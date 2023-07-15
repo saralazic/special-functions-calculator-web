@@ -21,18 +21,19 @@ p {
 }
 
 .toolbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    background-color: #832807;
-    color: white;
-    font-weight: 600;
-    font-size: large;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  background-color: #832807;
+  color: white;
+  font-weight: 600;
+  font-size: large;
+  z-index: 100;
+}
 
   .toolbar img {
     margin: 0 16px;
@@ -93,5 +94,10 @@ p {
   
   a:hover {
     color: #eba9a9e4;
+  }
+
+
+  body{
+    margin: 0;
   }
   

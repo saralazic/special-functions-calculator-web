@@ -6,8 +6,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     position: sticky;
-    background-color: #eee;
-    padding: 10px;
   }
 
   html, body {
@@ -34,6 +32,9 @@
   width: 100%;
   align-items: center;
   text-align: center;
+  background-color: #eee;
+  padding: 10px;
+
 }
 
 a {
