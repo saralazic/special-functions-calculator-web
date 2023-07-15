@@ -1,5 +1,23 @@
 {
-    "greeting": "Zdravo",
-    "message": "Dobrodošli na moju aplikaciju!"
+  "header": {
+    "title": "Kalkulator nekih specijalnih funkcija"
+  },
+  "homepage": {
+    "head_1": "Izračunajte vrednost specijalne funkcije jednostavno i efikasno!",
+    "head_2": "Odaberite neku od ponuđenih funkcija i počnite rad",
+    "bessel_1": "Beselove funkcije prve vrste",
+    "bessel_2": "Beselove funkcije druge vrste",
+    "bessel_3": "Beselove funkcije treće vrste",
+    "laguerre": "Lagerovi polinomi",
+    "legendre": "Ležandrovi polinomi",
+    "jacobi": "Jakobijevi polinomi",
+    "chebyshev_1": "Čebiševljevi polinomi prve vrste",
+    "chebyshev_2": "Čebiševljevi polinomi druge vrste"
+  },
+  "footer": {
+    "about": "O aplikaciji",
+    "contact": "Kontakt",
+    "copyright": "Elektrotehnički fakultet, Univerzitet u Beogradu"
   }
+}
   

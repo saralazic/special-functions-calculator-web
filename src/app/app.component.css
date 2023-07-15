@@ -1,0 +1,16 @@
+/* Set the component container as a flex container */
+:host {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Set a minimum height for the container */
+  }
+  
+  /* Make the router outlet grow to fill the available space */
+  router-outlet {
+    flex: 1;
+  }
+  
+  /* Fix the footer to the bottom */
+  app-footer {
+    flex-shrink: 0;
+  }

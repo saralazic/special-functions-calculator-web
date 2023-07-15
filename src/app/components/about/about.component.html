@@ -1,8 +1,8 @@
 <p>about works!</p>
 
 <div>
-    <h1>{{ greeting }}</h1>
+    <h1>{{ title }}</h1>
     <p>{{ message }}</p>
-    <button (click)="loadTranslations('en.json')">English</button>
-    <button (click)="loadTranslations('sr.json')">Serbian</button>
+    <button (click)="setLanguage('en')">English</button>
+    <button (click)="setLanguage('sr')">Serbian</button>
   </div>

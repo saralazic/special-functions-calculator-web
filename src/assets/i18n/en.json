@@ -1,5 +1,23 @@
 {
-    "greeting": "Hello",
-    "message": "Welcome to my app!"
+  "header": {
+    "title": "Calculator of some special functions"
+  },    
+  "homepage": {
+    "head_1": "Calculate the value of a special function simply and efficiently!",
+    "head_2": "Choose one of the functions bellow and start computing",
+    "bessel_1": "Bessel functions of the first kind",
+    "bessel_2": "bessel functions of the second kind",
+    "bessel_3": "bessel functions of the third kind",
+    "laguerre": "Laguerre polynomials",
+    "legendre": "Legendre polynomials",
+    "jacobi": "Jacobi polynomials",
+    "chebyshev_1": "Chebyshev polynomials of the first kind",
+    "chebyshev_2": "Chebyshev polynomials of the second kind"
+  },
+  "footer": {
+    "about": "About",
+    "contact": "Contact",
+    "copyright": "School of Electrical Engineering, University of Belgrade"
   }
+}
   
