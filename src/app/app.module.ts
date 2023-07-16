@@ -12,6 +12,8 @@ import { HeaderComponent } from './components/marginals/header/header.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { FooterComponent } from './components/marginals/footer/footer.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ContactComponent } from './components/contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { FooterComponent } from './components/marginals/footer/footer.component'
     AboutComponent,
     HeaderComponent,
     FooterComponent,
+    ContactComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,6 +33,8 @@ import { FooterComponent } from './components/marginals/footer/footer.component'
     MatMenuModule,
     MatIconModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LanguageService } from 'src/app/services/language-service/language.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-about',
@@ -8,8 +9,8 @@ import { LanguageService } from 'src/app/services/language-service/language.serv
   styleUrls: ['./about.component.css'],
 })
 export class AboutComponent implements OnInit {
-  title?: string;
-  message?: string;
+  private subscription?: Subscription;
+  text?: string;
 
   constructor(
     private http: HttpClient,
@@ -17,7 +18,16 @@ export class AboutComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadTranslations(); // Load English translations by default
+    this.loadTranslations();
+    this.subscription = this.languageService
+      .getLanguageChangeObservable()
+      .subscribe(() => {
+        this.loadTranslations(); // Load translations whenever language changes
+      });
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 
   loadTranslations() {
@@ -25,13 +35,7 @@ export class AboutComponent implements OnInit {
     this.http
       .get(`./assets/i18n/${selectedLanguage}.json`)
       .subscribe((translations: any) => {
-        this.title = translations.header.title;
-        this.message = translations.homepage.head_1;
+        this.text = translations.about.text;
       });
-  }
-
-  setLanguage(language: string) {
-    this.languageService.setSelectedLanguage(language);
-    this.loadTranslations();
   }
 }
