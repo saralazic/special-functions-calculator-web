@@ -25,7 +25,7 @@
   "contact": {
     "title": "Contact us",
     "name": "full name",
-    "email": "email address",
+    "subject": "subject",
     "message": "message",
     "button": "Submit",
     "phone": "phone",

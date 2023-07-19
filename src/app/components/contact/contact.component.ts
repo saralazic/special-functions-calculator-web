@@ -18,7 +18,7 @@ export class ContactComponent implements OnInit {
 
   name?: string;
   message?: string;
-  email?: string;
+  subject?: string;
   submit?: string;
   contactUs?: string;
   response?: string;
@@ -52,7 +52,7 @@ export class ContactComponent implements OnInit {
       .get(`./assets/i18n/${selectedLanguage}.json`)
       .subscribe((translations: any) => {
         this.name = translations.contact.name;
-        this.email = translations.contact.email;
+        this.subject = translations.contact.subject;
         this.message = translations.contact.message;
         this.contactUs = translations.contact.title;
         this.submit = translations.contact.button;
@@ -63,7 +63,7 @@ export class ContactComponent implements OnInit {
   initForm() {
     this.contactForm = this.formBuilder.group({
       name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      subject: ['', [Validators.required]],
       message: ['', Validators.required],
     });
   }
@@ -77,6 +77,16 @@ export class ContactComponent implements OnInit {
 
       // You can perform further actions like sending the form data to a server
       // or displaying a success message here.
+
+      const recipient = 'sara.lazic@outlook.com';
+      const subject = formData.subject;
+      const body = `${formData.message}\n\n${formData.name}`;
+
+      const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(
+        subject
+      )}&body=${encodeURIComponent(body)}`;
+
+      window.location.href = mailtoLink;
     }
   }
 }

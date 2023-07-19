@@ -25,7 +25,7 @@
   "contact": {
     "title": "Kontaktirajte nas",
     "name": "ime i prezime",
-    "email": "email adresa",
+    "subject": "naslov",
     "message": "poruka",
     "button": "Pošalji",
     "phone": "Broj telefona",
