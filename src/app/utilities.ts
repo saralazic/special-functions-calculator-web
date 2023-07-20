@@ -1,5 +1,4 @@
-// import * as Plotly from 'plotly.js';
-//import { Data, Layout } from 'plotly.js';
+import * as Plotly from 'plotly.js-basic-dist';
 
 export function factorial(n: number): number {
   if (n === 0 || n === 1) {
@@ -9,19 +8,24 @@ export function factorial(n: number): number {
   }
 }
 
-export function drawGraph(element: HTMLElement, x: number[], y: number[]) {
-  // const data: Data[] = [
-  //   {
-  //     x: x,
-  //     y: y,
-  //     mode: 'markers',
-  //     type: 'scatter',
-  //   },
-  // ];
-  // const layout: Partial<Layout> = {
-  //   title: 'Graph',
-  //   xaxis: { title: 'X-axis' },
-  //   yaxis: { title: 'Y-axis' },
-  // };
-  //  Plotly.newPlot(element, data, layout);
+export function drawGraph(
+  element: HTMLElement,
+  xValues: number[],
+  yValues: number[]
+) {
+  const trace: Partial<Plotly.ScatterData> = {
+    x: xValues,
+    y: yValues,
+    type: 'scatter', // Change the type according to the plot you want (e.g., 'scatter', 'bar', etc.)
+    mode: 'lines+markers', // Change the mode according to your preference
+    marker: { size: 1 }, // Set the size property to adjust the marker size (you can change the value as needed)
+  };
+
+  const layout: Partial<Plotly.Layout> = {
+    // Add any layout configuration you need here
+  };
+
+  const data = [trace];
+
+  Plotly.newPlot(element, data, layout);
 }

@@ -8,8 +8,8 @@ import { drawGraph } from 'src/app/utilities';
   templateUrl: './special-function.component.html',
   styleUrls: ['./special-function.component.css'],
 })
-export class SpecialFunctionComponent implements AfterViewInit {
-  @ViewChild('graphContainer', { static: false }) graphContainer?: ElementRef;
+export class SpecialFunctionComponent {
+  @ViewChild('graphContainer') graphContainer!: ElementRef;
 
   private bessel?: BesselFirstKind;
   parameter: string | null = null;
@@ -19,17 +19,22 @@ export class SpecialFunctionComponent implements AfterViewInit {
     this.bessel = new BesselFirstKind();
   }
 
-  ngAfterViewInit() {
-    const xValues = [1, 2, 3, 4, 5];
-    const yValues = [2, 4, 1, 5, 3];
-
-    drawGraph(this.graphContainer?.nativeElement, xValues, yValues);
-  }
-
   ngOnInit(): void {
+    this.bessel = new BesselFirstKind();
     this.parameter = this.route.snapshot.paramMap.get('parameter');
     // Use the 'parameter' value to fetch and display the corresponding data
 
     this.value = this.bessel?.calculate(1, 0.000001, 0.05);
+  }
+
+  drawGraph() {
+    let x_arr = [],
+      y_arr = [];
+    for (let x = 0; x <= 10; x = x + 0.05) {
+      let y = this.bessel?.calculate(2, 0.000001, x);
+      x_arr.push(x);
+      y_arr.push(y ?? 0);
+    }
+    drawGraph(this.graphContainer?.nativeElement, x_arr, y_arr);
   }
 }
