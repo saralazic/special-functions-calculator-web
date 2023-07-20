@@ -30,6 +30,9 @@
     "button": "Pošalji",
     "phone": "Broj telefona",
     "success": "Vaša poruka je uspešno poslata, uskoro ćemo vam se javiti"
+  },
+  "bessel_1":  {
+    "name": "Beselove funkcije prve vrste"
   }
 }
   

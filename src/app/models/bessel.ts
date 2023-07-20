@@ -1,4 +1,6 @@
-import { factorial } from '../utilities';
+import { FUNCTION_TYPE } from '../constants';
+import { factorial, loadTranslationForFunction } from '../utilities';
+import { ISpecialFunctionTranslations } from './specialFunction';
 
 export class BesselFirstKind {
   constructor() {}
@@ -14,5 +16,15 @@ export class BesselFirstKind {
     }
 
     return sum * (x / 2) ** n;
+  }
+
+  public loadTranslations(translations: any): ISpecialFunctionTranslations {
+    const specialFunctionTranslation = loadTranslationForFunction(
+      FUNCTION_TYPE.BESSEL_FIRST_KIND,
+      translations
+    );
+    return {
+      name: specialFunctionTranslation.name,
+    };
   }
 }

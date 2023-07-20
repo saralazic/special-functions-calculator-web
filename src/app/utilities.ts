@@ -1,4 +1,5 @@
 import * as Plotly from 'plotly.js-basic-dist';
+import { FUNCTION_TYPE } from './constants';
 
 export function factorial(n: number): number {
   if (n === 0 || n === 1) {
@@ -28,4 +29,18 @@ export function drawGraph(
   const data = [trace];
 
   Plotly.newPlot(element, data, layout);
+}
+
+export function loadTranslationForFunction(
+  type: FUNCTION_TYPE,
+  translations: any
+): any {
+  let fn: any;
+  switch (type) {
+    case FUNCTION_TYPE.BESSEL_FIRST_KIND:
+      fn = translations.bessel_1;
+      break;
+  }
+
+  return fn;
 }

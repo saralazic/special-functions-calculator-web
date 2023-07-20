@@ -30,6 +30,9 @@
     "button": "Submit",
     "phone": "phone",
     "success": "Your message is sent successfully, we will get back to you soon"
+  },
+  "bessel_1":{
+    "name": "Bessel functions of the first kind"
   }
 }
   
