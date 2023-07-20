@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "buildOptimizer": false,
             "outputPath": "dist/spef-calculator",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -28,7 +29,20 @@
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+            ],
+            "aot": true,
+            "budgets": [
+              {
+                "type": "initial",
+                "maximumWarning": "5mb",
+                "maximumError": "6mb"
+              },
+              {
+                "type": "anyComponentStyle",
+                "maximumWarning": "2kb"
+              }
+            ]
           },
           "configurations": {
             "production": {
@@ -44,7 +58,8 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "optimization": true
             },
             "development": {
               "buildOptimizer": false,
@@ -52,7 +67,8 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "outputHashing": "none"
             }
           },
           "defaultConfiguration": "production"
