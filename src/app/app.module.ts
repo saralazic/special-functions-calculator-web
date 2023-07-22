@@ -19,6 +19,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
+import { CalculatorComponent } from './components/calculator/calculator.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { MatSliderModule } from '@angular/material/slider';
     HeaderComponent,
     FooterComponent,
     ContactComponent,
+    CalculatorComponent,
   ],
   imports: [
     BrowserModule,

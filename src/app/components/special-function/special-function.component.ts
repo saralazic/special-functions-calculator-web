@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 import { BesselFirstKind } from 'src/app/models/bessel';
 import { SpecialFunction } from 'src/app/models/specialFunction';
 import { LanguageService } from 'src/app/services/language-service/language.service';
-import { drawGraph } from 'src/app/utilities';
+import { drawGraph } from 'src/utilities/utilities';
 
 @Component({
   selector: 'app-special-function',

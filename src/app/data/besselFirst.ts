@@ -1,4 +1,4 @@
-import { FUNCTION_TYPE } from '../constants';
+import { FUNCTION_TYPE } from './constants';
 import { FunctionCharacteristics } from '../models/functionCharacteristics';
 
 export const besselFunctionFirstKind: FunctionCharacteristics = {

@@ -1,4 +1,4 @@
-import { FUNCTION_TYPE } from '../constants';
+import { FUNCTION_TYPE } from '../data/constants';
 
 export interface FunctionCharacteristics {
   type: FUNCTION_TYPE;

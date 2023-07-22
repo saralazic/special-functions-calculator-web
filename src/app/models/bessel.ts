@@ -1,5 +1,8 @@
-import { FUNCTION_TYPE } from '../constants';
-import { factorial, loadTranslationForFunction } from '../utilities';
+import { FUNCTION_TYPE } from '../data/constants';
+import {
+  factorial,
+  loadTranslationForFunction,
+} from '../../utilities/utilities';
 import { ISpecialFunctionTranslations } from './specialFunction';
 
 export class BesselFirstKind {

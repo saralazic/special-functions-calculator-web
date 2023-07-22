@@ -1,5 +1,5 @@
 import * as Plotly from 'plotly.js-basic-dist';
-import { FUNCTION_TYPE } from './constants';
+import { FUNCTION_TYPE } from '../app/data/constants';
 
 export function factorial(n: number): number {
   if (n === 0 || n === 1) {
