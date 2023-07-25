@@ -1,5 +1,7 @@
+import { MathType } from 'mathjs';
+
 export interface IExpression {
-  calculateUnaryOperation(operand: string, data: any): number;
-  calculateBinaryOperation(): number;
-  evaluate(): number;
+  calculateUnaryOperation(operand: string, data: any): MathType;
+  calculateBinaryOperation(): MathType;
+  evaluate(): MathType;
 }

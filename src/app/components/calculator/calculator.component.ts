@@ -1,5 +1,5 @@
 import { Component, HostListener } from '@angular/core';
-import * as math from 'mathjs';
+import { all, BigNumber, create, MathType } from 'mathjs';
 import {
   brackets,
   hyperbolic,
@@ -11,6 +11,7 @@ import {
 } from 'src/app/data/calculatorSymbols';
 import { Expression } from 'src/app/models/expression/expression';
 import { ISymbol } from 'src/app/models/symbol';
+import { getE, getPi } from 'src/utilities/utilities';
 
 @Component({
   selector: 'app-calculator',
@@ -18,6 +19,8 @@ import { ISymbol } from 'src/app/models/symbol';
   styleUrls: ['./calculator.component.css'],
 })
 export class CalculatorComponent {
+  math = create(all, { precision: 64 });
+
   expression = new Expression('0');
   digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
@@ -75,7 +78,7 @@ export class CalculatorComponent {
     this.expression.addBracket(bracket === '(');
   }
 
-  getFormula() {
+  getExpression() {
     return this.expression.get();
   }
 
@@ -102,13 +105,14 @@ export class CalculatorComponent {
     this.expression.operator = '';
   }
 
-  calculateUnaryFunction(operand: string, data: any): number {
-    return this.expression.calculateUnaryOperation(operand, data);
+  calculateUnaryFunction(operand: string, data: MathType): string {
+    return this.expression.calculateUnaryOperation(operand, data).toString();
   }
 
   addConstant(isConstantPi: boolean) {
-    const value = isConstantPi ? math.pi : math.e;
-    this.expression.addSymbol(math.format(value, { precision: 64 }), true);
+    const value = isConstantPi ? getPi() : getE();
+    this.expression.addSymbol(value.toString(), true);
+    console.log(value.toString());
   }
 
   addSymbol(value: string, start: boolean = false): void {

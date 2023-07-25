@@ -1,3 +1,4 @@
+import { all, BigNumber, create, MathType } from 'mathjs';
 import * as Plotly from 'plotly.js-basic-dist';
 import { FUNCTION_TYPE } from '../app/data/constants';
 
@@ -43,4 +44,18 @@ export function loadTranslationForFunction(
   }
 
   return fn;
+}
+
+export function getE(): MathType {
+  const math = create(all, { precision: 64 });
+  return math.exp(math.bignumber(1));
+}
+
+export function getPi(): MathType {
+  const math = create(all, { precision: 64 });
+  // const piValue: BigNumber = math.bignumber(
+  //   '3.1415926535897932384626433832795028841971693993751058209749445923078164'
+  // );
+  const piHalf: BigNumber = math.acos(math.bignumber(0));
+  return math.multiply(piHalf, math.bignumber(2) as BigNumber);
 }

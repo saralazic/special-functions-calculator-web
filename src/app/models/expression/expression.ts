@@ -1,14 +1,14 @@
-import math from 'mathjs';
-import { all, BigNumber, create } from 'mathjs';
+import { create, all, BigNumber, MathType, sec } from 'mathjs';
 import { Stack } from 'src/utilities/stack';
+import { getE, getPi } from 'src/utilities/utilities';
 import { IExpression } from './IExpression';
 
 export class Expression implements IExpression {
-  math = create(all, { precision: 64 });
+  math = create(all, { number: 'BigNumber', precision: 64 });
 
   expression: string;
-  currentOperand: BigNumber = this.math.bignumber(0);
-  previousOperand: BigNumber = this.math.bignumber(0);
+  currentOperand: MathType = this.math.bignumber(0);
+  previousOperand: MathType = this.math.bignumber(0);
   operator: string = '';
   bracket: boolean = false;
   start: boolean = false;
@@ -21,160 +21,218 @@ export class Expression implements IExpression {
     this.expression = expression;
   }
 
-  evaluate(): number {
-    let result: number = 0;
+  evaluate(): MathType {
+    let result: MathType = this.math.bignumber(0);
     if (this.stack.size() < 3) return result;
     this.isOperand = false;
-    this.currentOperand = math.bignumber(this.stack.pop() ?? '0');
+    this.currentOperand = this.math.bignumber(this.stack.pop() ?? '0');
     this.operator = this.stack.pop() ?? '+';
-    this.previousOperand = math.bignumber(this.stack.pop() ?? '0');
+    this.previousOperand = this.math.bignumber(this.stack.pop() ?? '0');
     if (!this.previousOperand) return 0;
 
     result = this.calculateBinaryOperation();
 
-    this.currentOperand = math.bignumber(this.expression);
+    this.currentOperand = this.math.bignumber(this.expression);
 
     this.start = true;
     return result;
   }
 
-  calculateBinaryOperation(): number {
-    let result: BigNumber = this.math.bignumber(0);
+  calculateBinaryOperation(): MathType {
+    let result: MathType = this.math.bignumber(0);
+
+    console.log('previous: ' + this.previousOperand);
+    console.log('current: ' + this.currentOperand);
+    console.log('operator: ' + this.operator);
 
     switch (this.operator) {
       case '+':
-        result = math.add(this.previousOperand, this.currentOperand);
+        result = this.math.add(this.previousOperand, this.currentOperand);
         this.show(result);
         break;
       case '-':
-        result = math.min(this.previousOperand, this.currentOperand);
+        result = this.math.subtract(this.previousOperand, this.currentOperand);
         this.show(result);
         break;
       case '*':
-        result = math.mul(this.previousOperand, this.currentOperand);
+        result = this.math.multiply(this.previousOperand, this.currentOperand);
         this.show(result);
         break;
       case '/':
-        result = this.previousOperand / this.currentOperand;
+        result = this.math.divide(this.previousOperand, this.currentOperand);
         this.show(result);
         break;
       case 'sqrt':
-        result = Math.pow(this.previousOperand, 1 / this.currentOperand);
+        // Calculate cur = 1 / currentOperand
+        const cur: MathType = this.math.divide(
+          this.math.bignumber(1),
+          this.currentOperand
+        );
+        // Calculate previousOperand^(1/currentOperand)
+        result = this.math.pow(this.previousOperand, cur as BigNumber);
         this.show(result);
         break;
       case 'pow':
-        result = Math.pow(this.previousOperand, this.currentOperand);
+      case 'xy':
+        result = this.math.pow(
+          this.previousOperand,
+          this.currentOperand as BigNumber
+        );
         this.show(result);
         break;
       case 'yx':
-        result = Math.pow(this.currentOperand, this.previousOperand);
+        result = this.math.pow(
+          this.currentOperand,
+          this.previousOperand as BigNumber
+        );
         this.show(result);
         break;
       case 'log':
-        result = Math.log(this.previousOperand) / Math.log(this.currentOperand);
+        const first = this.math.log(this.previousOperand as BigNumber);
+        const second = this.math.log(this.currentOperand as BigNumber);
+        result = this.math.divide(first, second);
+        this.show(result);
         break;
     }
     return result;
   }
 
-  calculateUnaryOperation(operand: string, data: any): number {
-    let result: number = 0;
-    let rad: number = 0;
-    let grad = 180 / Math.PI;
-    this.currentOperand = math.bignumber(this.expression);
+  calculateUnaryOperation(operand: string, data: MathType): MathType {
+    let add, sub: BigNumber;
+    let result: MathType = this.math.bignumber(0);
+    let rad: MathType = this.math.bignumber(0);
+    let grad: MathType = this.math.divide(this.math.bignumber(180), getPi());
+
+    console.log(this.currentOperand);
+
+    this.currentOperand = this.math.bignumber(this.expression);
 
     switch (operand) {
       case 'invert_sign':
-        result = this.currentOperand * data;
+        result = this.math.multiply(this.currentOperand, data);
         break;
       case 'sqrt':
-        result = Math.sqrt(this.currentOperand);
+        result = this.math.sqrt(this.currentOperand);
         break;
       case 'sqrt3':
-        result = Math.pow(this.currentOperand, 1 / 3);
+        result = this.math.pow(
+          this.currentOperand,
+          this.math.divide(
+            this.math.bignumber(1),
+            this.math.bignumber(3)
+          ) as BigNumber
+        );
         break;
       case 'ln':
-        result = Math.log(this.currentOperand);
+        result = this.math.log(this.currentOperand);
         break;
       case 'lg':
-        result = Math.log(this.currentOperand) / Math.log(data);
+        const first = this.math.log(this.currentOperand);
+        const second = this.math.log(data as BigNumber);
+        result = this.math.divide(first, second);
         break;
       case 'pow_base':
-        let base = data == 'e' ? Math.E : data;
-        result = Math.pow(base, this.currentOperand);
+        result = this.math.pow(data, this.currentOperand);
         break;
       case 'pow':
-        let step = math.bignumber(data);
-        result = Math.pow(this.currentOperand, step);
+        let step = this.math.bignumber(data as BigNumber);
+        result = this.math.pow(this.currentOperand, step);
         break;
       case 'div':
-        result = 1 / this.currentOperand;
+        result = this.math.divide(1, this.currentOperand);
         break;
       case 'sin':
-        rad = this.radians ? this.currentOperand : this.currentOperand / grad;
-        result = Math.sin(rad);
+        rad = this.radians
+          ? this.currentOperand
+          : this.math.divide(this.currentOperand, grad);
+        console.log('rad: ' + rad);
+        console.log('sin ' + this.math.sin(rad as BigNumber));
+        result = this.math.sin(rad as BigNumber);
         break;
       case 'cos':
-        rad = this.radians ? this.currentOperand : this.currentOperand / grad;
-        result = Math.cos(rad);
+        rad = this.radians
+          ? this.currentOperand
+          : this.math.divide(this.currentOperand, grad);
+        result = this.math.cos(rad as BigNumber);
         break;
       case 'tan':
-        rad = this.radians ? this.currentOperand : this.currentOperand / grad;
-        result = Math.tan(rad);
+        rad = this.radians
+          ? this.currentOperand
+          : this.math.divide(this.currentOperand, grad);
+        result = this.math.tan(rad as BigNumber);
         break;
       case 'sinh':
-        rad = this.radians ? this.currentOperand : this.currentOperand / grad;
-        result = (Math.exp(rad) - Math.exp(-rad)) / 2;
+        rad = this.radians
+          ? this.currentOperand
+          : this.math.divide(this.currentOperand, grad);
+        sub = this.math.subtract(
+          this.math.exp(rad as BigNumber),
+          this.math.exp(this.math.unaryMinus(rad) as BigNumber)
+        );
+        result = this.math.divide(sub, this.math.bignumber(2));
         break;
       case 'cosh':
-        rad = this.radians ? this.currentOperand : this.currentOperand / grad;
-        result = (Math.exp(rad) + Math.exp(-rad)) / 2;
+        rad = this.radians
+          ? this.currentOperand
+          : this.math.divide(this.currentOperand, grad);
+
+        add = this.math.add(
+          this.math.exp(rad as BigNumber),
+          this.math.exp(this.math.unaryMinus(rad) as BigNumber)
+        );
+        result = this.math.divide(add, this.math.bignumber(2));
         break;
       case 'tanh':
-        rad = this.radians ? this.currentOperand : this.currentOperand / grad;
-        result =
-          (Math.exp(rad) - Math.exp(-rad)) / (Math.exp(rad) + Math.exp(-rad));
+        rad = this.radians
+          ? this.currentOperand
+          : this.math.divide(this.currentOperand, grad);
+
+        add = this.math.add(
+          this.math.exp(rad as BigNumber),
+          this.math.exp(this.math.unaryMinus(rad) as BigNumber)
+        );
+        sub = this.math.subtract(
+          this.math.exp(rad as BigNumber),
+          this.math.exp(this.math.unaryMinus(rad) as BigNumber)
+        );
+        result = this.math.divide(sub, add);
         break;
       case 'asin':
-        result = Math.asin(this.currentOperand);
-        result = this.radians ? result : result * grad;
+        result = this.math.asin(this.currentOperand);
+        result = this.radians ? result : this.math.multiply(result, grad);
         break;
       case 'acos':
-        result = Math.acos(this.currentOperand);
-        result = this.radians ? result : result * grad;
+        result = this.math.acos(this.currentOperand);
+        result = this.radians ? result : this.math.multiply(result, grad);
         break;
       case 'atan':
-        result = Math.atan(this.currentOperand);
-        result = this.radians ? result : result * grad;
+        result = this.math.atan(this.currentOperand);
+        result = this.radians ? result : this.math.multiply(result, grad);
         break;
       case 'asinh':
-        result = Math.asinh(this.currentOperand);
-        result = this.radians ? result : result * grad;
+        result = this.math.asinh(this.currentOperand);
+        result = this.radians ? result : this.math.multiply(result, grad);
         break;
       case 'acosh':
-        result = Math.acosh(this.currentOperand);
-        result = this.radians ? result : result * grad;
+        result = this.math.acosh(this.currentOperand);
+        result = this.radians ? result : this.math.multiply(result, grad);
         break;
       case 'atanh':
-        result = Math.atanh(this.currentOperand);
-        result = this.radians ? result : result * grad;
+        result = this.math.atanh(this.currentOperand);
+        result = this.radians ? result : this.math.multiply(result, grad);
         break;
       case 'rand':
-        result = Math.random();
+        result = this.math.divide(this.math.random(), getE());
         break;
       case 'factorial':
-        let n = Math.ceil(this.currentOperand);
-        result = 1;
-        for (let i = 1; i <= n; i++) {
-          result *= i;
-        }
+        result = this.math.factorial(this.currentOperand);
         break;
       case 'percent':
-        result = this.currentOperand / 100;
+        result = this.math.divide(this.currentOperand, 100);
         break;
       case 'ee':
         this.expression = this.currentOperand.toExponential();
-        return 0;
+        break;
     }
 
     this.start = true;
@@ -184,10 +242,6 @@ export class Expression implements IExpression {
 
   get(): string {
     return this.expression;
-  }
-
-  getCurrentOperand(): number {
-    return math.bignumber(this.expression);
   }
 
   setRadians(switcher: boolean): boolean {
@@ -260,7 +314,7 @@ export class Expression implements IExpression {
     this.expression = this.expression.slice(0, -1);
   }
 
-  show(value: BigNumber): string {
+  show(value: MathType): string {
     this.expression = value.toString();
     return this.expression;
   }
