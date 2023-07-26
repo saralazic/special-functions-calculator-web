@@ -1,6 +1,3 @@
-import { FUNCTION_TYPE } from '../data/constants';
-import { factorial } from '../../utilities/utilities';
-
 export abstract class SpecialFunction {
   constructor() {}
 

@@ -1,3 +1,4 @@
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { all, BigNumber, create, MathType } from 'mathjs';
 import * as Plotly from 'plotly.js-basic-dist';
 import { FUNCTION_TYPE } from '../app/data/constants';
@@ -58,4 +59,19 @@ export function getPi(): MathType {
   // );
   const piHalf: BigNumber = math.acos(math.bignumber(0));
   return math.multiply(piHalf, math.bignumber(2) as BigNumber);
+}
+
+export function round(stringVal: string): string {
+  if (stringVal.length > 60) {
+    let lastchars = stringVal.slice(-4);
+    console.log(lastchars);
+    if (
+      lastchars[0] === 'e' &&
+      lastchars[1] === '-' &&
+      +lastchars.slice(2) >= 64
+    ) {
+      return '0';
+    }
+  }
+  return stringVal;
 }

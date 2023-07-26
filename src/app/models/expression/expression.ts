@@ -1,6 +1,6 @@
 import { create, all, BigNumber, MathType, sec } from 'mathjs';
 import { Stack } from 'src/utilities/stack';
-import { getE, getPi } from 'src/utilities/utilities';
+import { getE, getPi, round } from 'src/utilities/utilities';
 import { IExpression } from './IExpression';
 
 export class Expression implements IExpression {
@@ -236,6 +236,7 @@ export class Expression implements IExpression {
     }
 
     this.start = true;
+
     this.show(result);
     return result;
   }
@@ -315,7 +316,7 @@ export class Expression implements IExpression {
   }
 
   show(value: MathType): string {
-    this.expression = value.toString();
+    this.expression = round(value.toString());
     return this.expression;
   }
 

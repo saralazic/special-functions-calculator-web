@@ -1,12 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
+  ValidationErrors,
   Validators,
-  AbstractControl,
 } from '@angular/forms';
+
 import { ActivatedRoute } from '@angular/router';
+import { bignumber } from 'mathjs';
 import { Subscription } from 'rxjs';
 import { BesselFirstKind } from 'src/app/models/bessel';
 import { SpecialFunction } from 'src/app/models/specialFunction';
@@ -27,12 +30,23 @@ export class SpecialFunctionComponent implements OnInit {
   value?: number;
   name?: string;
 
+  currentCalculatedValue: string;
+
+  shouldShowCalculator: boolean;
+  useCalculatorOnVariable: boolean;
+
+  calculatorIconPath = 'assets/icons/calculator.svg';
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
     private languageService: LanguageService,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.shouldShowCalculator = false;
+    this.useCalculatorOnVariable = true;
+    this.currentCalculatedValue = '';
+  }
 
   ngOnInit(): void {
     this.createForm();
@@ -70,14 +84,45 @@ export class SpecialFunctionComponent implements OnInit {
       });
   }
 
+  bigNumberValidator(control: AbstractControl): ValidationErrors | null {
+    const bigNumberRegex = /^-?\d+(\.\d+)?([eE]-?\d+)?$/;
+    if (control.value && !bigNumberRegex.test(control.value)) {
+      return { invalidBigNumber: true };
+    }
+    return null;
+  }
+
+  bigNumberValidatorForPrecision(
+    control: AbstractControl
+  ): ValidationErrors | null {
+    const precisionNumberRegex =
+      /^(0(\.\d+)?|0\.\d+|([0-9]\d*(\.\d+)?(e-?\d+)?))$/i;
+
+    if (control.value && !precisionNumberRegex.test(control.value)) {
+      return { invalidBigNumber: true };
+    }
+    // const value = (control.value);
+    // const zero = bignumber(0);
+    // const one = bignumber(1);
+
+    // if (value.cmp(zero) === -1 || value.cmp(one) === 1) {
+    //   return { invalidPrecisionNumber: true };
+    // }
+
+    return null;
+  }
+
   createForm() {
     this.form = this.formBuilder.group({
       positiveIntegerValue: [
         null,
         [Validators.required, Validators.pattern(/^[0-9]\d*$/)],
       ],
-      precisionValue: [0.000001, [Validators.required, Validators.min(0)]],
-      realNumberValue: [null, [Validators.required]],
+      precisionValue: [
+        '',
+        [Validators.required, this.bigNumberValidatorForPrecision],
+      ],
+      realNumberValue: ['', [Validators.required, this.bigNumberValidator]],
     });
   }
 
@@ -96,5 +141,42 @@ export class SpecialFunctionComponent implements OnInit {
 
       this.drawGraphic(positiveIntegerValue, precisionValue);
     }
+  }
+
+  showCalculator(onVariable: boolean) {
+    if (this.useCalculatorOnVariable === onVariable)
+      this.shouldShowCalculator = !this.shouldShowCalculator;
+    else this.currentCalculatedValue = '';
+
+    this.useCalculatorOnVariable = onVariable;
+  }
+
+  onCalculated(value: string): void {
+    this.currentCalculatedValue = value;
+  }
+
+  useCalculatedValue(): void {
+    if (this.useCalculatorOnVariable) {
+      this.form.patchValue({
+        realNumberValue: this.currentCalculatedValue,
+      });
+    } else {
+      this.form.patchValue({
+        precisionValue: this.currentCalculatedValue,
+      });
+    }
+  }
+
+  useCalcValDisabled(): boolean {
+    console.log('value: ' + this.currentCalculatedValue);
+    console.log('useOnVariable: ' + this.useCalculatorOnVariable);
+
+    if (this.currentCalculatedValue.length < 1) return true;
+    if (this.useCalculatorOnVariable) return false;
+
+    const precisionNumberRegex =
+      /^(0(\.\d+)?|0\.\d+|([0-9]\d*(\.\d+)?(e-?\d+)?))$/i;
+
+    return !precisionNumberRegex.test(this.currentCalculatedValue);
   }
 }

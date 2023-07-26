@@ -1,8 +1,8 @@
 <h1>{{name}}</h1>
 
-<div>
+<div class="container">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="fill" class="form-field">
+      <mat-form-field appearance="fill" class="form-field mat-form-field">
         <mat-label>Positive Integer:</mat-label>
         <input
           matInput
@@ -20,15 +20,16 @@
       &nbsp;
       &nbsp;
 
-      <mat-form-field appearance="fill" class="form-field">
-        <mat-label>Precision (0.000x or x*10^-y):</mat-label>
+      <mat-form-field appearance="fill" class="form-field mat-form-field">
+        <mat-label>Precision (0.00...00x or xe-y):</mat-label>
         <input
           matInput
-          type="number"
+          type="string"
           formControlName="precisionValue"
           required
           [class.is-invalid]="form.get('precisionValue')?.invalid && form.get('precisionValue')?.touched"
         />
+        <img src="{{ calculatorIconPath }}" alt="Calculator Icon" class="icon" (click)="showCalculator(false)">
         <mat-error *ngIf="form.get('precisionValue')?.invalid && form.get('precisionValue')?.touched">
           Please enter a valid precision value (0.000x or x*10^-y).
         </mat-error>
@@ -38,28 +39,35 @@
       &nbsp;
       &nbsp;
     
-      <mat-form-field appearance="fill" class="form-field">
+      <mat-form-field appearance="fill" class="form-field mat-form-field">
         <mat-label>Real Number:</mat-label>
         <input
           matInput
-          type="number"
+          type="string"
           formControlName="realNumberValue"
           required
           [class.is-invalid]="form.get('realNumberValue')?.invalid && form.get('realNumberValue')?.touched"
         />
+        <img src="{{ calculatorIconPath }}" alt="Calculator Icon" class="icon" (click)="showCalculator(true)">
+
         <mat-error *ngIf="form.get('realNumberValue')?.invalid && form.get('realNumberValue')?.touched">
           Please enter a valid real number.
         </mat-error>
-      </mat-form-field>
+      </mat-form-field>      
     
       <br>
       <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Calculate and Draw Graph</button>
     </form>
+
+    <div class="center" *ngIf = "shouldShowCalculator">
+      <app-calculator (calculated)="onCalculated($event)"></app-calculator>
+      <br>
+      <button mat-raised-button color="primary" (click)="useCalculatedValue()" [disabled]="useCalcValDisabled()">Use this value</button>
+    
+    </div>
+    
 </div>
 
-<div>
-  <app-calculator></app-calculator>
-</div>
 
 <br>
 {{value}}

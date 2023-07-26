@@ -1,5 +1,5 @@
-import { Component, HostListener } from '@angular/core';
-import { all, BigNumber, create, MathType } from 'mathjs';
+import { Component, EventEmitter, HostListener, Output } from '@angular/core';
+import { all, create, MathType, re } from 'mathjs';
 import {
   brackets,
   hyperbolic,
@@ -11,7 +11,7 @@ import {
 } from 'src/app/data/calculatorSymbols';
 import { Expression } from 'src/app/models/expression/expression';
 import { ISymbol } from 'src/app/models/symbol';
-import { getE, getPi } from 'src/utilities/utilities';
+import { getE, getPi, round } from 'src/utilities/utilities';
 
 @Component({
   selector: 'app-calculator',
@@ -31,6 +31,10 @@ export class CalculatorComponent {
   unaryOps1 = unaryOps1;
   unaryOps2 = unaryOps2;
   hyperbolic = hyperbolic;
+
+  calculatorIconPath = 'assets/icons/calculator.svg';
+
+  @Output() calculated: EventEmitter<string> = new EventEmitter<string>();
 
   getLabel(symbol: ISymbol) {
     return symbol.label;
@@ -106,13 +110,16 @@ export class CalculatorComponent {
   }
 
   calculateUnaryFunction(operand: string, data: MathType): string {
-    return this.expression.calculateUnaryOperation(operand, data).toString();
+    const stringValue = this.expression
+      .calculateUnaryOperation(operand, data)
+      .toString();
+    this.calculated.emit(stringValue);
+    return stringValue;
   }
 
   addConstant(isConstantPi: boolean) {
     const value = isConstantPi ? getPi() : getE();
     this.expression.addSymbol(value.toString(), true);
-    console.log(value.toString());
   }
 
   addSymbol(value: string, start: boolean = false): void {
@@ -129,6 +136,10 @@ export class CalculatorComponent {
     this.expression.stack.push(this.expression.expression);
     let value = this.expression.evaluate();
     this.resetOperand();
-    return value.toString();
+
+    const stringValue = value.toString();
+    this.calculated.emit(stringValue);
+
+    return stringValue;
   }
 }
