@@ -32,6 +32,7 @@ export class SpecialFunctionComponent implements OnInit {
   form!: FormGroup;
   parameter: string | null = null;
   value?: number;
+  valueBig?: string;
   name?: string;
 
   currentCalculatedValue: string;
@@ -105,10 +106,7 @@ export class SpecialFunctionComponent implements OnInit {
       return { invalidPrecisionNumber: true };
     }
 
-    console.log('value: ' + control.value);
-
     if (!checkIfBigNumberIsPrecision(control.value)) {
-      console.log(checkIfBigNumberIsPrecision(control.value));
       return { invalidPrecisionNumber: true };
     }
 
@@ -136,6 +134,12 @@ export class SpecialFunctionComponent implements OnInit {
         this.form.get('realNumberValue')?.value || '0'
       );
 
+      this.valueBig = this.spef?.calculateBig(
+        positiveIntegerValue,
+        precisionValue,
+        this.form.get('realNumberValue')?.value || '0'
+      );
+
       this.value = this.spef?.calculate(
         positiveIntegerValue,
         precisionValue,
@@ -160,20 +164,43 @@ export class SpecialFunctionComponent implements OnInit {
 
   useCalculatedValue(): void {
     if (this.useCalculatorOnVariable) {
+      const controlName = 'realNumberValue';
+      const control = this.form.get(controlName);
+      const newValue = this.currentCalculatedValue;
+
       this.form.patchValue({
-        realNumberValue: this.currentCalculatedValue,
+        [controlName]: newValue,
       });
+
+      // Trigger validation on the control
+      control?.updateValueAndValidity();
+
+      // If the control is still invalid after validation, display the error message
+      if (control?.invalid && control?.touched) {
+        const errors = control?.errors;
+        console.error('Validation error:', errors);
+      }
     } else {
+      const controlName = 'precisionValue';
+      const control = this.form.get(controlName);
+      const newValue = this.currentCalculatedValue;
+
       this.form.patchValue({
-        precisionValue: this.currentCalculatedValue,
+        [controlName]: newValue,
       });
+
+      // Trigger validation on the control
+      control?.updateValueAndValidity();
+
+      // If the control is still invalid after validation, display the error message
+      if (control?.invalid && control?.touched) {
+        const errors = control?.errors;
+        console.error('Validation error:', errors);
+      }
     }
   }
 
   useCalcValDisabled(): boolean {
-    console.log('value: ' + this.currentCalculatedValue);
-    console.log('useOnVariable: ' + this.useCalculatorOnVariable);
-
     if (this.currentCalculatedValue.length < 1) return true;
     if (this.useCalculatorOnVariable) return false;
 

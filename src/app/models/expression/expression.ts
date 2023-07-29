@@ -6,9 +6,12 @@ import { IExpression } from './IExpression';
 export class Expression implements IExpression {
   math = create(all, { number: 'BigNumber', precision: 64 });
 
+  private zero = this.math.bignumber(0);
+  private one = this.math.bignumber(1);
+
   expression: string;
-  currentOperand: MathType = this.math.bignumber(0);
-  previousOperand: MathType = this.math.bignumber(0);
+  currentOperand: MathType = this.zero;
+  previousOperand: MathType = this.zero;
   operator: string = '';
   bracket: boolean = false;
   start: boolean = false;
@@ -22,7 +25,7 @@ export class Expression implements IExpression {
   }
 
   evaluate(): MathType {
-    let result: MathType = this.math.bignumber(0);
+    let result: MathType = this.zero;
     if (this.stack.size() < 3) return result;
     this.isOperand = false;
     this.currentOperand = this.math.bignumber(this.stack.pop() ?? '0');
@@ -39,12 +42,7 @@ export class Expression implements IExpression {
   }
 
   calculateBinaryOperation(): MathType {
-    let result: MathType = this.math.bignumber(0);
-
-    console.log('previous: ' + this.previousOperand);
-    console.log('current: ' + this.currentOperand);
-    console.log('operator: ' + this.operator);
-
+    let result: MathType = this.zero;
     switch (this.operator) {
       case '+':
         result = this.math.add(this.previousOperand, this.currentOperand);
@@ -64,10 +62,7 @@ export class Expression implements IExpression {
         break;
       case 'sqrt':
         // Calculate cur = 1 / currentOperand
-        const cur: MathType = this.math.divide(
-          this.math.bignumber(1),
-          this.currentOperand
-        );
+        const cur: MathType = this.math.divide(this.one, this.currentOperand);
         // Calculate previousOperand^(1/currentOperand)
         result = this.math.pow(this.previousOperand, cur as BigNumber);
         this.show(result);
@@ -99,11 +94,9 @@ export class Expression implements IExpression {
 
   calculateUnaryOperation(operand: string, data: MathType): MathType {
     let add, sub: BigNumber;
-    let result: MathType = this.math.bignumber(0);
-    let rad: MathType = this.math.bignumber(0);
+    let result: MathType = this.zero;
+    let rad: MathType = this.zero;
     let grad: MathType = this.math.divide(this.math.bignumber(180), getPi());
-
-    console.log(this.currentOperand);
 
     this.currentOperand = this.math.bignumber(this.expression);
 
@@ -117,10 +110,7 @@ export class Expression implements IExpression {
       case 'sqrt3':
         result = this.math.pow(
           this.currentOperand,
-          this.math.divide(
-            this.math.bignumber(1),
-            this.math.bignumber(3)
-          ) as BigNumber
+          this.math.divide(this.one, this.math.bignumber(3)) as BigNumber
         );
         break;
       case 'ln':
@@ -145,8 +135,7 @@ export class Expression implements IExpression {
         rad = this.radians
           ? this.currentOperand
           : this.math.divide(this.currentOperand, grad);
-        console.log('rad: ' + rad);
-        console.log('sin ' + this.math.sin(rad as BigNumber));
+
         result = this.math.sin(rad as BigNumber);
         break;
       case 'cos':

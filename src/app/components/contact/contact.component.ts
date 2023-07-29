@@ -71,7 +71,6 @@ export class ContactComponent implements OnInit {
   submitForm() {
     if (this.contactForm && this.contactForm.valid) {
       const formData = this.contactForm.value;
-      console.log(formData);
 
       this.showResponse = true;
 

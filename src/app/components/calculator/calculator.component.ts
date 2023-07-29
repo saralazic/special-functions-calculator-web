@@ -19,8 +19,6 @@ import { getE, getPi } from 'src/utilities/utilities';
   styleUrls: ['./calculator.component.css'],
 })
 export class CalculatorComponent {
-  math = create(all, { precision: 64 });
-
   expression = new Expression('0');
   digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 

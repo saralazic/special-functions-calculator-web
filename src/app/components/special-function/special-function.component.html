@@ -29,12 +29,20 @@
           required
           [class.is-invalid]="form.get('precisionValue')?.invalid && form.get('precisionValue')?.touched"
         />
-        <img src="{{ calculatorIconPath }}" alt="Calculator Icon" class="icon" (click)="showCalculator(false)">
+
         <mat-error *ngIf="form.get('precisionValue')?.invalid && form.get('precisionValue')?.touched">
           Please enter a valid precision value (0.000x or x*10^-y).
         </mat-error>
+        <img
+        src="{{ calculatorIconPath }}"
+        alt="Calculator Icon"
+        class="icon"
+        (click)="showCalculator(false)"
+        type="button"/>
       </mat-form-field>
+    
       &nbsp;       
+
       &nbsp;
       &nbsp;
       &nbsp;
@@ -48,12 +56,20 @@
           required
           [class.is-invalid]="form.get('realNumberValue')?.invalid && form.get('realNumberValue')?.touched"
         />
-        <img src="{{ calculatorIconPath }}" alt="Calculator Icon" class="icon" (click)="showCalculator(true)">
 
         <mat-error *ngIf="form.get('realNumberValue')?.invalid && form.get('realNumberValue')?.touched">
           Please enter a valid real number.
         </mat-error>
-      </mat-form-field>      
+        <img
+        src="{{ calculatorIconPath }}"
+        alt="Calculator Icon"
+        class="icon"
+        (click)="showCalculator(true)"
+        type="button"/>
+      </mat-form-field>
+
+      &nbsp; 
+      
     
       <br>
       <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Calculate and Draw Graph</button>
@@ -71,6 +87,10 @@
 
 <br>
 {{value}}
+<br>
+
+<br>
+{{valueBig}}
 <br>
 <div #graphContainer></div>
 

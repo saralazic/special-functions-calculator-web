@@ -63,7 +63,6 @@ export function getPi(): MathType {
 export function round(stringVal: string): string {
   if (stringVal.length > 60) {
     let lastchars = stringVal.slice(-4);
-    console.log(lastchars);
     if (
       lastchars[0] === 'e' &&
       lastchars[1] === '-' &&
