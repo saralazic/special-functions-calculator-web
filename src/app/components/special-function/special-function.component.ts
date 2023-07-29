@@ -9,12 +9,15 @@ import {
 } from '@angular/forms';
 
 import { ActivatedRoute } from '@angular/router';
-import { bignumber } from 'mathjs';
+import { create, all, MathType } from 'mathjs';
 import { Subscription } from 'rxjs';
 import { BesselFirstKind } from 'src/app/models/bessel';
 import { SpecialFunction } from 'src/app/models/specialFunction';
 import { LanguageService } from 'src/app/services/language-service/language.service';
-import { drawGraph } from 'src/utilities/utilities';
+import {
+  checkIfBigNumberIsPrecision,
+  drawGraph,
+} from 'src/utilities/utilities';
 
 @Component({
   selector: 'app-special-function',
@@ -23,6 +26,7 @@ import { drawGraph } from 'src/utilities/utilities';
 })
 export class SpecialFunctionComponent implements OnInit {
   @ViewChild('graphContainer') graphContainer!: ElementRef;
+
   private subscription?: Subscription;
   private spef?: SpecialFunction;
   form!: FormGroup;
@@ -95,19 +99,18 @@ export class SpecialFunctionComponent implements OnInit {
   bigNumberValidatorForPrecision(
     control: AbstractControl
   ): ValidationErrors | null {
-    const precisionNumberRegex =
-      /^(0(\.\d+)?|0\.\d+|([0-9]\d*(\.\d+)?(e-?\d+)?))$/i;
+    const precisionNumberRegex = /^-?\d+(\.\d+)?([eE]-?\d+)?$/;
 
-    if (control.value && !precisionNumberRegex.test(control.value)) {
-      return { invalidBigNumber: true };
+    if (!control.value || !precisionNumberRegex.test(control.value)) {
+      return { invalidPrecisionNumber: true };
     }
-    // const value = (control.value);
-    // const zero = bignumber(0);
-    // const one = bignumber(1);
 
-    // if (value.cmp(zero) === -1 || value.cmp(one) === 1) {
-    //   return { invalidPrecisionNumber: true };
-    // }
+    console.log('value: ' + control.value);
+
+    if (!checkIfBigNumberIsPrecision(control.value)) {
+      console.log(checkIfBigNumberIsPrecision(control.value));
+      return { invalidPrecisionNumber: true };
+    }
 
     return null;
   }

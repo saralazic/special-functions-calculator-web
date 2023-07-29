@@ -1,4 +1,4 @@
-import { create, all, BigNumber, MathType, sec } from 'mathjs';
+import { create, all, BigNumber, MathType } from 'mathjs';
 import { Stack } from 'src/utilities/stack';
 import { getE, getPi, round } from 'src/utilities/utilities';
 import { IExpression } from './IExpression';

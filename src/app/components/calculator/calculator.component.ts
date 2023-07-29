@@ -1,5 +1,5 @@
 import { Component, EventEmitter, HostListener, Output } from '@angular/core';
-import { all, create, MathType, re } from 'mathjs';
+import { create, all, MathType } from 'mathjs';
 import {
   brackets,
   hyperbolic,
@@ -11,7 +11,7 @@ import {
 } from 'src/app/data/calculatorSymbols';
 import { Expression } from 'src/app/models/expression/expression';
 import { ISymbol } from 'src/app/models/symbol';
-import { getE, getPi, round } from 'src/utilities/utilities';
+import { getE, getPi } from 'src/utilities/utilities';
 
 @Component({
   selector: 'app-calculator',

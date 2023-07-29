@@ -1,4 +1,3 @@
-import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { all, BigNumber, create, MathType } from 'mathjs';
 import * as Plotly from 'plotly.js-basic-dist';
 import { FUNCTION_TYPE } from '../app/data/constants';
@@ -74,4 +73,19 @@ export function round(stringVal: string): string {
     }
   }
   return stringVal;
+}
+
+// Initialize the math object globally at an appropriate place (e.g., top of the file or in a service)
+const math = create(all, { number: 'BigNumber', precision: 64 });
+
+export function checkIfBigNumberIsPrecision(value: string): boolean {
+  const valueNumber = math.bignumber(value);
+  const zero = math.bignumber(0);
+  const one = math.bignumber(1);
+
+  // Convert the result of math.compare() to a native JavaScript number using Number()
+  return (
+    Number(math.compare(valueNumber, zero)) > 0 &&
+    Number(math.compare(valueNumber, one)) < 0
+  );
 }
