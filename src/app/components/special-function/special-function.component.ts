@@ -42,6 +42,8 @@ export class SpecialFunctionComponent implements OnInit {
 
   calculatorIconPath = 'assets/icons/calculator.svg';
 
+  calculatorError?: string;
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,

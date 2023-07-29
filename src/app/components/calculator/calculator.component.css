@@ -33,16 +33,32 @@
 	/* Additional button styling if needed */
   }
   
-  input {
-	flex: 1;
-	height: 40px;
-	width: 100%;
-	/* Additional input field styling if needed */
-  }
-
   .rad{
 	font-size: 10px;
   }
 
 
-
+  input {
+	flex: 1;
+	height: 40px;
+	width: 100%;
+	min-width: 0; /* Ensure input doesn't become too narrow */
+	white-space: nowrap; /* Prevent line breaks */
+  }
+  
+  .input-container {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	overflow-x: auto; /* Show horizontal scrollbar when content overflows */
+  }
+  
+  /* For WebKit browsers (Chrome, Safari, Edge) */
+  input::-webkit-scrollbar {
+	width: 8px; /* Set the width of the scrollbar */
+  }
+  
+  input::-webkit-scrollbar-thumb {
+	background-color: black; /* Set the color of the scrollbar thumb */
+  }
+  
