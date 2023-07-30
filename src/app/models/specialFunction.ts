@@ -1,6 +1,4 @@
 export abstract class SpecialFunction {
-  constructor() {}
-
   public abstract calculateBig(n: number, eps: string, x: string): string;
 
   public abstract calculate(n: number, eps: number, x: number): number;

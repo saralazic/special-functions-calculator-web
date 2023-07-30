@@ -10,7 +10,9 @@ import {
 
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { FUNCTION_TYPE } from 'src/app/data/constants';
 import { BesselFirstKind } from 'src/app/models/functions/besselFirst';
+import { BesselSecondKind } from 'src/app/models/functions/besselSecond';
 import { SpecialFunction } from 'src/app/models/specialFunction';
 import { LanguageService } from 'src/app/services/language-service/language.service';
 import {
@@ -56,7 +58,8 @@ export class SpecialFunctionComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    this.spef = new BesselFirstKind();
+    this.parameter = this.route.snapshot.paramMap.get('parameter');
+    this.createChosenFunction();
     this.loadTranslations();
 
     this.subscription = this.languageService
@@ -64,9 +67,20 @@ export class SpecialFunctionComponent implements OnInit {
       .subscribe(() => {
         this.loadTranslations(); // Load translations whenever language changes
       });
+  }
 
-    this.parameter = this.route.snapshot.paramMap.get('parameter');
-    // Use the 'parameter' value to fetch and display the corresponding data
+  createChosenFunction() {
+    switch (this.parameter) {
+      case FUNCTION_TYPE.BESSEL_FIRST_KIND:
+        this.spef = new BesselFirstKind();
+        break;
+      case FUNCTION_TYPE.BESSEL_SECOND_KIND:
+        this.spef = new BesselSecondKind();
+        break;
+      default:
+        this.spef = new BesselFirstKind();
+        break;
+    }
   }
 
   ngOnDestroy() {

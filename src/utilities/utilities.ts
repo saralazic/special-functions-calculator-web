@@ -44,6 +44,12 @@ export function loadTranslationForFunction(
     case FUNCTION_TYPE.BESSEL_FIRST_KIND:
       fn = translations.bessel_1;
       break;
+    case FUNCTION_TYPE.BESSEL_SECOND_KIND:
+      fn = translations.bessel_2;
+      break;
+    default:
+      fn = translations.bessel_1;
+      break;
   }
 
   return fn;
