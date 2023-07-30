@@ -1,6 +1,9 @@
 import { all, BigNumber, create, MathType } from 'mathjs';
 import * as Plotly from 'plotly.js-basic-dist';
 import { FUNCTION_TYPE } from '../app/data/constants';
+import { BIG_NUMBER_CONSTANTS, math_64 } from './big_numbers_math';
+
+const math = math_64;
 
 export function factorial(n: number): number {
   if (n === 0 || n === 1) {
@@ -47,17 +50,15 @@ export function loadTranslationForFunction(
 }
 
 export function getE(): MathType {
-  const math = create(all, { precision: 64 });
-  return math.exp(math.bignumber(1));
+  return math.exp(BIG_NUMBER_CONSTANTS.ONE);
 }
 
 export function getPi(): MathType {
-  const math = create(all, { precision: 64 });
   // const piValue: BigNumber = math.bignumber(
   //   '3.1415926535897932384626433832795028841971693993751058209749445923078164'
   // );
-  const piHalf: BigNumber = math.acos(math.bignumber(0));
-  return math.multiply(piHalf, math.bignumber(2) as BigNumber);
+  const piHalf: BigNumber = math.acos(BIG_NUMBER_CONSTANTS.ZERO);
+  return math.multiply(piHalf, BIG_NUMBER_CONSTANTS.TWO as BigNumber);
 }
 
 export function round(stringVal: string): string {
@@ -74,13 +75,10 @@ export function round(stringVal: string): string {
   return stringVal;
 }
 
-// Initialize the math object globally at an appropriate place (e.g., top of the file or in a service)
-const math = create(all, { number: 'BigNumber', precision: 64 });
-
 export function checkIfBigNumberIsPrecision(value: string): boolean {
   const valueNumber = math.bignumber(value);
-  const zero = math.bignumber(0);
-  const one = math.bignumber(1);
+  const zero = BIG_NUMBER_CONSTANTS.ZERO;
+  const one = BIG_NUMBER_CONSTANTS.ONE;
 
   // Convert the result of math.compare() to a native JavaScript number using Number()
   return (

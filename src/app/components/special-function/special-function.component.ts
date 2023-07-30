@@ -9,9 +9,8 @@ import {
 } from '@angular/forms';
 
 import { ActivatedRoute } from '@angular/router';
-import { create, all, MathType } from 'mathjs';
 import { Subscription } from 'rxjs';
-import { BesselFirstKind } from 'src/app/models/bessel';
+import { BesselFirstKind } from 'src/app/models/functions/besselFirst';
 import { SpecialFunction } from 'src/app/models/specialFunction';
 import { LanguageService } from 'src/app/services/language-service/language.service';
 import {

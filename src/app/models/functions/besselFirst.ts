@@ -1,19 +1,17 @@
-import { FUNCTION_TYPE } from '../data/constants';
+import { FUNCTION_TYPE } from '../../data/constants';
 import {
   factorial,
   loadTranslationForFunction,
-} from '../../utilities/utilities';
-import { ISpecialFunctionTranslations } from './specialFunction';
-import { all, create, MathType } from 'mathjs';
+} from '../../../utilities/utilities';
+import {
+  ISpecialFunctionTranslations,
+  SpecialFunction,
+} from '../specialFunction';
+import { MathType } from 'mathjs';
+import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 
-export class BesselFirstKind {
-  math = create(all, { number: 'BigNumber', precision: 64 });
-
-  one = this.math.bignumber(1);
-  two = this.math.bignumber(2);
-  four = this.math.bignumber(4);
-
-  constructor() {}
+export class BesselFirstKind extends SpecialFunction {
+  math = math_64;
 
   calculate(n: number, eps: number, x: number): number {
     let t = 1 / factorial(n);
@@ -35,11 +33,11 @@ export class BesselFirstKind {
     const nBig = this.math.bignumber(n);
 
     const fact = this.math.factorial(n);
-    let t: MathType = this.math.divide(this.one, fact);
+    let t: MathType = this.math.divide(BIG_NUMBER_CONSTANTS.ONE, fact);
 
     let sum: MathType = t;
 
-    const xsqr = this.math.pow(x, this.two);
+    const xsqr = this.math.pow(x, BIG_NUMBER_CONSTANTS.TWO);
     const numerator = this.math.unaryMinus(xsqr);
 
     for (
@@ -52,14 +50,14 @@ export class BesselFirstKind {
 
       let denominator: MathType = this.math.add(nBig, kBig);
       denominator = this.math.multiply(denominator, kBig);
-      denominator = this.math.multiply(denominator, this.four);
+      denominator = this.math.multiply(denominator, BIG_NUMBER_CONSTANTS.FOUR);
 
       const R = this.math.divide(numerator, denominator);
       t = this.math.multiply(t, R);
       sum = this.math.add(sum, t);
     }
 
-    let result = this.math.divide(x, this.two);
+    let result = this.math.divide(x, BIG_NUMBER_CONSTANTS.TWO);
     result = this.math.pow(result, nBig);
     result = this.math.multiply(sum, result);
 

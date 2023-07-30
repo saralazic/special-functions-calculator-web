@@ -33,6 +33,9 @@
   },
   "bessel_1":  {
     "name": "Beselove funkcije prve vrste"
+  },
+  "bessel_2":  {
+    "name": "Beselove funkcije druge vrste"
   }
 }
   

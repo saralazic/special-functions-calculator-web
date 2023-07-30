@@ -33,6 +33,9 @@
   },
   "bessel_1":{
     "name": "Bessel functions of the first kind"
+  },
+  "bessel_2":{
+    "name": "Bessel functions of the second kind"
   }
 }
   

@@ -1,8 +1,9 @@
 import { all, create } from 'mathjs';
+import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 import { getE } from 'src/utilities/utilities';
 import { ISymbol, ISymbolWithData } from '../models/symbol';
 
-const math = create(all, { precision: 64 });
+const math = math_64;
 
 export const operators: ISymbol[] = [
   { symbol: '+', label: '&#43;' },
@@ -33,30 +34,42 @@ export const brackets: ISymbol[] = [
 ];
 
 export const unaryOps1: ISymbolWithData[] = [
-  { symbol: 'pow', label: 'x<sup>2</sup>', data: math.bignumber(2) },
-  { symbol: 'pow', label: 'x<sup>3</sup>', data: math.bignumber(3) },
+  { symbol: 'pow', label: 'x<sup>2</sup>', data: BIG_NUMBER_CONSTANTS.TWO },
+  { symbol: 'pow', label: 'x<sup>3</sup>', data: BIG_NUMBER_CONSTANTS.THREE },
   { symbol: 'pow_base', label: 'e<sup>x</sup>', data: getE() },
   {
     symbol: 'div',
     label: '<sup>1</sup>/<sub>x</sub>',
-    data: math.bignumber(1),
+    data: BIG_NUMBER_CONSTANTS.ONE,
   },
-  { symbol: 'sqrt', label: '<sup>2</sup>&radic;x', data: math.bignumber(2) },
+  {
+    symbol: 'sqrt',
+    label: '<sup>2</sup>&radic;x',
+    data: BIG_NUMBER_CONSTANTS.TWO,
+  },
   {
     symbol: 'sqrt3',
     label: '<sup>3</sup>&radic;x',
-    data: math.divide(math.bignumber(1), math.bignumber(3)),
+    data: math.divide(BIG_NUMBER_CONSTANTS.ONE, BIG_NUMBER_CONSTANTS.THREE),
   },
 ];
 
 export const unaryOps2: ISymbolWithData[] = [
-  { symbol: 'pow_base', label: '10<sup>x</sup>', data: math.bignumber(10) },
-  { symbol: 'pow_base', label: '2<sup>x</sup>', data: math.bignumber(2) },
-  { symbol: 'factorial', label: 'x!', data: math.bignumber(1) },
-  // { symbol: 'ee', label: 'EE', data: math.bignumber(1) },
+  {
+    symbol: 'pow_base',
+    label: '10<sup>x</sup>',
+    data: BIG_NUMBER_CONSTANTS.TEN,
+  },
+  {
+    symbol: 'pow_base',
+    label: '2<sup>x</sup>',
+    data: BIG_NUMBER_CONSTANTS.TWO,
+  },
+  { symbol: 'factorial', label: 'x!', data: BIG_NUMBER_CONSTANTS.ONE },
+  // { symbol: 'ee', label: 'EE', data: BIG_MATH_CONSTANTS.ONE },
   { symbol: 'ln', label: 'ln', data: getE() },
-  { symbol: 'lg', label: 'lg', data: math.bignumber(10) },
-  { symbol: 'lg', label: 'log<sub>2</sub>', data: math.bignumber(2) },
+  { symbol: 'lg', label: 'lg', data: BIG_NUMBER_CONSTANTS.TEN },
+  { symbol: 'lg', label: 'log<sub>2</sub>', data: BIG_NUMBER_CONSTANTS.TWO },
 ];
 
 export const hyperbolic: ISymbol[] = [
