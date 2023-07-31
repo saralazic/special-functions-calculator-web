@@ -130,38 +130,38 @@ export class SpecialFunctionComponent implements OnInit {
 
   createForm() {
     this.form = this.formBuilder.group({
-      positiveIntegerValue: [
-        null,
-        [Validators.required, Validators.pattern(/^[0-9]\d*$/)],
-      ],
+      orderValue: ['', [Validators.required, this.bigNumberValidator]],
       precisionValue: [
         '',
         [Validators.required, this.bigNumberValidatorForPrecision],
       ],
-      realNumberValue: ['', [Validators.required, this.bigNumberValidator]],
+      variableValue: ['', [Validators.required, this.bigNumberValidator]],
     });
   }
 
   onSubmit(): void {
     if (this.form.valid) {
-      const { positiveIntegerValue, precisionValue } = this.form.value;
-      const realNumberValue = parseFloat(
-        this.form.get('realNumberValue')?.value || '0'
+      const orderValue = parseFloat(this.form.get('orderValue')?.value || '0');
+      const precisionValue = parseFloat(
+        this.form.get('precisionValue')?.value || '0.1'
+      );
+      const variableValue = parseFloat(
+        this.form.get('variableValue')?.value || '0'
       );
 
       this.valueBig = this.spef?.calculateBig(
-        positiveIntegerValue,
-        precisionValue,
-        this.form.get('realNumberValue')?.value || '0'
+        orderValue.toString(),
+        precisionValue.toString(),
+        variableValue.toString()
       );
 
       this.value = this.spef?.calculate(
-        positiveIntegerValue,
+        orderValue,
         precisionValue,
-        realNumberValue
+        variableValue
       );
 
-      this.drawGraphic(positiveIntegerValue, precisionValue);
+      this.drawGraphic(orderValue, precisionValue);
     }
   }
 

@@ -1,6 +1,7 @@
 import { FUNCTION_TYPE } from '../../data/constants';
 import {
-  factorial,
+  getE,
+  getPi,
   loadTranslationForFunction,
 } from '../../../utilities/utilities';
 import {
@@ -18,7 +19,7 @@ export class BesselFirstKind extends SpecialFunction {
     const xHalfSqr = xHalf ** 2;
 
     let gammaArg = alpha + 1.0;
-    let gammaCurrent: number = math.gamma(gammaArg);
+    let gammaCurrent: number = this.gamma(gammaArg);
 
     let t = xHalf ** alpha / gammaCurrent;
     let sum = t;
@@ -30,8 +31,7 @@ export class BesselFirstKind extends SpecialFunction {
       gammaPrevious = gammaCurrent;
 
       gammaArg += 1;
-      gammaCurrent = math.gamma(gammaArg);
-
+      gammaCurrent = this.gamma(gammaArg);
       R = -(xHalfSqr * gammaPrevious) / (m * gammaCurrent);
       t *= R;
       sum += t;
@@ -40,13 +40,13 @@ export class BesselFirstKind extends SpecialFunction {
     return sum;
   }
 
-  calculateBig(alphaBig: number, epsBig: string, xBig: string): string {
+  calculateBig(alphaBig: string, epsBig: string, xBig: string): string {
     const alpha = this.math.bignumber(alphaBig);
     const eps = this.math.bignumber(epsBig);
     const x = this.math.bignumber(xBig);
 
-    let alphaPlusOne = this.math.add(alpha, BIG_NUMBER_CONSTANTS.ONE);
-    let gammaCurrent = this.math.gamma(alphaPlusOne);
+    let gammaArg = this.math.add(alpha, BIG_NUMBER_CONSTANTS.ONE);
+    let gammaCurrent = this.gammaBig(gammaArg);
 
     const xHalf = this.math.divide(x, BIG_NUMBER_CONSTANTS.TWO);
     const xHalfSqr = this.math.pow(xHalf, BIG_NUMBER_CONSTANTS.TWO);
@@ -57,7 +57,6 @@ export class BesselFirstKind extends SpecialFunction {
     let sum = t;
 
     let gammaPrevious;
-    let gammaArg = alphaPlusOne;
     let R;
 
     for (
@@ -69,7 +68,7 @@ export class BesselFirstKind extends SpecialFunction {
       gammaPrevious = gammaCurrent;
 
       gammaArg = this.math.add(gammaArg, BIG_NUMBER_CONSTANTS.ONE);
-      gammaCurrent = this.math.gamma(gammaArg);
+      gammaCurrent = this.gammaBig(gammaArg);
 
       R = this.math.divide(gammaPrevious, gammaCurrent);
       R = this.math.multiply(R, xHalfSqr);
@@ -81,6 +80,81 @@ export class BesselFirstKind extends SpecialFunction {
     }
 
     return sum.toString();
+  }
+
+  gammaBig(alpha: math.BigNumber): math.BigNumber {
+    if (this.math.isInteger(alpha)) {
+      return this.math.gamma(alpha);
+    }
+
+    const x = this.math.subtract(alpha, BIG_NUMBER_CONSTANTS.ONE);
+    const pi = getPi();
+    const e = getE();
+
+    let first = this.math.divide(x, e);
+    first = this.math.pow(first, x);
+
+    let second = this.math.multiply(
+      BIG_NUMBER_CONSTANTS.EIGHT,
+      this.math.pow(x, BIG_NUMBER_CONSTANTS.THREE)
+    );
+
+    let add = this.math.multiply(
+      BIG_NUMBER_CONSTANTS.FOUR,
+      this.math.pow(x, BIG_NUMBER_CONSTANTS.TWO)
+    );
+
+    second = this.math.add(second, add);
+
+    second = this.math.add(second, x);
+
+    second = this.math.add(
+      second,
+      this.math.divide(BIG_NUMBER_CONSTANTS.ONE, BIG_NUMBER_CONSTANTS.THIRTY)
+    );
+
+    second = this.math.pow(
+      second,
+      this.math.divide(
+        BIG_NUMBER_CONSTANTS.ONE,
+        BIG_NUMBER_CONSTANTS.SIX
+      ) as math.BigNumber
+    );
+
+    let mul = this.math.multiply(first, second);
+
+    return this.math.multiply(
+      this.math.pow(
+        pi,
+        this.math.divide(
+          BIG_NUMBER_CONSTANTS.ONE,
+          BIG_NUMBER_CONSTANTS.TWO
+        ) as math.BigNumber
+      ),
+      mul
+    ) as math.BigNumber;
+  }
+
+  gamma(alpha: number): number {
+    const pi = Math.PI;
+    const e = Math.exp(1);
+
+    let x = alpha - 1;
+    let first = x / e;
+    first = Math.pow(first, x);
+
+    let second = 8 * Math.pow(x, 3);
+    let add = 4 * Math.pow(x, 2);
+
+    second += add;
+    second += x;
+    second += 1 / 30;
+
+    second = Math.pow(second, 1 / 6);
+
+    let mul = first * second;
+
+    return Math.sqrt(pi) * mul;
   }
 
   public loadTranslations(translations: any): ISpecialFunctionTranslations {

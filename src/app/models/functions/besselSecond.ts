@@ -31,7 +31,7 @@ export class BesselSecondKind extends SpecialFunction {
     );
   }
 
-  calculateBig(alphaBig: number, epsBig: string, xBig: string): string {
+  calculateBig(alphaBig: string, epsBig: string, xBig: string): string {
     const pi = getPi();
     const alpha = this.math.bignumber(alphaBig);
     const alphaPi = this.math.multiply(alpha, pi);
@@ -47,7 +47,7 @@ export class BesselSecondKind extends SpecialFunction {
     let JminusAlpha = Jalpha;
 
     // JminusAlpha is (-1)^n Jalpha
-    if (alphaBig % 2 === 1) JminusAlpha = this.math.unaryMinus(JminusAlpha);
+    // if (alphaBig % 2 === 1) JminusAlpha = this.math.unaryMinus(JminusAlpha);
 
     console.log('J minus alpha: ' + JminusAlpha);
 

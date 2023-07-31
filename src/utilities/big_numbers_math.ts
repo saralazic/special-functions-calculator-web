@@ -9,5 +9,8 @@ export class BIG_NUMBER_CONSTANTS {
   public static TWO = math_64.bignumber(2);
   public static THREE = math_64.bignumber(3);
   public static FOUR = math_64.bignumber(4);
+  public static SIX = math_64.bignumber(6);
+  public static EIGHT = math_64.bignumber(8);
   public static TEN = math_64.bignumber(10);
+  public static THIRTY = math_64.bignumber(30);
 }

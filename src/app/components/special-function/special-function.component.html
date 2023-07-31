@@ -1,79 +1,81 @@
 <h1>{{name}}</h1>
 
 <div class="container">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="fill" class="form-field mat-form-field">
-        <mat-label>Positive Integer:</mat-label>
-        <input
-          matInput
-          type="number"
-          formControlName="positiveIntegerValue"
-          required
-          [class.is-invalid]="form.get('positiveIntegerValue')?.invalid && form.get('positiveIntegerValue')?.touched"
-        />
-        <mat-error *ngIf="form.get('positiveIntegerValue')?.invalid && form.get('positiveIntegerValue')?.touched">
-          Please enter a positive integer.
-        </mat-error>
-      </mat-form-field>
-      &nbsp;       
-      &nbsp;
-      &nbsp;
-      &nbsp;
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill" class="form-field mat-form-field">
+      <mat-label>Order (real number):</mat-label>
+      <input
+        matInput
+        type="string"
+        formControlName="orderValue"
+        required
+        [class.is-invalid]="form.get('orderValue')?.invalid && form.get('orderValue')?.touched"
+      />
+      <mat-error *ngIf="form.get('orderValue')?.invalid && form.get('orderValue')?.touched">
+        Please enter a valid real number for the order.
+      </mat-error>
+    </mat-form-field>
+    &nbsp;       
+    &nbsp;
+    &nbsp;
+    &nbsp;
+  
+    <mat-form-field appearance="fill" class="form-field mat-form-field">
+      <mat-label>Precision (0.00...00x or xe-y):</mat-label>
+      <input
+        matInput
+        type="string"
+        formControlName="precisionValue"
+        required
+        [class.is-invalid]="form.get('precisionValue')?.invalid && form.get('precisionValue')?.touched"
+      />
 
-      <mat-form-field appearance="fill" class="form-field mat-form-field">
-        <mat-label>Precision (0.00...00x or xe-y):</mat-label>
-        <input
-          matInput
-          type="string"
-          formControlName="precisionValue"
-          required
-          [class.is-invalid]="form.get('precisionValue')?.invalid && form.get('precisionValue')?.touched"
-        />
-
-        <mat-error *ngIf="form.get('precisionValue')?.invalid && form.get('precisionValue')?.touched">
-          Please enter a valid precision value (0.000x or x*10^-y).
-        </mat-error>
-        <img
-        src="{{ calculatorIconPath }}"
-        alt="Calculator Icon"
-        class="icon"
-        (click)="showCalculator(false)"
-        type="button"/>
-      </mat-form-field>
+      <mat-error *ngIf="form.get('precisionValue')?.invalid && form.get('precisionValue')?.touched">
+        Please enter a valid precision value (0.000x or x*10^-y).
+      </mat-error>
+      <img
+      src="{{ calculatorIconPath }}"
+      alt="Calculator Icon"
+      class="icon"
+      (click)="showCalculator(false)"
+      type="button"/>
+    </mat-form-field>
     
-      &nbsp;       
-
-      &nbsp;
-      &nbsp;
-      &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+  
     
-      <mat-form-field appearance="fill" class="form-field mat-form-field">
-        <mat-label>Real Number:</mat-label>
-        <input
-          matInput
-          type="string"
-          formControlName="realNumberValue"
-          required
-          [class.is-invalid]="form.get('realNumberValue')?.invalid && form.get('realNumberValue')?.touched"
-        />
-
-        <mat-error *ngIf="form.get('realNumberValue')?.invalid && form.get('realNumberValue')?.touched">
-          Please enter a valid real number.
-        </mat-error>
-        <img
-        src="{{ calculatorIconPath }}"
-        alt="Calculator Icon"
-        class="icon"
-        (click)="showCalculator(true)"
-        type="button"/>
-      </mat-form-field>
-
-      &nbsp; 
-      
+    <mat-form-field appearance="fill" class="form-field mat-form-field">
+      <mat-label>Variable (real number):</mat-label>
+      <input
+        matInput
+        type="string"
+        formControlName="variableValue"
+        required
+        [class.is-invalid]="form.get('variableValue')?.invalid && form.get('variableValue')?.touched"
+      />
+  
+      <mat-error *ngIf="form.get('variableValue')?.invalid && form.get('variableValue')?.touched">
+        Please enter a valid real number for the variable.
+      </mat-error>
+      <img
+      src="{{ calculatorIconPath }}"
+      alt="Calculator Icon"
+      class="icon"
+      (click)="showCalculator(true)"
+      type="button"/>
+    </mat-form-field>
+  
+    &nbsp; 
     
-      <br>
-      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Calculate and Draw Graph</button>
-    </form>
+    
+    <br>
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Calculate and Draw Graph</button>
+
+  </form>
+  
 
     <div class="center" *ngIf = "shouldShowCalculator">
       <app-calculator (calculated)="onCalculated($event)"></app-calculator>

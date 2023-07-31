@@ -1,5 +1,5 @@
 export abstract class SpecialFunction {
-  public abstract calculateBig(n: number, eps: string, x: string): string;
+  public abstract calculateBig(n: string, eps: string, x: string): string;
 
   public abstract calculate(n: number, eps: number, x: number): number;
   public abstract loadTranslations(
