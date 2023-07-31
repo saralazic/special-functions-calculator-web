@@ -19,7 +19,7 @@ export class BesselFirstKind extends SpecialFunction {
     const xHalfSqr = xHalf ** 2;
 
     let gammaArg = alpha + 1.0;
-    let gammaCurrent: number = this.gamma(gammaArg);
+    let gammaCurrent: number = this.math.gamma(gammaArg);
 
     let t = xHalf ** alpha / gammaCurrent;
     let sum = t;
@@ -31,7 +31,7 @@ export class BesselFirstKind extends SpecialFunction {
       gammaPrevious = gammaCurrent;
 
       gammaArg += 1;
-      gammaCurrent = this.gamma(gammaArg);
+      gammaCurrent = this.math.gamma(gammaArg);
       R = -(xHalfSqr * gammaPrevious) / (m * gammaCurrent);
       t *= R;
       sum += t;
@@ -47,6 +47,7 @@ export class BesselFirstKind extends SpecialFunction {
 
     let gammaArg = this.math.add(alpha, BIG_NUMBER_CONSTANTS.ONE);
     let gammaCurrent = this.gammaBig(gammaArg);
+    console.log(gammaCurrent.toString());
 
     const xHalf = this.math.divide(x, BIG_NUMBER_CONSTANTS.TWO);
     const xHalfSqr = this.math.pow(xHalf, BIG_NUMBER_CONSTANTS.TWO);
@@ -91,70 +92,48 @@ export class BesselFirstKind extends SpecialFunction {
     const pi = getPi();
     const e = getE();
 
+    const half = this.math.divide(
+      BIG_NUMBER_CONSTANTS.ONE,
+      BIG_NUMBER_CONSTANTS.TWO
+    );
+
     let first = this.math.divide(x, e);
     first = this.math.pow(first, x);
 
     let second = this.math.multiply(
-      BIG_NUMBER_CONSTANTS.EIGHT,
+      BIG_NUMBER_CONSTANTS.c12,
       this.math.pow(x, BIG_NUMBER_CONSTANTS.THREE)
     );
 
     let add = this.math.multiply(
-      BIG_NUMBER_CONSTANTS.FOUR,
-      this.math.pow(x, BIG_NUMBER_CONSTANTS.TWO)
+      x,
+      this.math.divide(BIG_NUMBER_CONSTANTS.c24, BIG_NUMBER_CONSTANTS.SEVEN)
     );
 
     second = this.math.add(second, add);
 
-    second = this.math.add(second, x);
+    second = this.math.subtract(second, half);
 
-    second = this.math.add(
-      second,
-      this.math.divide(BIG_NUMBER_CONSTANTS.ONE, BIG_NUMBER_CONSTANTS.THIRTY)
-    );
+    second = this.math.divide(BIG_NUMBER_CONSTANTS.ONE, second);
+    second = this.math.add(BIG_NUMBER_CONSTANTS.ONE, second);
 
-    second = this.math.pow(
-      second,
-      this.math.divide(
-        BIG_NUMBER_CONSTANTS.ONE,
-        BIG_NUMBER_CONSTANTS.SIX
-      ) as math.BigNumber
+    let pow = this.math.divide(
+      BIG_NUMBER_CONSTANTS.c53,
+      BIG_NUMBER_CONSTANTS.c210
     );
+    pow = this.math.add(this.math.pow(x, BIG_NUMBER_CONSTANTS.TWO), pow);
+
+    second = this.math.pow(second, pow as math.BigNumber);
 
     let mul = this.math.multiply(first, second);
 
+    let piX2 = this.math.multiply(BIG_NUMBER_CONSTANTS.TWO, pi);
+    piX2 = this.math.multiply(piX2, x);
+
     return this.math.multiply(
-      this.math.pow(
-        pi,
-        this.math.divide(
-          BIG_NUMBER_CONSTANTS.ONE,
-          BIG_NUMBER_CONSTANTS.TWO
-        ) as math.BigNumber
-      ),
+      this.math.pow(piX2, half as math.BigNumber),
       mul
     ) as math.BigNumber;
-  }
-
-  gamma(alpha: number): number {
-    const pi = Math.PI;
-    const e = Math.exp(1);
-
-    let x = alpha - 1;
-    let first = x / e;
-    first = Math.pow(first, x);
-
-    let second = 8 * Math.pow(x, 3);
-    let add = 4 * Math.pow(x, 2);
-
-    second += add;
-    second += x;
-    second += 1 / 30;
-
-    second = Math.pow(second, 1 / 6);
-
-    let mul = first * second;
-
-    return Math.sqrt(pi) * mul;
   }
 
   public loadTranslations(translations: any): ISpecialFunctionTranslations {
