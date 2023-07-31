@@ -7,61 +7,80 @@ import {
   ISpecialFunctionTranslations,
   SpecialFunction,
 } from '../specialFunction';
-import { MathType } from 'mathjs';
+import * as math from 'mathjs';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 
 export class BesselFirstKind extends SpecialFunction {
   math = math_64;
 
-  calculate(n: number, eps: number, x: number): number {
-    let t = 1 / factorial(n);
+  calculate(alpha: number, eps: number, x: number): number {
+    const xHalf = x / 2.0;
+    const xHalfSqr = xHalf ** 2;
+
+    let gammaArg = alpha + 1.0;
+    let gammaCurrent: number = math.gamma(gammaArg);
+
+    let t = xHalf ** alpha / gammaCurrent;
     let sum = t;
 
-    for (let k = 1; Math.abs(t / sum) > eps; k++) {
-      const R = -(x ** 2) / (4 * k * (n + k));
+    let gammaPrevious: number;
+    let R: number;
+
+    for (let m = 1; math.abs(t / sum) > eps; m++) {
+      gammaPrevious = gammaCurrent;
+
+      gammaArg += 1;
+      gammaCurrent = math.gamma(gammaArg);
+
+      R = -(xHalfSqr * gammaPrevious) / (m * gammaCurrent);
       t *= R;
       sum += t;
     }
 
-    return sum * (x / 2) ** n;
+    return sum;
   }
 
-  calculateBig(n: number, epsBig: string, xBig: string): string {
+  calculateBig(alphaBig: number, epsBig: string, xBig: string): string {
+    const alpha = this.math.bignumber(alphaBig);
     const eps = this.math.bignumber(epsBig);
     const x = this.math.bignumber(xBig);
 
-    const nBig = this.math.bignumber(n);
+    let alphaPlusOne = this.math.add(alpha, BIG_NUMBER_CONSTANTS.ONE);
+    let gammaCurrent = this.math.gamma(alphaPlusOne);
 
-    const fact = this.math.factorial(n);
-    let t: MathType = this.math.divide(BIG_NUMBER_CONSTANTS.ONE, fact);
+    const xHalf = this.math.divide(x, BIG_NUMBER_CONSTANTS.TWO);
+    const xHalfSqr = this.math.pow(xHalf, BIG_NUMBER_CONSTANTS.TWO);
 
-    let sum: MathType = t;
+    const xHalfPowered = this.math.pow(xHalf, alpha);
 
-    const xsqr = this.math.pow(x, BIG_NUMBER_CONSTANTS.TWO);
-    const numerator = this.math.unaryMinus(xsqr);
+    let t = this.math.divide(xHalfPowered, gammaCurrent);
+    let sum = t;
+
+    let gammaPrevious;
+    let gammaArg = alphaPlusOne;
+    let R;
 
     for (
-      let k = 1;
+      let m = 1;
       Number(this.math.compare(this.math.abs(this.math.divide(t, sum)), eps)) >
       0;
-      k++
+      m++
     ) {
-      const kBig = this.math.bignumber(k);
+      gammaPrevious = gammaCurrent;
 
-      let denominator: MathType = this.math.add(nBig, kBig);
-      denominator = this.math.multiply(denominator, kBig);
-      denominator = this.math.multiply(denominator, BIG_NUMBER_CONSTANTS.FOUR);
+      gammaArg = this.math.add(gammaArg, BIG_NUMBER_CONSTANTS.ONE);
+      gammaCurrent = this.math.gamma(gammaArg);
 
-      const R = this.math.divide(numerator, denominator);
-      t = this.math.multiply(t, R);
-      sum = this.math.add(sum, t);
+      R = this.math.divide(gammaPrevious, gammaCurrent);
+      R = this.math.multiply(R, xHalfSqr);
+      R = this.math.divide(R, m);
+      R = this.math.unaryMinus(R);
+
+      t = this.math.multiply(R, t);
+      sum = this.math.add(t, sum);
     }
 
-    let result = this.math.divide(x, BIG_NUMBER_CONSTANTS.TWO);
-    result = this.math.pow(result, nBig);
-    result = this.math.multiply(sum, result);
-
-    return result.toString();
+    return sum.toString();
   }
 
   public loadTranslations(translations: any): ISpecialFunctionTranslations {
