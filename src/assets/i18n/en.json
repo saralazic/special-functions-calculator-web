@@ -36,6 +36,9 @@
   },
   "bessel_2":{
     "name": "Bessel functions of the second kind"
+  },
+  "legendre":{
+    "name": "Legendre polynomials"
   }
 }
   

@@ -36,6 +36,9 @@
   },
   "bessel_2":  {
     "name": "Beselove funkcije druge vrste"
+  },
+  "legendre":{
+    "name": "Ležandrovi polinomi"
   }
 }
   

@@ -47,6 +47,9 @@ export function loadTranslationForFunction(
     case FUNCTION_TYPE.BESSEL_SECOND_KIND:
       fn = translations.bessel_2;
       break;
+    case FUNCTION_TYPE.LEGENDRE_POLYNOMIAL:
+      fn = translations.legendre;
+      break;
     default:
       fn = translations.bessel_1;
       break;

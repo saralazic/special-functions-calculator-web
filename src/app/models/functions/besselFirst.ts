@@ -47,7 +47,6 @@ export class BesselFirstKind extends SpecialFunction {
 
     let gammaArg = this.math.add(alpha, BIG_NUMBER_CONSTANTS.ONE);
     let gammaCurrent = this.gammaBig(gammaArg);
-    console.log(gammaCurrent.toString());
 
     const xHalf = this.math.divide(x, BIG_NUMBER_CONSTANTS.TWO);
     const xHalfSqr = this.math.pow(xHalf, BIG_NUMBER_CONSTANTS.TWO);

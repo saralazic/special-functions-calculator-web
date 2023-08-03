@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import { FUNCTION_TYPE } from 'src/app/data/constants';
 import { BesselFirstKind } from 'src/app/models/functions/besselFirst';
 import { BesselSecondKind } from 'src/app/models/functions/besselSecond';
+import { LegendrePolynomial } from 'src/app/models/functions/legendre';
 import { SpecialFunction } from 'src/app/models/specialFunction';
 import { LanguageService } from 'src/app/services/language-service/language.service';
 import {
@@ -77,6 +78,9 @@ export class SpecialFunctionComponent implements OnInit {
       case FUNCTION_TYPE.BESSEL_SECOND_KIND:
         this.spef = new BesselSecondKind();
         break;
+      case FUNCTION_TYPE.LEGENDRE_POLYNOMIAL:
+        this.spef = new LegendrePolynomial();
+        break;
       default:
         this.spef = new BesselFirstKind();
         break;
@@ -88,10 +92,30 @@ export class SpecialFunctionComponent implements OnInit {
   }
 
   drawGraphic(n: number, eps: number) {
+    const { xArr, yArr } = this.generateCoordinates(n, eps);
+    drawGraph(this.graphContainer?.nativeElement, xArr, yArr);
+  }
+
+  generateCoordinates(n: number, eps: number) {
+    if (this.parameter === FUNCTION_TYPE.LEGENDRE_POLYNOMIAL) {
+      const startValue: number = -0.999999;
+      const endValue: number = 0.999999;
+      const numParameters: number = 201;
+
+      const step: number = (endValue - startValue) / (numParameters - 1);
+      const xArr: number[] = Array.from(
+        { length: numParameters },
+        (_, index) => startValue + index * step
+      );
+      const yArr = xArr.map((x) => this.spef?.calculate(n, eps, x) ?? 0);
+
+      return { xArr, yArr };
+    }
+
     const xArr = Array.from({ length: 201 }, (_, index) => index * 0.05);
     const yArr = xArr.map((x) => this.spef?.calculate(n, eps, x) ?? 0);
 
-    drawGraph(this.graphContainer?.nativeElement, xArr, yArr);
+    return { xArr, yArr };
   }
 
   loadTranslations() {
