@@ -4,6 +4,8 @@ import {
   loadTranslationForFunction,
 } from '../../../utilities/utilities';
 import {
+  FunctionParamsForCalculation,
+  FunctionParamsForCalculationWithBigNumbers,
   ISpecialFunctionTranslations,
   SpecialFunction,
 } from '../specialFunction';
@@ -21,8 +23,11 @@ export class BesselSecondKind extends SpecialFunction {
     this.J = new BesselFirstKind();
   }
 
-  calculate(alpha: number, eps: number, x: number): number {
-    const Jalpha = this.J.calculate(alpha, eps, x);
+  calculate(params: FunctionParamsForCalculation): number {
+    const { alpha, x } = params;
+    const eps: number = params.eps ?? 10 ^ -15;
+
+    const Jalpha = this.J.calculate(params);
     let JminusAlpha = Jalpha;
     if (alpha % 2) JminusAlpha = -JminusAlpha;
 
@@ -44,7 +49,10 @@ export class BesselSecondKind extends SpecialFunction {
     return val;
   }
 
-  calculateBig(alphaBig: string, epsBig: string, xBig: string): string {
+  calculateBig(params: FunctionParamsForCalculationWithBigNumbers): string {
+    const { alphaBig, xBig } = params;
+    const epsBig = params.epsBig ?? '1e-64';
+
     const pi = getPi();
     const alpha = this.math.bignumber(alphaBig);
     const alphaPi = this.math.multiply(alpha, pi);
@@ -52,9 +60,7 @@ export class BesselSecondKind extends SpecialFunction {
     const cos = this.math.cos(alphaPi as BigNumber);
     const sin = this.math.sin(alphaPi as BigNumber);
 
-    const Jalpha = this.math.bignumber(
-      this.J.calculateBig(alphaBig, epsBig, xBig)
-    );
+    const Jalpha = this.math.bignumber(this.J.calculateBig(params));
     console.log('J alpha: ' + Jalpha);
 
     let JminusAlpha = Jalpha;

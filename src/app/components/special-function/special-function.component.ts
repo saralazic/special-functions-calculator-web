@@ -123,13 +123,28 @@ export class SpecialFunctionComponent implements OnInit {
         { length: numParameters },
         (_, index) => startValue + index * step
       );
-      const yArr = xArr.map((x) => this.spef?.calculate(n, eps, x) ?? 0);
+
+      const yArr = xArr.map(
+        (x) =>
+          this.spef?.calculate({
+            alpha: n,
+            x: x,
+            eps: eps,
+          }) ?? 0
+      );
 
       return { xArr, yArr };
     }
 
     const xArr = Array.from({ length: 201 }, (_, index) => index * 0.05);
-    const yArr = xArr.map((x) => this.spef?.calculate(n, eps, x) ?? 0);
+    const yArr = xArr.map(
+      (x) =>
+        this.spef?.calculate({
+          alpha: n,
+          x: x,
+          eps: eps,
+        }) ?? 0
+    );
 
     return { xArr, yArr };
   }
@@ -189,17 +204,17 @@ export class SpecialFunctionComponent implements OnInit {
         this.form.get('variableValue')?.value || '0'
       );
 
-      this.valueBig = this.spef?.calculateBig(
-        orderValue.toString(),
-        precisionValue.toString(),
-        variableValue.toString()
-      );
+      this.valueBig = this.spef?.calculateBig({
+        alphaBig: orderValue.toString(),
+        epsBig: precisionValue.toString(),
+        xBig: variableValue.toString(),
+      });
 
-      this.value = this.spef?.calculate(
-        orderValue,
-        precisionValue,
-        variableValue
-      );
+      this.value = this.spef?.calculate({
+        alpha: orderValue,
+        eps: precisionValue,
+        x: variableValue,
+      });
 
       this.drawGraphic(orderValue, precisionValue);
     }

@@ -8,9 +8,11 @@ export abstract class SpecialFunction {
     this.functionType = type;
   }
 
-  public abstract calculateBig(n: string, eps: string, x: string): string;
+  public abstract calculateBig(
+    params: FunctionParamsForCalculationWithBigNumbers
+  ): string;
 
-  public abstract calculate(n: number, eps: number, x: number): number;
+  public abstract calculate(params: FunctionParamsForCalculation): number;
 
   public loadTranslations(translations: any): ISpecialFunctionTranslations {
     const specialFunctionTranslation = loadTranslationForFunction(
@@ -25,4 +27,16 @@ export abstract class SpecialFunction {
 
 export interface ISpecialFunctionTranslations {
   name: string;
+}
+
+export interface FunctionParamsForCalculation {
+  alpha: number;
+  x: number;
+  eps?: number;
+}
+
+export interface FunctionParamsForCalculationWithBigNumbers {
+  alphaBig: string;
+  xBig: string;
+  epsBig?: string;
 }

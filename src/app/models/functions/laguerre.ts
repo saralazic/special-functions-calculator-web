@@ -1,7 +1,11 @@
 import { MathType } from 'mathjs';
 import { FUNCTION_TYPE } from 'src/app/data/constants';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
-import { SpecialFunction } from '../specialFunction';
+import {
+  FunctionParamsForCalculation,
+  FunctionParamsForCalculationWithBigNumbers,
+  SpecialFunction,
+} from '../specialFunction';
 
 export class LaguerrePolynomial extends SpecialFunction {
   math = math_64;
@@ -10,7 +14,9 @@ export class LaguerrePolynomial extends SpecialFunction {
     super(FUNCTION_TYPE.LAGUERRE_POLYNOMIAL);
   }
 
-  calculate(alpha: number, eps: number, x: number): number {
+  calculate(params: FunctionParamsForCalculation): number {
+    const { alpha, x } = params;
+
     let t = 1;
     let sum = t;
 
@@ -26,7 +32,9 @@ export class LaguerrePolynomial extends SpecialFunction {
     return sum;
   }
 
-  calculateBig(alphaBig: string, eps: string, xBig: string): string {
+  calculateBig(params: FunctionParamsForCalculationWithBigNumbers): string {
+    const { alphaBig, xBig } = params;
+
     const alpha = this.math.bignumber(alphaBig);
     const x = this.math.bignumber(xBig);
 

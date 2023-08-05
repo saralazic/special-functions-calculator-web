@@ -1,11 +1,8 @@
 import { FUNCTION_TYPE } from '../../data/constants';
+import { getE, getPi } from '../../../utilities/utilities';
 import {
-  getE,
-  getPi,
-  loadTranslationForFunction,
-} from '../../../utilities/utilities';
-import {
-  ISpecialFunctionTranslations,
+  FunctionParamsForCalculation,
+  FunctionParamsForCalculationWithBigNumbers,
   SpecialFunction,
 } from '../specialFunction';
 import * as math from 'mathjs';
@@ -18,7 +15,10 @@ export class BesselFirstKind extends SpecialFunction {
     super(FUNCTION_TYPE.BESSEL_FIRST_KIND);
   }
 
-  calculate(alpha: number, eps: number, x: number): number {
+  calculate(params: FunctionParamsForCalculation): number {
+    const { alpha, x } = params;
+    const eps: number = params.eps ?? 10 ^ -15;
+
     const xHalf = x / 2.0;
     const xHalfSqr = xHalf ** 2;
 
@@ -44,7 +44,10 @@ export class BesselFirstKind extends SpecialFunction {
     return sum;
   }
 
-  calculateBig(alphaBig: string, epsBig: string, xBig: string): string {
+  calculateBig(params: FunctionParamsForCalculationWithBigNumbers): string {
+    const { alphaBig, xBig } = params;
+    const epsBig = params.epsBig ?? '1e-64';
+
     const alpha = this.math.bignumber(alphaBig);
     const eps = this.math.bignumber(epsBig);
     const x = this.math.bignumber(xBig);

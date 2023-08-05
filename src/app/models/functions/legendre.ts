@@ -3,6 +3,8 @@ import { FUNCTION_TYPE } from 'src/app/data/constants';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 import { loadTranslationForFunction } from 'src/utilities/utilities';
 import {
+  FunctionParamsForCalculation,
+  FunctionParamsForCalculationWithBigNumbers,
   ISpecialFunctionTranslations,
   SpecialFunction,
 } from '../specialFunction';
@@ -14,7 +16,9 @@ export class LegendrePolynomial extends SpecialFunction {
     super(FUNCTION_TYPE.LEGENDRE_POLYNOMIAL);
   }
 
-  calculate(alpha: number, eps: number, x: number): number {
+  calculate(params: FunctionParamsForCalculation): number {
+    const { alpha, x } = params;
+
     let t: number = (x - 1) ** alpha;
     let sum = t;
 
@@ -34,7 +38,9 @@ export class LegendrePolynomial extends SpecialFunction {
     return res;
   }
 
-  calculateBig(alphaBig: string, eps: string, xBig: string): string {
+  calculateBig(params: FunctionParamsForCalculationWithBigNumbers): string {
+    const { alphaBig, xBig } = params;
+
     const alpha = this.math.bignumber(alphaBig);
     const x = this.math.bignumber(xBig);
 
