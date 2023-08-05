@@ -13,6 +13,8 @@ import { Subscription } from 'rxjs';
 import { FUNCTION_TYPE } from 'src/app/data/constants';
 import { BesselFirstKind } from 'src/app/models/functions/besselFirst';
 import { BesselSecondKind } from 'src/app/models/functions/besselSecond';
+import { ChebyshevPolynomialOfFirstKind } from 'src/app/models/functions/chebyshevFirst';
+import { ChebyshevPolynomialOfSecondKind } from 'src/app/models/functions/chebyshevSecond';
 import { LaguerrePolynomial } from 'src/app/models/functions/laguerre';
 import { LegendrePolynomial } from 'src/app/models/functions/legendre';
 import { SpecialFunction } from 'src/app/models/specialFunction';
@@ -85,6 +87,12 @@ export class SpecialFunctionComponent implements OnInit {
       case FUNCTION_TYPE.LAGUERRE_POLYNOMIAL:
         this.spef = new LaguerrePolynomial();
         break;
+      case FUNCTION_TYPE.CHEBYSHEV_FIRST_KIND:
+        this.spef = new ChebyshevPolynomialOfFirstKind();
+        break;
+      case FUNCTION_TYPE.CHEBYSHEV_SECOND_KIND:
+        this.spef = new ChebyshevPolynomialOfSecondKind();
+        break;
       default:
         this.spef = new BesselFirstKind();
         break;
@@ -101,7 +109,11 @@ export class SpecialFunctionComponent implements OnInit {
   }
 
   generateCoordinates(n: number, eps: number) {
-    if (this.parameter === FUNCTION_TYPE.LEGENDRE_POLYNOMIAL) {
+    if (
+      this.parameter === FUNCTION_TYPE.LEGENDRE_POLYNOMIAL ||
+      this.parameter === FUNCTION_TYPE.CHEBYSHEV_FIRST_KIND ||
+      this.parameter === FUNCTION_TYPE.CHEBYSHEV_SECOND_KIND
+    ) {
       const startValue: number = -0.999999;
       const endValue: number = 0.999999;
       const numParameters: number = 201;

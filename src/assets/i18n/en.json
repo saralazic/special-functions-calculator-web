@@ -42,6 +42,15 @@
   },
   "laguerre":{
     "name": "Laguerre polynomials"
+  },
+  "laguerre":{
+    "name": "Laguerre polynomials"
+  },
+  "chebyshev_1":{
+    "name": "Chebyshev polynomials of the first kind"
+  },
+  "chebyshev_2":{
+    "name": "Chebyshev polynomials of the second kind"
   }
 }
   

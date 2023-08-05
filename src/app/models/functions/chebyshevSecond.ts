@@ -1,0 +1,30 @@
+import { BigNumber, MathType, re } from 'mathjs';
+import { FUNCTION_TYPE } from 'src/app/data/constants';
+import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
+import { SpecialFunction } from '../specialFunction';
+
+export class ChebyshevPolynomialOfSecondKind extends SpecialFunction {
+  math = math_64;
+
+  constructor() {
+    super(FUNCTION_TYPE.CHEBYSHEV_SECOND_KIND);
+  }
+
+  calculate(alpha: number, eps: number, x: number): number {
+    const arccosX = Math.acos(x);
+    return Math.sin((alpha + 1) * arccosX) / Math.sin(arccosX);
+  }
+
+  calculateBig(alphaBig: string, eps: string, xBig: string): string {
+    const alpha = this.math.bignumber(alphaBig);
+    const arccosX = this.math.acos(this.math.bignumber(xBig));
+
+    let result: MathType = this.math.add(alpha, BIG_NUMBER_CONSTANTS.ONE);
+    result = this.math.multiply(result, arccosX);
+    result = this.math.sin(result as BigNumber);
+
+    result = this.math.divide(result, this.math.sin(arccosX));
+
+    return result.toString();
+  }
+}

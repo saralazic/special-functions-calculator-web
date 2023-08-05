@@ -42,6 +42,12 @@
   },
   "laguerre":{
     "name": "Lagerovi polinomi"
+  },
+  "chebyshev_1":{
+    "name": "Čebiševljevi polinomi prve vrste"
+  },
+  "chebyshev_2":{
+    "name": "Čebiševljevi polinomi druge vrste"
   }
 }
   

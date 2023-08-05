@@ -53,6 +53,12 @@ export function loadTranslationForFunction(
     case FUNCTION_TYPE.LAGUERRE_POLYNOMIAL:
       fn = translations.laguerre;
       break;
+    case FUNCTION_TYPE.CHEBYSHEV_FIRST_KIND:
+      fn = translations.chebyshev_1;
+      break;
+    case FUNCTION_TYPE.CHEBYSHEV_SECOND_KIND:
+      fn = translations.chebyshev_2;
+      break;
     default:
       fn = translations.bessel_1;
       break;
