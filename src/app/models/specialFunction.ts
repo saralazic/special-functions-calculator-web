@@ -33,10 +33,14 @@ export interface FunctionParamsForCalculation {
   alpha: number;
   x: number;
   eps?: number;
+  a?: number;
+  b?: number;
 }
 
 export interface FunctionParamsForCalculationWithBigNumbers {
   alphaBig: string;
   xBig: string;
   epsBig?: string;
+  a?: string;
+  b?: string;
 }

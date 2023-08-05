@@ -1,5 +1,13 @@
 import { all, BigNumber, create, MathType } from 'mathjs';
 import * as Plotly from 'plotly.js-basic-dist';
+import { BesselFirstKind } from 'src/app/models/functions/besselFirst';
+import { BesselSecondKind } from 'src/app/models/functions/besselSecond';
+import { ChebyshevPolynomialOfFirstKind } from 'src/app/models/functions/chebyshevFirst';
+import { ChebyshevPolynomialOfSecondKind } from 'src/app/models/functions/chebyshevSecond';
+import { JacobiPolynomial } from 'src/app/models/functions/jacobi';
+import { LaguerrePolynomial } from 'src/app/models/functions/laguerre';
+import { LegendrePolynomial } from 'src/app/models/functions/legendre';
+import { SpecialFunction } from 'src/app/models/specialFunction';
 import { FUNCTION_TYPE } from '../app/data/constants';
 import { BIG_NUMBER_CONSTANTS, math_64 } from './big_numbers_math';
 
@@ -59,12 +67,47 @@ export function loadTranslationForFunction(
     case FUNCTION_TYPE.CHEBYSHEV_SECOND_KIND:
       fn = translations.chebyshev_2;
       break;
+    case FUNCTION_TYPE.JACOBI_POLYNOMIAL:
+      fn = translations.jacobi;
+      break;
     default:
       fn = translations.bessel_1;
       break;
   }
 
   return fn;
+}
+
+export function createChosenFunction(parameter: string): SpecialFunction {
+  let spef: SpecialFunction;
+  switch (parameter) {
+    case FUNCTION_TYPE.BESSEL_FIRST_KIND:
+      spef = new BesselFirstKind();
+      break;
+    case FUNCTION_TYPE.BESSEL_SECOND_KIND:
+      spef = new BesselSecondKind();
+      break;
+    case FUNCTION_TYPE.LEGENDRE_POLYNOMIAL:
+      spef = new LegendrePolynomial();
+      break;
+    case FUNCTION_TYPE.LAGUERRE_POLYNOMIAL:
+      spef = new LaguerrePolynomial();
+      break;
+    case FUNCTION_TYPE.CHEBYSHEV_FIRST_KIND:
+      spef = new ChebyshevPolynomialOfFirstKind();
+      break;
+    case FUNCTION_TYPE.CHEBYSHEV_SECOND_KIND:
+      spef = new ChebyshevPolynomialOfSecondKind();
+      break;
+    case FUNCTION_TYPE.JACOBI_POLYNOMIAL:
+      spef = new JacobiPolynomial();
+      break;
+    default:
+      spef = new BesselFirstKind();
+      break;
+  }
+
+  return spef;
 }
 
 export function getE(): MathType {

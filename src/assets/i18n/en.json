@@ -51,6 +51,9 @@
   },
   "chebyshev_2":{
     "name": "Chebyshev polynomials of the second kind"
+  },
+  "jacobi":{
+    "name": "Jacobi polynomials"
   }
 }
   

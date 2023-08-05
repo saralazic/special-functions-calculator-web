@@ -48,6 +48,9 @@
   },
   "chebyshev_2":{
     "name": "Čebiševljevi polinomi druge vrste"
+  },
+  "jacobi":{
+    "name": "Jakobijevi polinomi"
   }
 }
   

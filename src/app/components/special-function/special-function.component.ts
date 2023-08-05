@@ -15,12 +15,14 @@ import { BesselFirstKind } from 'src/app/models/functions/besselFirst';
 import { BesselSecondKind } from 'src/app/models/functions/besselSecond';
 import { ChebyshevPolynomialOfFirstKind } from 'src/app/models/functions/chebyshevFirst';
 import { ChebyshevPolynomialOfSecondKind } from 'src/app/models/functions/chebyshevSecond';
+import { JacobiPolynomial } from 'src/app/models/functions/jacobi';
 import { LaguerrePolynomial } from 'src/app/models/functions/laguerre';
 import { LegendrePolynomial } from 'src/app/models/functions/legendre';
 import { SpecialFunction } from 'src/app/models/specialFunction';
 import { LanguageService } from 'src/app/services/language-service/language.service';
 import {
   checkIfBigNumberIsPrecision,
+  createChosenFunction,
   drawGraph,
 } from 'src/utilities/utilities';
 
@@ -63,7 +65,7 @@ export class SpecialFunctionComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
     this.parameter = this.route.snapshot.paramMap.get('parameter');
-    this.createChosenFunction();
+    this.spef = createChosenFunction(this.parameter ?? '');
     this.loadTranslations();
 
     this.subscription = this.languageService
@@ -71,32 +73,6 @@ export class SpecialFunctionComponent implements OnInit {
       .subscribe(() => {
         this.loadTranslations(); // Load translations whenever language changes
       });
-  }
-
-  createChosenFunction() {
-    switch (this.parameter) {
-      case FUNCTION_TYPE.BESSEL_FIRST_KIND:
-        this.spef = new BesselFirstKind();
-        break;
-      case FUNCTION_TYPE.BESSEL_SECOND_KIND:
-        this.spef = new BesselSecondKind();
-        break;
-      case FUNCTION_TYPE.LEGENDRE_POLYNOMIAL:
-        this.spef = new LegendrePolynomial();
-        break;
-      case FUNCTION_TYPE.LAGUERRE_POLYNOMIAL:
-        this.spef = new LaguerrePolynomial();
-        break;
-      case FUNCTION_TYPE.CHEBYSHEV_FIRST_KIND:
-        this.spef = new ChebyshevPolynomialOfFirstKind();
-        break;
-      case FUNCTION_TYPE.CHEBYSHEV_SECOND_KIND:
-        this.spef = new ChebyshevPolynomialOfSecondKind();
-        break;
-      default:
-        this.spef = new BesselFirstKind();
-        break;
-    }
   }
 
   ngOnDestroy() {
