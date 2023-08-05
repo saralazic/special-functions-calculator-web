@@ -14,6 +14,10 @@ import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 export class BesselFirstKind extends SpecialFunction {
   math = math_64;
 
+  constructor() {
+    super(FUNCTION_TYPE.BESSEL_FIRST_KIND);
+  }
+
   calculate(alpha: number, eps: number, x: number): number {
     const xHalf = x / 2.0;
     const xHalfSqr = xHalf ** 2;
@@ -133,15 +137,5 @@ export class BesselFirstKind extends SpecialFunction {
       this.math.pow(piX2, half as math.BigNumber),
       mul
     ) as math.BigNumber;
-  }
-
-  public loadTranslations(translations: any): ISpecialFunctionTranslations {
-    const specialFunctionTranslation = loadTranslationForFunction(
-      FUNCTION_TYPE.BESSEL_FIRST_KIND,
-      translations
-    );
-    return {
-      name: specialFunctionTranslation.name,
-    };
   }
 }

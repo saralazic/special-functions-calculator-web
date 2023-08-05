@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import { FUNCTION_TYPE } from 'src/app/data/constants';
 import { BesselFirstKind } from 'src/app/models/functions/besselFirst';
 import { BesselSecondKind } from 'src/app/models/functions/besselSecond';
+import { LaguerrePolynomial } from 'src/app/models/functions/laguerre';
 import { LegendrePolynomial } from 'src/app/models/functions/legendre';
 import { SpecialFunction } from 'src/app/models/specialFunction';
 import { LanguageService } from 'src/app/services/language-service/language.service';
@@ -80,6 +81,9 @@ export class SpecialFunctionComponent implements OnInit {
         break;
       case FUNCTION_TYPE.LEGENDRE_POLYNOMIAL:
         this.spef = new LegendrePolynomial();
+        break;
+      case FUNCTION_TYPE.LAGUERRE_POLYNOMIAL:
+        this.spef = new LaguerrePolynomial();
         break;
       default:
         this.spef = new BesselFirstKind();

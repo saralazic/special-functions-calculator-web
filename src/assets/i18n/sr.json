@@ -39,6 +39,9 @@
   },
   "legendre":{
     "name": "Ležandrovi polinomi"
+  },
+  "laguerre":{
+    "name": "Lagerovi polinomi"
   }
 }
   

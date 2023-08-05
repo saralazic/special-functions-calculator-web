@@ -39,6 +39,9 @@
   },
   "legendre":{
     "name": "Legendre polynomials"
+  },
+  "laguerre":{
+    "name": "Laguerre polynomials"
   }
 }
   

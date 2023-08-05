@@ -17,7 +17,7 @@ export class BesselSecondKind extends SpecialFunction {
   J: BesselFirstKind;
 
   constructor() {
-    super();
+    super(FUNCTION_TYPE.BESSEL_SECOND_KIND);
     this.J = new BesselFirstKind();
   }
 
@@ -69,15 +69,5 @@ export class BesselSecondKind extends SpecialFunction {
     result = this.math.divide(result, sin);
 
     return result.toString();
-  }
-
-  public loadTranslations(translations: any): ISpecialFunctionTranslations {
-    const specialFunctionTranslation = loadTranslationForFunction(
-      FUNCTION_TYPE.BESSEL_SECOND_KIND,
-      translations
-    );
-    return {
-      name: specialFunctionTranslation.name,
-    };
   }
 }

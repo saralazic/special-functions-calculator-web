@@ -50,6 +50,9 @@ export function loadTranslationForFunction(
     case FUNCTION_TYPE.LEGENDRE_POLYNOMIAL:
       fn = translations.legendre;
       break;
+    case FUNCTION_TYPE.LAGUERRE_POLYNOMIAL:
+      fn = translations.laguerre;
+      break;
     default:
       fn = translations.bessel_1;
       break;

@@ -10,6 +10,10 @@ import {
 export class LegendrePolynomial extends SpecialFunction {
   math = math_64;
 
+  constructor() {
+    super(FUNCTION_TYPE.LEGENDRE_POLYNOMIAL);
+  }
+
   calculate(alpha: number, eps: number, x: number): number {
     let t: number = (x - 1) ** alpha;
     let sum = t;
@@ -65,15 +69,5 @@ export class LegendrePolynomial extends SpecialFunction {
     res = this.math.multiply(res, sum);
 
     return res.toString();
-  }
-
-  public loadTranslations(translations: any): ISpecialFunctionTranslations {
-    const specialFunctionTranslation = loadTranslationForFunction(
-      FUNCTION_TYPE.LEGENDRE_POLYNOMIAL,
-      translations
-    );
-    return {
-      name: specialFunctionTranslation.name,
-    };
   }
 }
