@@ -54,6 +54,17 @@
   },
   "jacobi":{
     "name": "Jacobi polynomials"
+  },
+  "input": {
+    "labelOrderNatural": "Order (natural number):",
+    "labelOrderReal": "Order (natural number):",
+    "labelPrecision": "Precision (0.00...00x or xe-y):",
+    "labelVariable": "Variable (real number):",
+    "labelVariableConstrained": "Variable (real number between -1 and 1):",
+    "labelVariableN0": "Variable (natural number or 0):",
+    "aInputLabel": "Parameter alpha (real number greater than -1):",
+    "bInputLabel": "Parameter beta (real number greater than -1):",
+    "errorMessage": "Please enter a valid value"
   }
 }
   

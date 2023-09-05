@@ -18,4 +18,5 @@ export class BIG_NUMBER_CONSTANTS {
   public static c30 = math_64.bignumber(30);
   public static c53 = math_64.bignumber(53);
   public static c210 = math_64.bignumber(210);
+  public static MINUS_ONE = math_64.bignumber(-1);
 }

@@ -30,6 +30,12 @@
               "src/styles.css"
             ],
             "scripts": [
+              "node_modules/mathjs/lib/esm/core/create.js",
+              "node_modules/mathjs/lib/esm/function/probability/util/seededRNG.js",
+              "node_modules/mathjs/lib/esm/function/relational/compareNatural.js",
+              "node_modules/mathjs/lib/esm/type/complex/Complex.js",
+              "node_modules/mathjs/lib/esm/type/fraction/Fraction.js",
+              "node_modules/mathjs/lib/esm/utils/latex.js"
             ],
             "aot": true,
             "budgets": [
@@ -46,6 +52,7 @@
           },
           "configurations": {
             "production": {
+              "buildOptimizer": false,
               "budgets": [
                 {
                   "type": "initial",
@@ -107,7 +114,15 @@
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/mathjs/lib/esm/core/create.js",
+              "node_modules/mathjs/lib/esm/function/probability/util/seededRNG.js",
+              "node_modules/mathjs/lib/esm/function/relational/compareNatural.js",
+              "node_modules/mathjs/lib/esm/type/complex/Complex.js",
+              "node_modules/mathjs/lib/esm/type/fraction/Fraction.js",
+              "node_modules/mathjs/lib/esm/utils/latex.js",
+              "node_modules/plotly.js-basic-dist/plotly.js"
+            ]
           }
         }
       }

@@ -11,20 +11,9 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FUNCTION_TYPE } from 'src/app/data/constants';
-import { BesselFirstKind } from 'src/app/models/functions/besselFirst';
-import { BesselSecondKind } from 'src/app/models/functions/besselSecond';
-import { ChebyshevPolynomialOfFirstKind } from 'src/app/models/functions/chebyshevFirst';
-import { ChebyshevPolynomialOfSecondKind } from 'src/app/models/functions/chebyshevSecond';
-import { JacobiPolynomial } from 'src/app/models/functions/jacobi';
-import { LaguerrePolynomial } from 'src/app/models/functions/laguerre';
-import { LegendrePolynomial } from 'src/app/models/functions/legendre';
 import { SpecialFunction } from 'src/app/models/specialFunction';
 import { LanguageService } from 'src/app/services/language-service/language.service';
-import {
-  checkIfBigNumberIsPrecision,
-  createChosenFunction,
-  drawGraph,
-} from 'src/utilities/utilities';
+import { createChosenFunction, drawGraph } from 'src/utilities/utilities';
 
 @Component({
   selector: 'app-special-function',
@@ -36,34 +25,18 @@ export class SpecialFunctionComponent implements OnInit {
 
   private subscription?: Subscription;
   private spef?: SpecialFunction;
-  form!: FormGroup;
   parameter: string | null = null;
   value?: number;
   valueBig?: string;
   name?: string;
 
-  currentCalculatedValue: string;
-
-  shouldShowCalculator: boolean;
-  useCalculatorOnVariable: boolean;
-
-  calculatorIconPath = 'assets/icons/calculator.svg';
-
-  calculatorError?: string;
-
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private languageService: LanguageService,
-    private formBuilder: FormBuilder
-  ) {
-    this.shouldShowCalculator = false;
-    this.useCalculatorOnVariable = true;
-    this.currentCalculatedValue = '';
-  }
+    private languageService: LanguageService
+  ) {}
 
   ngOnInit(): void {
-    this.createForm();
     this.parameter = this.route.snapshot.paramMap.get('parameter');
     this.spef = createChosenFunction(this.parameter ?? '');
     this.loadTranslations();
@@ -135,124 +108,18 @@ export class SpecialFunctionComponent implements OnInit {
       });
   }
 
-  bigNumberValidator(control: AbstractControl): ValidationErrors | null {
-    const bigNumberRegex = /^-?\d+(\.\d+)?([eE]-?\d+)?$/;
-    if (control.value && !bigNumberRegex.test(control.value)) {
-      return { invalidBigNumber: true };
-    }
-    return null;
-  }
-
-  bigNumberValidatorForPrecision(
-    control: AbstractControl
-  ): ValidationErrors | null {
-    const precisionNumberRegex = /^-?\d+(\.\d+)?([eE]-?\d+)?$/;
-
-    if (!control.value || !precisionNumberRegex.test(control.value)) {
-      return { invalidPrecisionNumber: true };
-    }
-
-    if (!checkIfBigNumberIsPrecision(control.value)) {
-      return { invalidPrecisionNumber: true };
-    }
-
-    return null;
-  }
-
-  createForm() {
-    this.form = this.formBuilder.group({
-      orderValue: ['', [Validators.required, this.bigNumberValidator]],
-      precisionValue: [
-        '',
-        [Validators.required, this.bigNumberValidatorForPrecision],
-      ],
-      variableValue: ['', [Validators.required, this.bigNumberValidator]],
-    });
-  }
-
-  onSubmit(): void {
-    if (this.form.valid) {
-      const orderValue = parseFloat(this.form.get('orderValue')?.value || '0');
-      const precisionValue = parseFloat(
-        this.form.get('precisionValue')?.value || '0.1'
-      );
-      const variableValue = parseFloat(
-        this.form.get('variableValue')?.value || '0'
-      );
-
-      this.valueBig = this.spef?.calculateBig({
-        alphaBig: orderValue.toString(),
-        epsBig: precisionValue.toString(),
-        xBig: variableValue.toString(),
-      });
-
-      this.value = this.spef?.calculate({
-        alpha: orderValue,
-        eps: precisionValue,
-        x: variableValue,
-      });
-
-      this.drawGraphic(orderValue, precisionValue);
-    }
-  }
-
-  showCalculator(onVariable: boolean) {
-    if (this.useCalculatorOnVariable === onVariable)
-      this.shouldShowCalculator = !this.shouldShowCalculator;
-    else this.currentCalculatedValue = '';
-
-    this.useCalculatorOnVariable = onVariable;
-  }
-
-  onCalculated(value: string): void {
-    this.currentCalculatedValue = value;
-  }
-
-  useCalculatedValue(): void {
-    if (this.useCalculatorOnVariable) {
-      const controlName = 'realNumberValue';
-      const control = this.form.get(controlName);
-      const newValue = this.currentCalculatedValue;
-
-      this.form.patchValue({
-        [controlName]: newValue,
-      });
-
-      // Trigger validation on the control
-      control?.updateValueAndValidity();
-
-      // If the control is still invalid after validation, display the error message
-      if (control?.invalid && control?.touched) {
-        const errors = control?.errors;
-        console.error('Validation error:', errors);
-      }
-    } else {
-      const controlName = 'precisionValue';
-      const control = this.form.get(controlName);
-      const newValue = this.currentCalculatedValue;
-
-      this.form.patchValue({
-        [controlName]: newValue,
-      });
-
-      // Trigger validation on the control
-      control?.updateValueAndValidity();
-
-      // If the control is still invalid after validation, display the error message
-      if (control?.invalid && control?.touched) {
-        const errors = control?.errors;
-        console.error('Validation error:', errors);
-      }
-    }
-  }
-
-  useCalcValDisabled(): boolean {
-    if (this.currentCalculatedValue.length < 1) return true;
-    if (this.useCalculatorOnVariable) return false;
-
-    const precisionNumberRegex =
-      /^(0(\.\d+)?|0\.\d+|([0-9]\d*(\.\d+)?(e-?\d+)?))$/i;
-
-    return !precisionNumberRegex.test(this.currentCalculatedValue);
+  onFormValuesChanged(event: any): void {
+    // todo: get values somehow
+    // this.valueBig = this.spef?.calculateBig({
+    //   alphaBig: orderValue.toString(),
+    //   epsBig: precisionValue.toString(),
+    //   xBig: variableValue.toString(),
+    // });
+    // this.value = this.spef?.calculate({
+    //   alpha: orderValue,
+    //   eps: precisionValue,
+    //   x: variableValue,
+    // });
+    // this.drawGraphic(orderValue, precisionValue);
   }
 }

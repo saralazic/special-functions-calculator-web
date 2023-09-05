@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { CalculatorComponent } from './components/calculator/calculator.component';
+import { FunctionInputComponent } from './components/function-input/function-input.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { CalculatorComponent } from './components/calculator/calculator.componen
     FooterComponent,
     ContactComponent,
     CalculatorComponent,
+    FunctionInputComponent,
   ],
   imports: [
     BrowserModule,
