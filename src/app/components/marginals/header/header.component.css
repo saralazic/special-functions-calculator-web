@@ -45,8 +45,8 @@ p {
 
    
   .language-button {
-    width: 40px;
-    height: 40px;
+    width: 60px; /* Increase this value to make the button larger */
+    height: 60px; /* Increase this value to make the button larger */
     border-radius: 50%;
     margin-right: 10px;
     margin-top: 10px;
@@ -55,12 +55,13 @@ p {
     justify-content: center;
     background-color: transparent;
     border: none;
-    cursor: pointer;
+    outline: none; /* Remove the default focus outline when clicking */
+
   }
   
   .language-icon {
-    width: 40px;
-    height: 40px;
+    width: 100%; /* Increase this value to make the icon larger */
+    height: 100%; /* Increase this value to make the icon larger */
     background-repeat: no-repeat;
     background-size: contain;
   }
