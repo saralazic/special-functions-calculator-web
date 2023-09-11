@@ -10,7 +10,11 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FUNCTION_TYPE } from 'src/app/data/constants';
-import { FunctionParamsForCalculation } from 'src/app/models/specialFunction';
+import {
+  FunctionParams,
+  FunctionParamsForCalculation,
+  FunctionParamsForCalculationWithBigNumbers,
+} from 'src/app/models/specialFunction';
 import { LanguageService } from 'src/app/services/language-service/language.service';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 import { checkIfBigNumberIsPrecision } from 'src/utilities/utilities';
@@ -137,6 +141,7 @@ export class FunctionInputComponent implements OnInit {
     this.parameter = this.route.snapshot.paramMap.get('parameter');
     this.assignInput();
     this.loadTranslations();
+    this.createForm();
 
     this.subscription = this.languageService
       .getLanguageChangeObservable()
@@ -157,13 +162,26 @@ export class FunctionInputComponent implements OnInit {
       const paramAlpha = this.form.get('aParameterValue')?.value || '0';
       const paramBeta = this.form.get('bParameterValue')?.value || '0';
 
-      let params = {
-        alpha: orderValue,
-        x: variableValue,
-        eps: precisionValue,
+      const paramsBig = {
+        alphaBig: orderValue,
+        epsBig: precisionValue,
+        xBig: variableValue,
         a: paramAlpha,
         b: paramBeta,
+      } as FunctionParamsForCalculationWithBigNumbers;
+
+      const paramsR = {
+        alpha: +orderValue,
+        eps: +precisionValue,
+        x: +variableValue,
+        a: +paramAlpha,
+        b: +paramBeta,
       } as FunctionParamsForCalculation;
+
+      const params = {
+        real: paramsR,
+        bignumber: paramsBig,
+      } as FunctionParams;
 
       this.formValuesChanged.emit(params);
     }
@@ -431,8 +449,6 @@ export class FunctionInputComponent implements OnInit {
 
     this.variableInputN0.label = this.labelVariableN0;
     this.variableInputN0.error = this.errorMessage;
-
-    this.createForm();
   }
 
   assignInput() {

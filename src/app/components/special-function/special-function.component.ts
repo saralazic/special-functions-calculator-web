@@ -11,7 +11,10 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FUNCTION_TYPE } from 'src/app/data/constants';
-import { SpecialFunction } from 'src/app/models/specialFunction';
+import {
+  FunctionParams,
+  SpecialFunction,
+} from 'src/app/models/specialFunction';
 import { LanguageService } from 'src/app/services/language-service/language.service';
 import { createChosenFunction, drawGraph } from 'src/utilities/utilities';
 
@@ -108,18 +111,13 @@ export class SpecialFunctionComponent implements OnInit {
       });
   }
 
-  onFormValuesChanged(event: any): void {
-    // todo: get values somehow
-    // this.valueBig = this.spef?.calculateBig({
-    //   alphaBig: orderValue.toString(),
-    //   epsBig: precisionValue.toString(),
-    //   xBig: variableValue.toString(),
-    // });
-    // this.value = this.spef?.calculate({
-    //   alpha: orderValue,
-    //   eps: precisionValue,
-    //   x: variableValue,
-    // });
-    // this.drawGraphic(orderValue, precisionValue);
+  onFormValuesChanged(data: FunctionParams) {
+    if (data) {
+      this.valueBig = this.spef?.calculateBig(data.bignumber);
+
+      this.value = this.spef?.calculate(data.real);
+
+      this.drawGraphic(data.real.alpha, data.real.eps);
+    }
   }
 }

@@ -32,7 +32,7 @@ export interface ISpecialFunctionTranslations {
 export interface FunctionParamsForCalculation {
   alpha: number;
   x: number;
-  eps?: number;
+  eps: number;
   a?: number;
   b?: number;
 }
@@ -40,7 +40,12 @@ export interface FunctionParamsForCalculation {
 export interface FunctionParamsForCalculationWithBigNumbers {
   alphaBig: string;
   xBig: string;
-  epsBig?: string;
+  epsBig: string;
   a?: string;
   b?: string;
+}
+
+export interface FunctionParams {
+  real: FunctionParamsForCalculation;
+  bignumber: FunctionParamsForCalculationWithBigNumbers;
 }
