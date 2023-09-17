@@ -488,6 +488,10 @@ export class FunctionInputComponent implements OnInit {
         break;
     }
   }
+
+  openNewWindow() {
+    window.open(`/function-informations/${this.parameter}`, '_blank');
+  }
 }
 
 interface IInput {

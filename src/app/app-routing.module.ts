@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
-import { FunctionInputComponent } from './components/function-input/function-input.component';
+import { FunctionInformationComponent } from './components/function-information/function-information.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { SpecialFunctionComponent } from './components/special-function/special-function.component';
 
@@ -12,9 +12,10 @@ const routes: Routes = [
   { path: 'homepage', component: HomepageComponent },
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },
-
-  // todo: DELETE
-  { path: 'input', component: FunctionInputComponent },
+  {
+    path: 'function-informations/:parameter',
+    component: FunctionInformationComponent,
+  },
 ];
 
 @NgModule({

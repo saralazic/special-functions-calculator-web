@@ -3,6 +3,7 @@ import { FUNCTION_TYPE } from '../data/constants';
 
 export abstract class SpecialFunction {
   public functionType: FUNCTION_TYPE;
+  public translations?: ISpecialFunctionTranslations;
 
   constructor(type: FUNCTION_TYPE) {
     this.functionType = type;
@@ -19,9 +20,12 @@ export abstract class SpecialFunction {
       this.functionType,
       translations
     );
-    return {
+
+    this.translations = {
       name: specialFunctionTranslation.name,
     };
+
+    return this.translations;
   }
 }
 
