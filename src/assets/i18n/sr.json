@@ -27,8 +27,8 @@
     "name": "ime i prezime",
     "subject": "naslov",
     "message": "poruka",
-    "button": "Pošalji",
-    "phone": "Broj telefona",
+    "button": "pošalji",
+    "phone": "broj telefona",
     "success": "Vaša poruka je uspešno poslata, uskoro ćemo vam se javiti"
   },
   "bessel_1":  {

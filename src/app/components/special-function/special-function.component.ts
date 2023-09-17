@@ -1,12 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
 
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';

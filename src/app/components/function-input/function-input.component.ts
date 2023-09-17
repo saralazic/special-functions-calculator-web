@@ -417,6 +417,7 @@ export class FunctionInputComponent implements OnInit {
         this.labelVariable = translations.input.labelVariable;
         this.labelVariableConstrained =
           translations.input.labelVariableConstrained;
+        this.labelVariableN0 = translations.input.labelVariableN0;
         this.errorMessage = translations.input.errorMessage;
         this.aInputLabel = translations.input.aInputLabel;
         this.bInputLabel = translations.input.bInputLabel;
