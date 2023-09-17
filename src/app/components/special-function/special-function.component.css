@@ -1,28 +1,24 @@
-.icon{
-    width: 20px; /* Adjust the size as per your requirements */
-    height: 20px; /* Adjust the size as per your requirements */
-    position: absolute;
-    right: 2px;
-    cursor: pointer;
-
-  }
-
-
-.mat-form-field {
-  width: 100%; /* Adjust the width as per your requirement */
-  max-width: 400px; /* Set a max-width if needed */
-  position: relative;
-}
-
-.container{
-  align-items: center;
-  text-align: center;
-}
 
 .center {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%; /* Set an appropriate height for the container, if needed */
+  height: 100%; 
+}
+
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-side {
+  flex: 1;
+  padding: 20px; 
+}
+
+.right-side {
+  flex: 1;
+  padding: 20px; 
 }

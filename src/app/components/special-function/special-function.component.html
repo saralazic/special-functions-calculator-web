@@ -1,102 +1,15 @@
-<h1>{{name}}</h1>
-
-<!-- <div class="container">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="fill" class="form-field mat-form-field">
-      <mat-label>Order (real number):</mat-label>
-      <input
-        matInput
-        type="string"
-        formControlName="orderValue"
-        required
-        [class.is-invalid]="form.get('orderValue')?.invalid && form.get('orderValue')?.touched"
-      />
-      <mat-error *ngIf="form.get('orderValue')?.invalid && form.get('orderValue')?.touched">
-        Please enter a valid real number for the order.
-      </mat-error>
-    </mat-form-field>
-    &nbsp;       
-    &nbsp;
-    &nbsp;
-    &nbsp;
-  
-    <mat-form-field appearance="fill" class="form-field mat-form-field">
-      <mat-label>Precision (0.00...00x or xe-y):</mat-label>
-      <input
-        matInput
-        type="string"
-        formControlName="precisionValue"
-        required
-        [class.is-invalid]="form.get('precisionValue')?.invalid && form.get('precisionValue')?.touched"
-      />
-
-      <mat-error *ngIf="form.get('precisionValue')?.invalid && form.get('precisionValue')?.touched">
-        Please enter a valid precision value (0.000x or x*10^-y).
-      </mat-error>
-      <img
-      src="{{ calculatorIconPath }}"
-      alt="Calculator Icon"
-      class="icon"
-      (click)="showCalculator(false)"
-      type="button"/>
-    </mat-form-field>
-    
-    &nbsp;
-    &nbsp;
-    &nbsp;
-    &nbsp;
-  
-    
-    <mat-form-field appearance="fill" class="form-field mat-form-field">
-      <mat-label>Variable (real number):</mat-label>
-      <input
-        matInput
-        type="string"
-        formControlName="variableValue"
-        required
-        [class.is-invalid]="form.get('variableValue')?.invalid && form.get('variableValue')?.touched"
-      />
-  
-      <mat-error *ngIf="form.get('variableValue')?.invalid && form.get('variableValue')?.touched">
-        Please enter a valid real number for the variable.
-      </mat-error>
-      <img
-      src="{{ calculatorIconPath }}"
-      alt="Calculator Icon"
-      class="icon"
-      (click)="showCalculator(true)"
-      type="button"/>
-    </mat-form-field>
-  
-    &nbsp; 
-    
-    
+<div class="center">
+  <h1>{{name}}</h1>
+</div>
+<div class="container">
+  <div class="left-side">
+    <app-function-input [parameter]="parameter" (formValuesChanged)="onFormValuesChanged($event)"></app-function-input>
+  </div>
+  <div class="right-side">
+    {{value}}
     <br>
-    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Calculate and Draw Graph</button>
-
-  </form>
-  
-
-    <div class="center" *ngIf = "shouldShowCalculator">
-      <app-calculator (calculated)="onCalculated($event)"></app-calculator>
-      <br>
-      <button mat-raised-button color="primary" (click)="useCalculatedValue()" [disabled]="useCalcValDisabled()">Use this value</button>
-    
-    </div>
-    
-</div> -->
-
-<app-function-input [parameter]="parameter" (formValuesChanged)="onFormValuesChanged($event)"></app-function-input>
-
-
-<br>
-{{value}}
-<br>
-
-<br>
-{{valueBig}}
-<br>
-<div #graphContainer></div>
-
-
-<!-- Display data based on the parameter value -->
+    {{valueBig}}
+    <br>
+    <div #graphContainer></div>
+  </div>
+</div>
