@@ -1,0 +1,40 @@
+<div class="container">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div *ngFor="let input of inputs">
+            <mat-form-field appearance="fill" class="form-field mat-form-field">
+                <mat-label>{{input.label}}</mat-label>
+                    <input
+                    matInput
+                    type="string"
+                    formControlName="{{input.formControlName}}"
+                    required
+                    [class.is-invalid]="input.isInvalid"
+                    />
+            
+                <mat-error *ngIf="input.isInvalid">
+                    {{input.error}}
+                </mat-error>
+                <img
+                src="{{ calculatorIconPath }}"
+                alt="Calculator Icon"
+                class="icon"
+                (click)="showCalculator(false)"
+                type="button"/>
+            </mat-form-field>
+        </div>
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Calculate and Draw Graph</button>
+        <br>
+    </form>
+    <br>
+    <br>
+    <button mat-raised-button color="primary"  (click)="openNewWindow()">Osnovne informacije</button>
+
+
+
+    <div class="center" *ngIf = "shouldShowCalculator">
+        <app-calculator (calculated)="onCalculated($event)"></app-calculator>
+        <br>
+        <button mat-raised-button color="primary" (click)="useCalculatedValue()" [disabled]="useCalcValDisabled()">Use this value</button>
+      
+    </div>
+</div>

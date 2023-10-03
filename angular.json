@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "buildOptimizer": false,
             "outputPath": "dist/spef-calculator",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -25,12 +26,33 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/mathjs/lib/esm/core/create.js",
+              "node_modules/mathjs/lib/esm/function/probability/util/seededRNG.js",
+              "node_modules/mathjs/lib/esm/function/relational/compareNatural.js",
+              "node_modules/mathjs/lib/esm/type/complex/Complex.js",
+              "node_modules/mathjs/lib/esm/type/fraction/Fraction.js",
+              "node_modules/mathjs/lib/esm/utils/latex.js"
+            ],
+            "aot": true,
+            "budgets": [
+              {
+                "type": "initial",
+                "maximumWarning": "5mb",
+                "maximumError": "6mb"
+              },
+              {
+                "type": "anyComponentStyle",
+                "maximumWarning": "2kb"
+              }
+            ]
           },
           "configurations": {
             "production": {
+              "buildOptimizer": false,
               "budgets": [
                 {
                   "type": "initial",
@@ -43,7 +65,8 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "optimization": true
             },
             "development": {
               "buildOptimizer": false,
@@ -51,7 +74,8 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "outputHashing": "none"
             }
           },
           "defaultConfiguration": "production"
@@ -87,12 +111,24 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/mathjs/lib/esm/core/create.js",
+              "node_modules/mathjs/lib/esm/function/probability/util/seededRNG.js",
+              "node_modules/mathjs/lib/esm/function/relational/compareNatural.js",
+              "node_modules/mathjs/lib/esm/type/complex/Complex.js",
+              "node_modules/mathjs/lib/esm/type/fraction/Fraction.js",
+              "node_modules/mathjs/lib/esm/utils/latex.js",
+              "node_modules/plotly.js-basic-dist/plotly.js"
+            ]
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "b7c65ca9-fe74-495a-b415-87dd595d1436"
   }
 }

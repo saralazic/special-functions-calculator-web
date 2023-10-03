@@ -1,0 +1,79 @@
+<div class="p-1 form-group">
+    <form method="POST">
+      <div>
+          <div>
+              <span *ngIf="getOperand()!='';" [innerHTML]="getOperand()"></span>
+              <span *ngIf="getRadians(); else badgeGrads" class="rad">Rad</span>
+              <ng-template #badgeGrads><span class="rad">Grad</span></ng-template>
+          </div>
+        </div>
+
+
+        <div class="table">
+
+            <div class="row">
+              <div class="button-container">
+                <input type="text" placeholder="0" #inputField [value]="getExpression()">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="button-container"*ngFor="let d of digits">
+                <button class="button" (click)="addSymbol(d);">{{d}}</button>
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="button-container"><button class="button"(click)="addSymbol('.');">,</button></div>
+              <div class="button-container"*ngFor="let o of operators">
+                <button class="button" (click)="setOperator(o.symbol);" [innerHTML]="getLabel(o)"></button>
+              </div>
+              <div class="button-container"*ngFor="let b of brackets">
+                <button class="button"(click)="addBracket(b.symbol);" [innerHTML]="getLabel(b)"></button>
+              </div>              
+              <div class="button-container"><button class="button"(click)="calculateUnaryFunction('invert_sign',-1);">&#177;</button></div>
+              <div class="button-container"><button class="button"(click)="calculateUnaryFunction('percent',-1);">%</button></div>
+            </div>
+  
+            <div class="row">
+              <div class="button-container"*ngFor="let op of unaryOps1">
+                <button class="button"(click)="calculateUnaryFunction(op.symbol, op.data);" [innerHTML]="getLabel(op)"></button>
+              </div>
+              <div class="button-container"*ngFor="let op of operators2">
+                <button class="button"(click)="setOperator(op.symbol);" [innerHTML]="getLabel(op)"></button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="button-container"*ngFor="let op of unaryOps2">
+                <button class="button"(click)="calculateUnaryFunction(op.symbol, op.data);" [innerHTML]="getLabel(op)"></button>
+              </div>
+              <div class="button-container"><button class="button" (click)="addConstant(false);">e</button></div>
+              <div class="button-container"><button class="button" (click)="addConstant(true);">&#x213C;</button></div>
+            </div>
+  
+  
+            <div class="row">
+              <div class="button-container"*ngFor="let t of trigonometry">
+                <button class="button" (click)="calculateUnaryFunction(t.symbol, 1);" [innerHTML]="getLabel(t)"></button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="button-container"*ngFor="let h of hyperbolic">
+                <button class="button" (click)="calculateUnaryFunction(h.symbol, 1);" [innerHTML]="getLabel(h)"></button>
+              </div>
+            </div> 
+            
+            <div class="row">
+              <div class="button-container"><button class="button" (click)="calculateUnaryFunction('rand',1);">Rnd</button></div>
+              <div class="button-container"><button class="button" (click)="calculate();">=</button></div>
+              <div class="button-container"><button class="button clear" (click)="clear();">C</button></div>
+              <div class="button-container"><button class="button" (click)="setRadians();">Rad</button></div>
+              <div class="button-container"><button class="button" (click)="setRadians();">Grad</button></div>
+            </div>
+        </div>
+
+
+    </form>
+  </div>

@@ -1,0 +1,47 @@
+<!-- contact-us.component.html -->
+
+<div class="wrapper">
+    <div class="contact-us-container">
+        <div class="form">
+            <h1>{{contactUs}}</h1>
+            <br>
+            <form [formGroup]="contactForm" (ngSubmit)="submitForm()">
+        
+            <div class="form-row">
+                <label for="name">{{name}}</label>
+                <input type="text" id="name" formControlName="name">
+            </div>
+        
+            <div class="form-row">
+                <label for="subject">{{subject}}</label>
+                <input type="text" id="subject" formControlName="subject">
+            </div>
+        
+            <div class="form-row">
+                <label for="message">{{message}}</label>
+                <textarea id="message" formControlName="message"></textarea>
+            </div>
+        
+            <button type="submit" [disabled]="!contactForm.valid">{{submit}}</button>      
+        </form>
+        <div *ngIf = "showResponse" class="response">
+            {{response}}
+        </div>
+
+            <br>
+            
+            <div class="contact-icons-wrapper">
+                <div class="contact-icons">
+                    <div class="contact-icon">
+                        <img src="{{ phoneIconPath }}" alt="Phone Icon" class="icon">
+                        <span>+381 67 715 99 23</span>
+                      </div>
+                      <div class="contact-icon">
+                        <img src="{{ emailIconPath }}" alt="Email Icon" class="icon">
+                        <span>sara.lazic@outlook.com</span>
+                      </div>
+                </div>
+            </div>
+</div>
+
+  

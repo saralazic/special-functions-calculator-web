@@ -1,0 +1,15 @@
+<div class="center">
+  <h1>{{name}}</h1>
+</div>
+<div class="container">
+  <div class="left-side">
+    <app-function-input [parameter]="parameter" (formValuesChanged)="onFormValuesChanged($event)"></app-function-input>
+  </div>
+  <div class="right-side">
+    {{value}}
+    <br>
+    {{valueBig}}
+    <br>
+    <div #graphContainer></div>
+  </div>
+</div>

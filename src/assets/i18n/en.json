@@ -1,0 +1,70 @@
+{
+  "header": {
+    "title": "Calculator of some special functions"
+  },    
+  "homepage": {
+    "head_1": "Calculate the value of a special function simply and efficiently!",
+    "head_2": "Choose one of the functions bellow and start computing",
+    "bessel_1": "Bessel functions of the first kind",
+    "bessel_2": "Bessel functions of the second kind",
+    "bessel_3": "Bessel functions of the third kind",
+    "laguerre": "Laguerre polynomials",
+    "legendre": "Legendre polynomials",
+    "jacobi": "Jacobi polynomials",
+    "chebyshev_1": "Chebyshev polynomials of the first kind",
+    "chebyshev_2": "Chebyshev polynomials of the second kind"
+  },
+  "footer": {
+    "about": "About",
+    "contact": "Contact",
+    "copyright": "School of Electrical Engineering, University of Belgrade"
+  },
+  "about": {
+    "text": "The application 'Calculator of some special functions' was created as a result of the master's thesis of the same name, B.Sc. Eng. Sara Lazić, from the subject of Special Functions at the master academic studies in Software Engineering at the Faculty of Electrical Engineering, University of Belgrade, under the mentorship of prof. Dr. Bratislav Iričanin. The goal of this application is to allow users to quickly and efficiently evaluate the values ​​of some special functions that are most often encountered in various fields of science and engineering. The calculator provides support for calculating and graphically displaying the values ​​of the following functions: Bessel functions of the first, second and third kind, Laguerre polynomials, Legendre polynomials, Jacobi polynomials, as well as Chebyshev polynomials of the first and second kind."
+  },
+  "contact": {
+    "title": "Contact us",
+    "name": "full name",
+    "subject": "subject",
+    "message": "message",
+    "button": "submit",
+    "phone": "phone",
+    "success": "Your message is sent successfully, we will get back to you soon"
+  },
+  "bessel_1":{
+    "name": "Bessel functions of the first kind"
+  },
+  "bessel_2":{
+    "name": "Bessel functions of the second kind"
+  },
+  "legendre":{
+    "name": "Legendre polynomials"
+  },
+  "laguerre":{
+    "name": "Laguerre polynomials"
+  },
+  "laguerre":{
+    "name": "Laguerre polynomials"
+  },
+  "chebyshev_1":{
+    "name": "Chebyshev polynomials of the first kind"
+  },
+  "chebyshev_2":{
+    "name": "Chebyshev polynomials of the second kind"
+  },
+  "jacobi":{
+    "name": "Jacobi polynomials"
+  },
+  "input": {
+    "labelOrderNatural": "Order (natural number):",
+    "labelOrderReal": "Order (natural number):",
+    "labelPrecision": "Precision (0.00...00x or xe-y):",
+    "labelVariable": "Variable (real number):",
+    "labelVariableConstrained": "Variable (real number between -1 and 1):",
+    "labelVariableN0": "Variable (natural number or 0):",
+    "aInputLabel": "Parameter alpha (real number greater than -1):",
+    "bInputLabel": "Parameter beta (real number greater than -1):",
+    "errorMessage": "Please enter a valid value"
+  }
+}
+  
