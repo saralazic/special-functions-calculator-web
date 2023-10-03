@@ -1,5 +1,5 @@
 import { Component, EventEmitter, HostListener, Output } from '@angular/core';
-import { create, all, MathType } from 'mathjs';
+import { MathType } from 'mathjs';
 import {
   brackets,
   hyperbolic,

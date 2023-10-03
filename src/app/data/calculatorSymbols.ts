@@ -1,4 +1,3 @@
-import { all, create } from 'mathjs';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 import { getE } from 'src/utilities/utilities';
 import { ISymbol, ISymbolWithData } from '../models/symbol';

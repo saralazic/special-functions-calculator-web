@@ -1,6 +1,6 @@
 import { BigNumber, MathType } from 'mathjs';
 import { FUNCTION_TYPE } from 'src/app/data/constants';
-import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
+import { math_64 } from 'src/utilities/big_numbers_math';
 import {
   FunctionParamsForCalculation,
   FunctionParamsForCalculationWithBigNumbers,

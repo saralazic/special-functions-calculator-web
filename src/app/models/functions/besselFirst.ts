@@ -1,12 +1,12 @@
-import { FUNCTION_TYPE } from '../../data/constants';
+import * as math from 'mathjs';
+import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 import { getE, getPi } from '../../../utilities/utilities';
+import { FUNCTION_TYPE } from '../../data/constants';
 import {
   FunctionParamsForCalculation,
   FunctionParamsForCalculationWithBigNumbers,
   SpecialFunction,
 } from '../specialFunction';
-import * as math from 'mathjs';
-import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 
 export class BesselFirstKind extends SpecialFunction {
   math = math_64;

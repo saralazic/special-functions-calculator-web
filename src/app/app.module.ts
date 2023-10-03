@@ -1,27 +1,27 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { MatMenuModule } from '@angular/material/menu';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { SvgIconComponent } from './components/svg-icon/svg-icon.component';
-import { SpecialFunctionComponent } from './components/special-function/special-function.component';
-import { HomepageComponent } from './components/homepage/homepage.component';
-import { AboutComponent } from './components/about/about.component';
 import { HttpClientModule } from '@angular/common/http';
-import { HeaderComponent } from './components/marginals/header/header.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatIconModule } from '@angular/material/icon';
-import { FooterComponent } from './components/marginals/footer/footer.component';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ContactComponent } from './components/contact/contact.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { AboutComponent } from './components/about/about.component';
 import { CalculatorComponent } from './components/calculator/calculator.component';
-import { FunctionInputComponent } from './components/function-input/function-input.component';
+import { ContactComponent } from './components/contact/contact.component';
 import { FunctionInformationComponent } from './components/function-information/function-information.component';
+import { FunctionInputComponent } from './components/function-input/function-input.component';
+import { HomepageComponent } from './components/homepage/homepage.component';
+import { FooterComponent } from './components/marginals/footer/footer.component';
+import { HeaderComponent } from './components/marginals/header/header.component';
+import { SpecialFunctionComponent } from './components/special-function/special-function.component';
+import { SvgIconComponent } from './components/svg-icon/svg-icon.component';
 
 @NgModule({
   declarations: [
