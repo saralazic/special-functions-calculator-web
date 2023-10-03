@@ -1,32 +1,13 @@
 :host {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size: 14px;
-    color: #333;
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 8px 0;
-  }
-  
-  p {
-    margin: 0;
-  }
-
-body {
-    text-align: center;
-    align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 14px;
+  color: #333;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-/* contact-us.component.css */
 
-.wrapper{
+.wrapper {
   width: 100%;
   height: 770px;
   display: flex;
@@ -37,88 +18,83 @@ body {
 }
 
 .contact-us-container {
-    width: 500px;
-    margin: 0 auto;
-    padding-left: 20px;
-    padding-right: 40px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    background-color: #f2f2f2;
-    border-radius: 5px;
-    text-align: center;
+  width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.form-row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
 
-  .form-row {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 10px;
-  }
-  
-  label {
-    width: 100px;
-    font-weight: bold;
-    margin-right: 10px;
-    text-align: right;
-  }
-  
-  input[type="text"],
-  input[type="email"],
-  textarea {
-    flex: 1;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    width: 300px;
-  }
+label {
+  width: 100px;
+  font-weight: bold;
+  margin-right: 10px;
+  text-align: right;
+}
 
-  textarea{
-    height: 100px;
-  }
-  
-  button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button:disabled {
-    background-color: #999;
-    cursor: not-allowed;
-  }
-  
+input[type="text"],
+input[type="email"],
+textarea {
+  flex: 1;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  width: 300px;
+}
 
-  .contact-icons-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Align the icons and text to the left */
-    margin-top: 20px; /* Add margin to separate the contact details from the form */
-  }
+textarea {
+  height: 100px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.contact-icons-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
 
 .contact-icons {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Align the icons and text to the left */
+  align-items: flex-start;
 }
 
 .contact-icon {
   display: flex;
   align-items: center;
-  margin-bottom: 10px; /* Add margin between each contact icon */
+  margin-bottom: 10px;
 }
 
 .icon {
-  width: 24px; /* Adjust the size as per your requirements */
-  height: 24px; /* Adjust the size as per your requirements */
+  width: 24px;
+  height: 24px;
   margin-right: 8px;
 }
 
-.response{
+.response {
   margin-top: 20px;
 }
