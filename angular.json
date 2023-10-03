@@ -13,6 +13,15 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "typed-function",
+              "seedrandom",
+              "javascript-natural-sort",
+              "plotly.js-basic-dist",
+              "escape-latex",
+              "fraction.js",
+              "complex.js"
+            ],
             "buildOptimizer": false,
             "outputPath": "dist/spef-calculator",
             "index": "src/index.html",
