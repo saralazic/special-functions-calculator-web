@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FUNCTION_TYPE } from 'src/app/data/constants';
