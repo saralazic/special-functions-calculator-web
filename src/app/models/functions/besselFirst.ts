@@ -1,12 +1,12 @@
 import * as math from 'mathjs';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 import { FunctionType } from '../enums';
-import { getE, getPi } from '../../../utilities/utilities';
+import { gammaBig, getE, getPi } from '../../../utilities/utilities';
 import {
   FunctionParamsForCalculation,
   FunctionParamsForCalculationWithBigNumbers,
   SpecialFunction,
-} from '../specialFunction';
+} from './specialFunction';
 
 export class BesselFirstKind extends SpecialFunction {
   math = math_64;
@@ -53,7 +53,7 @@ export class BesselFirstKind extends SpecialFunction {
     const x = this.math.bignumber(xBig);
 
     let gammaArg = this.math.add(alpha, BIG_NUMBER_CONSTANTS.ONE);
-    let gammaCurrent = this.gammaBig(gammaArg);
+    let gammaCurrent = gammaBig(gammaArg);
 
     const xHalf = this.math.divide(x, BIG_NUMBER_CONSTANTS.TWO);
     const xHalfSqr = this.math.pow(xHalf, BIG_NUMBER_CONSTANTS.TWO);
@@ -75,7 +75,7 @@ export class BesselFirstKind extends SpecialFunction {
       gammaPrevious = gammaCurrent;
 
       gammaArg = this.math.add(gammaArg, BIG_NUMBER_CONSTANTS.ONE);
-      gammaCurrent = this.gammaBig(gammaArg);
+      gammaCurrent = gammaBig(gammaArg);
 
       R = this.math.divide(gammaPrevious, gammaCurrent);
       R = this.math.multiply(R, xHalfSqr);
@@ -87,58 +87,5 @@ export class BesselFirstKind extends SpecialFunction {
     }
 
     return sum.toString();
-  }
-
-  gammaBig(alpha: math.BigNumber): math.BigNumber {
-    if (this.math.isInteger(alpha)) {
-      return this.math.gamma(alpha);
-    }
-
-    const x = this.math.subtract(alpha, BIG_NUMBER_CONSTANTS.ONE);
-    const pi = getPi();
-    const e = getE();
-
-    const half = this.math.divide(
-      BIG_NUMBER_CONSTANTS.ONE,
-      BIG_NUMBER_CONSTANTS.TWO
-    );
-
-    let first = this.math.divide(x, e);
-    first = this.math.pow(first, x);
-
-    let second = this.math.multiply(
-      BIG_NUMBER_CONSTANTS.c12,
-      this.math.pow(x, BIG_NUMBER_CONSTANTS.THREE)
-    );
-
-    let add = this.math.multiply(
-      x,
-      this.math.divide(BIG_NUMBER_CONSTANTS.c24, BIG_NUMBER_CONSTANTS.SEVEN)
-    );
-
-    second = this.math.add(second, add);
-
-    second = this.math.subtract(second, half);
-
-    second = this.math.divide(BIG_NUMBER_CONSTANTS.ONE, second);
-    second = this.math.add(BIG_NUMBER_CONSTANTS.ONE, second);
-
-    let pow = this.math.divide(
-      BIG_NUMBER_CONSTANTS.c53,
-      BIG_NUMBER_CONSTANTS.c210
-    );
-    pow = this.math.add(this.math.pow(x, BIG_NUMBER_CONSTANTS.TWO), pow);
-
-    second = this.math.pow(second, pow as math.BigNumber);
-
-    let mul = this.math.multiply(first, second);
-
-    let piX2 = this.math.multiply(BIG_NUMBER_CONSTANTS.TWO, pi);
-    piX2 = this.math.multiply(piX2, x);
-
-    return this.math.multiply(
-      this.math.pow(piX2, half as math.BigNumber),
-      mul
-    ) as math.BigNumber;
   }
 }

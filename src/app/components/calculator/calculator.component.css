@@ -1,15 +1,5 @@
-:host {
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-	font-size: 18px;
-	color: #333;
-	box-sizing: border-box;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	font-weight: 500;
-  }
-
 .table {
-	width: 450px; /* Adjust to your desired fixed row width */
+	width: 450px;
 	display: flex;
 	flex-direction: column;
   }
@@ -28,9 +18,6 @@
   .button {
 	flex: 1;
 	  transition: background-color 0.3s;
-	/* background-color: rgb(212, 197, 200);
-
-	/* Additional button styling if needed */
   }
   
   .rad{
@@ -42,23 +29,15 @@
 	flex: 1;
 	height: 40px;
 	width: 100%;
-	min-width: 0; /* Ensure input doesn't become too narrow */
-	white-space: nowrap; /* Prevent line breaks */
+	min-width: 0; 
+	white-space: nowrap;
   }
   
-  .input-container {
-	flex: 1;
-	display: flex;
-	align-items: center;
-	overflow-x: auto; /* Show horizontal scrollbar when content overflows */
-  }
-  
-  /* For WebKit browsers (Chrome, Safari, Edge) */
   input::-webkit-scrollbar {
-	width: 8px; /* Set the width of the scrollbar */
+	width: 8px; 
   }
   
   input::-webkit-scrollbar-thumb {
-	background-color: black; /* Set the color of the scrollbar thumb */
+	background-color: black; 
   }
   

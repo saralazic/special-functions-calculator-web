@@ -2,13 +2,16 @@ import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 import { MathType } from 'mathjs';
 import {
   brackets,
+  digits,
   hyperbolic,
+  MULTIPLY_SIGN_ASCII_CODE,
   operators,
   operators2,
   trigonometry,
   unaryOps1,
   unaryOps2,
 } from 'src/app/data/calculatorSymbols';
+import { Keys } from 'src/app/models/enums';
 import { Expression } from 'src/app/models/expression/expression';
 import { ISymbol } from 'src/app/models/symbol';
 import { getE, getPi } from 'src/utilities/utilities';
@@ -19,18 +22,15 @@ import { getE, getPi } from 'src/utilities/utilities';
   styleUrls: ['./calculator.component.css'],
 })
 export class CalculatorComponent {
-  expression = new Expression('0');
-  digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-
-  operators = operators;
-  operators2 = operators2;
-  trigonometry = trigonometry;
-  brackets = brackets;
-  unaryOps1 = unaryOps1;
-  unaryOps2 = unaryOps2;
-  hyperbolic = hyperbolic;
-
-  calculatorIconPath = 'assets/icons/calculator.svg';
+  public expression = new Expression('0');
+  public digits = digits;
+  public operators = operators;
+  public operators2 = operators2;
+  public trigonometry = trigonometry;
+  public brackets = brackets;
+  public unaryOps1 = unaryOps1;
+  public unaryOps2 = unaryOps2;
+  public hyperbolic = hyperbolic;
 
   @Output() calculated: EventEmitter<string> = new EventEmitter<string>();
 
@@ -41,43 +41,43 @@ export class CalculatorComponent {
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     const key = event.key;
-    const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
-
-    if (digits)
-      if (digits.includes(key)) {
-        this.addSymbol(key, false);
-      }
-
-    if (key === 'Backspace') {
-      this.removeSymbol();
-    }
-
-    if (key === 'Enter') {
-      this.calculate();
-    }
-
-    if (key === 'Escape') {
-      this.clear();
-    }
-
+    const symbols = [...this.digits, Keys.DOT];
     const operations = ['+', '-', '*', '/'];
 
-    if (operations.includes(key)) {
-      this.setOperator(key);
-    }
+    switch (key) {
+      case Keys.BACKSPACE:
+        this.removeSymbol();
+        break;
 
-    if (key === '%') {
-      this.calculateUnaryFunction('percent', -1);
+      case Keys.ENTER:
+        this.calculate();
+        break;
+
+      case Keys.ESC:
+        this.clear();
+        break;
+
+      case Keys.PERCENT:
+        this.calculateUnaryFunction('percent', -1);
+        break;
+
+      default:
+        if (symbols.includes(key)) {
+          this.addSymbol(key, false);
+        } else if (operations.includes(key)) {
+          this.setOperator(key);
+        }
+        break;
     }
   }
 
-  //**wrapper */
+  /** wrapper methods */
   setOperator(operator: string): void {
     this.expression.setOperator(operator);
   }
 
   addBracket(bracket: string): void {
-    this.expression.addBracket(bracket === '(');
+    this.expression.addBracket(bracket === Keys.BRACKET_OPEN);
   }
 
   getExpression() {
@@ -99,7 +99,7 @@ export class CalculatorComponent {
 
   getOperand(): string {
     let o = this.expression.operator;
-    if (o == '*') return '&#215;';
+    if (o === Keys.STAR) return MULTIPLY_SIGN_ASCII_CODE; // code for dot instead of star
     return o;
   }
 
@@ -129,7 +129,7 @@ export class CalculatorComponent {
   }
 
   calculate(): string {
-    if (this.expression.isOperand == true || this.expression.stack.size() < 2)
+    if (this.expression.isOperand || this.expression.stack.size() < 2)
       return '';
     this.expression.stack.push(this.expression.expression);
     let value = this.expression.evaluate();

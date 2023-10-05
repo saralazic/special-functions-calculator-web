@@ -11,6 +11,7 @@ import { LanguageService } from 'src/app/services/language-service/language.serv
 export class HomepageComponent {
   private subscription?: Subscription;
 
+  /** TODO: html can be rendered dynamically, it would be much nicer than this, I should refractor this */
   head_1?: string;
   head_2?: string;
   bessel_1?: string;
@@ -32,7 +33,7 @@ export class HomepageComponent {
     this.subscription = this.languageService
       .getLanguageChangeObservable()
       .subscribe(() => {
-        this.loadTranslations(); // Load translations whenever language changes
+        this.loadTranslations();
       });
   }
 

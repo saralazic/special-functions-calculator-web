@@ -6,9 +6,9 @@ import { Component, Input } from '@angular/core';
 })
 export class SvgIconComponent {
   @Input() iconName?: string;
-  @Input() size = 71; // Default size is 24 pixels
+  @Input() size = 71;
 
   get iconPath(): string {
-    return `assets/icons/${this.iconName}.svg`; // Adjust the file path if necessary
+    return `assets/icons/${this.iconName}.svg`;
   }
 }

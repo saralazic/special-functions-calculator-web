@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SpecialFunction } from 'src/app/models/specialFunction';
+import { SpecialFunction } from 'src/app/models/functions/specialFunction';
 import { LanguageService } from 'src/app/services/language-service/language.service';
 import { createChosenFunction } from 'src/utilities/utilities';
 
@@ -15,8 +15,6 @@ export class FunctionInformationComponent {
   private subscription?: Subscription;
   spef?: SpecialFunction;
   parameter: string | null = null;
-
-  //  name?: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,7 +30,7 @@ export class FunctionInformationComponent {
     this.subscription = this.languageService
       .getLanguageChangeObservable()
       .subscribe(() => {
-        this.loadTranslations(); // Load translations whenever language changes
+        this.loadTranslations();
       });
   }
 

@@ -4,6 +4,8 @@ import { Stack } from 'src/utilities/stack';
 import { getE, getPi, round } from 'src/utilities/utilities';
 import { IExpression } from './IExpression';
 
+/** This is for calculator component */
+/** Does evaluation of expressions using BigMath */
 export class Expression implements IExpression {
   math = math_64;
 
@@ -13,7 +15,7 @@ export class Expression implements IExpression {
   operator: string = '';
   bracket: boolean = false;
   start: boolean = false;
-  isOperandReal: boolean = false; // input number having dot
+  isOperandReal: boolean = false;
   isOperand: boolean = false;
   radians: boolean = true;
   stack = new Stack<string>();
@@ -243,8 +245,10 @@ export class Expression implements IExpression {
     return this.radians;
   }
 
+  /* only one level of brackets 
+  and they can be set only if user set the operand first
+  */
   addBracket(openBracket: boolean): void {
-    // brackets can be set only if we have not set them before and we set operand (if we set brackets first - it will not make sense)
     if (openBracket) {
       if (this.bracket == false && this.isOperand == true) {
         this.stack.push('(');
@@ -268,7 +272,6 @@ export class Expression implements IExpression {
 
   setOperator(operand: string): void {
     this.operator = operand;
-    // If operator already set - nothing doing
     if (this.isOperand) {
       this.operator = operand;
       return;

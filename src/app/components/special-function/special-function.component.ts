@@ -6,9 +6,13 @@ import { FunctionType } from 'src/app/models/enums';
 import {
   FunctionParams,
   SpecialFunction,
-} from 'src/app/models/specialFunction';
+} from 'src/app/models/functions/specialFunction';
 import { LanguageService } from 'src/app/services/language-service/language.service';
-import { createChosenFunction, drawGraph } from 'src/utilities/utilities';
+import {
+  createChosenFunction,
+  drawGraph,
+  generateCoordinates,
+} from 'src/utilities/utilities';
 
 @Component({
   selector: 'app-special-function',
@@ -39,7 +43,7 @@ export class SpecialFunctionComponent implements OnInit {
     this.subscription = this.languageService
       .getLanguageChangeObservable()
       .subscribe(() => {
-        this.loadTranslations(); // Load translations whenever language changes
+        this.loadTranslations();
       });
   }
 
@@ -48,49 +52,13 @@ export class SpecialFunctionComponent implements OnInit {
   }
 
   drawGraphic(n: number, eps: number) {
-    const { xArr, yArr } = this.generateCoordinates(n, eps);
-    drawGraph(this.graphContainer?.nativeElement, xArr, yArr);
-  }
-
-  generateCoordinates(n: number, eps: number) {
-    if (
-      this.parameter === FunctionType.LEGENDRE_POLYNOMIAL ||
-      this.parameter === FunctionType.CHEBYSHEV_FIRST_KIND ||
-      this.parameter === FunctionType.CHEBYSHEV_SECOND_KIND
-    ) {
-      const startValue: number = -0.999999;
-      const endValue: number = 0.999999;
-      const numParameters: number = 201;
-
-      const step: number = (endValue - startValue) / (numParameters - 1);
-      const xArr: number[] = Array.from(
-        { length: numParameters },
-        (_, index) => startValue + index * step
-      );
-
-      const yArr = xArr.map(
-        (x) =>
-          this.spef?.calculate({
-            alpha: n,
-            x: x,
-            eps: eps,
-          }) ?? 0
-      );
-
-      return { xArr, yArr };
-    }
-
-    const xArr = Array.from({ length: 201 }, (_, index) => index * 0.05);
-    const yArr = xArr.map(
-      (x) =>
-        this.spef?.calculate({
-          alpha: n,
-          x: x,
-          eps: eps,
-        }) ?? 0
+    const { xArr, yArr } = generateCoordinates(
+      this.parameter,
+      this.spef,
+      n,
+      eps
     );
-
-    return { xArr, yArr };
+    drawGraph(this.graphContainer?.nativeElement, xArr, yArr);
   }
 
   loadTranslations() {
@@ -103,6 +71,7 @@ export class SpecialFunctionComponent implements OnInit {
       });
   }
 
+  /** When child component sends value, it triggers this method */
   onFormValuesChanged(data: FunctionParams) {
     if (data) {
       this.valueBig = this.spef?.calculateBig(data.bignumber);
@@ -112,4 +81,6 @@ export class SpecialFunctionComponent implements OnInit {
       this.drawGraphic(data.real.alpha, data.real.eps);
     }
   }
+
+  //** TODO: find better way to show calculation result!! */
 }

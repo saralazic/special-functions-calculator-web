@@ -5,7 +5,7 @@ import {
   FunctionParamsForCalculation,
   FunctionParamsForCalculationWithBigNumbers,
   SpecialFunction,
-} from '../specialFunction';
+} from './specialFunction';
 
 export class ChebyshevPolynomialOfFirstKind extends SpecialFunction {
   math = math_64;

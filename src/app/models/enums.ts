@@ -16,3 +16,14 @@ export enum InputType {
   ALPHA,
   BETA,
 }
+
+export enum Keys {
+  BACKSPACE = 'Backspace',
+  ENTER = 'Enter',
+  ESC = 'Escape',
+  DOT = '.',
+  BRACKET_OPEN = '(',
+  BRACKET_CLOSED = ')',
+  PERCENT = '%',
+  STAR = '*',
+}

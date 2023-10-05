@@ -64,7 +64,10 @@
     "labelVariableN0": "Variable (natural number or 0):",
     "aInputLabel": "Parameter alpha (real number greater than -1):",
     "bInputLabel": "Parameter beta (real number greater than -1):",
-    "errorMessage": "Please enter a valid value"
+    "errorMessage": "Please enter a valid value",
+    "buttonBasicInformations": "Basic informations about this function",
+    "buttonUseCalculatedValue": "Use this value",
+    "buttonCalculateAndDrawGraph": "Calculate and draw graph"
   }
 }
   
