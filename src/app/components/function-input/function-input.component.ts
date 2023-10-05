@@ -42,6 +42,9 @@ export class FunctionInputComponent implements OnInit {
   bInputLabel: string = '';
   labelVariableConstrained: string = '';
   errorMessage: string = '';
+  basicInformationsLabel: string = '';
+  useCalculatedValueLabel: string = '';
+  calculateAndDrawLabel: string = '';
 
   currentCalculatedValue: string;
 
@@ -436,6 +439,13 @@ export class FunctionInputComponent implements OnInit {
         this.errorMessage = translations.input.errorMessage;
         this.aInputLabel = translations.input.aInputLabel;
         this.bInputLabel = translations.input.bInputLabel;
+
+        this.basicInformationsLabel =
+          translations.input.buttonBasicInformations;
+        this.useCalculatedValueLabel =
+          translations.input.buttonUseCalculatedValue;
+        this.calculateAndDrawLabel =
+          translations.input.buttonCalculateAndDrawGraph;
 
         this.loadInputTranslations();
       });

@@ -22,19 +22,19 @@
                 type="button"/>
             </mat-form-field>
         </div>
-        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Calculate and Draw Graph</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid"> {{ calculateAndDrawLabel }}</button>
         <br>
     </form>
     <br>
     <br>
-    <button mat-raised-button color="primary"  (click)="openNewWindow()">Osnovne informacije</button>
+    <button mat-raised-button color="primary"  (click)="openNewWindow()">{{ basicInformationsLabel }}</button>
 
 
 
     <div class="center" *ngIf = "shouldShowCalculator">
         <app-calculator (calculated)="onCalculated($event)"></app-calculator>
         <br>
-        <button mat-raised-button color="primary" (click)="useCalculatedValue()" [disabled]="useCalcValDisabled()">Use this value</button>
+        <button mat-raised-button color="primary" (click)="useCalculatedValue()" [disabled]="useCalcValDisabled()">{{ useCalculatedValueLabel }}</button>
       
     </div>
 </div>

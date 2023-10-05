@@ -61,7 +61,11 @@
     "labelVariableN0": "Promenljiva (prirodan broj ili 0):",
     "aInputLabel": "Parametar alfa (realan broj veći od -1):",
     "bInputLabel": "Parametar beta (realan broj veći od -1):",
-    "errorMessage": "Unesite validnu vrednost!"
+    "errorMessage": "Unesite validnu vrednost!",
+    "buttonBasicInformations": "Osnovne informacije o ovoj funkciji",
+    "buttonUseCalculatedValue": "Upotrebi ovu vrednost",
+    "buttonCalculateAndDrawGraph": "Izračunaj vrednost i nacrtaj grafik"
+
   }
 }
   
