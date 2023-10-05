@@ -10,6 +10,8 @@ import {
 } from './specialFunction';
 import { BesselFirstKind } from './besselFirst';
 
+//** TODO: Discuss this with professor and revisit, currently doesn't work */
+
 export class BesselSecondKind extends SpecialFunction {
   math = math_64;
   J: BesselFirstKind;

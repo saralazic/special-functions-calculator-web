@@ -12,7 +12,7 @@
   width: 500px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f2f2f2;
+  background-color: var(--footer-gray);
   border-radius: 5px;
   text-align: center;
   display: flex;
@@ -48,7 +48,6 @@ textarea {
 }
 
 button {
-  background-color: #4CAF50;
   color: white;
   border: none;
   padding: 10px 20px;

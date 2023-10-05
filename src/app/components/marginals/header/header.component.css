@@ -6,7 +6,7 @@
   height: 70px;
   display: flex;
   align-items: center;
-  background-color: #832807;
+  background-color: var(--burgundy);
   color: white;
   font-weight: 600;
   font-size: large;

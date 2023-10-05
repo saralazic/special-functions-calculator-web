@@ -8,18 +8,18 @@
   width: 100%;
   align-items: center;
   text-align: center;
-  background-color: #eee;
+  background-color: var(--footer-gray);
   padding: 10px;
 
 }
 
 a {
-  color: #d77f1b;
+  color: var(--orange);
   text-decoration: none;
 }
 
 a:hover {
-  color: #a50303e4;
+  color: var(--hover-red);
 }
 
 .copyright{
