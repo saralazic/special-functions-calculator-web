@@ -11,6 +11,9 @@
 npm-debug.log
 yarn-error.log
 
+# Android
+/android
+
 # IDEs and editors
 .idea/
 .project
