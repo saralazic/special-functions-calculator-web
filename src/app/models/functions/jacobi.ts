@@ -1,5 +1,5 @@
 import { MathType } from 'mathjs';
-import { FUNCTION_TYPE } from 'src/app/data/constants';
+import { FunctionType } from 'src/app/models/enums';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 import {
   FunctionParamsForCalculation,
@@ -11,7 +11,7 @@ export class JacobiPolynomial extends SpecialFunction {
   math = math_64;
 
   constructor() {
-    super(FUNCTION_TYPE.JACOBI_POLYNOMIAL);
+    super(FunctionType.JACOBI_POLYNOMIAL);
   }
 
   calculate(params: FunctionParamsForCalculation): number {

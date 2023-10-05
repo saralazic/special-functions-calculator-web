@@ -3,13 +3,14 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
+  FormControl,
   FormGroup,
   ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { FUNCTION_TYPE } from 'src/app/data/constants';
+import { FunctionType, InputType } from 'src/app/models/enums';
 import {
   FunctionParams,
   FunctionParamsForCalculation,
@@ -45,7 +46,7 @@ export class FunctionInputComponent implements OnInit {
   currentCalculatedValue: string;
 
   shouldShowCalculator: boolean;
-  useCalculatorOnVariable: boolean;
+  whereToUseCalculatedValue: InputType | null;
 
   calculatorIconPath = 'assets/icons/calculator.svg';
 
@@ -69,7 +70,7 @@ export class FunctionInputComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.shouldShowCalculator = false;
-    this.useCalculatorOnVariable = true;
+    this.whereToUseCalculatedValue = null;
     this.currentCalculatedValue = '';
 
     this.orderInputReal = {
@@ -78,6 +79,7 @@ export class FunctionInputComponent implements OnInit {
       isInvalid:
         "form.get('orderValue')?.invalid && form.get('orderValue')?.touched",
       error: this.errorMessage,
+      inputType: InputType.ORDER,
     };
 
     this.orderInputNatural = {
@@ -86,6 +88,7 @@ export class FunctionInputComponent implements OnInit {
       isInvalid:
         "form.get('orderValue')?.invalid && form.get('orderValue')?.touched",
       error: this.errorMessage,
+      inputType: InputType.ORDER,
     };
 
     this.precisionInput = {
@@ -94,6 +97,7 @@ export class FunctionInputComponent implements OnInit {
       isInvalid:
         "form.get('precisionValue')?.invalid && form.get('precisionValue')?.touched",
       error: this.errorMessage,
+      inputType: InputType.PRECISION,
     };
 
     this.variableInput = {
@@ -102,6 +106,7 @@ export class FunctionInputComponent implements OnInit {
       isInvalid:
         "form.get('variableValue')?.invalid && form.get('variableValue')?.touched",
       error: this.errorMessage,
+      inputType: InputType.VARIABLE,
     };
 
     this.variableInputConstrained = {
@@ -110,6 +115,7 @@ export class FunctionInputComponent implements OnInit {
       isInvalid:
         "form.get('variableValue')?.invalid && form.get('variableValue')?.touched",
       error: this.errorMessage,
+      inputType: InputType.VARIABLE,
     };
 
     this.variableInputN0 = {
@@ -118,6 +124,7 @@ export class FunctionInputComponent implements OnInit {
       isInvalid:
         "form.get('variableValue')?.invalid && form.get('variableValue')?.touched",
       error: this.errorMessage,
+      inputType: InputType.VARIABLE,
     };
 
     this.aInput = {
@@ -126,6 +133,7 @@ export class FunctionInputComponent implements OnInit {
       isInvalid:
         "form.get('aParameterValue')?.invalid && form.get('aParameterValue')?.touched",
       error: this.errorMessage,
+      inputType: InputType.ALPHA,
     };
 
     this.bInput = {
@@ -134,6 +142,7 @@ export class FunctionInputComponent implements OnInit {
       isInvalid:
         "form.get('bParameterValue')?.invalid && form.get('bParameterValue')?.touched",
       error: this.errorMessage,
+      inputType: InputType.BETA,
     };
   }
 
@@ -276,12 +285,14 @@ export class FunctionInputComponent implements OnInit {
     return null;
   }
 
-  showCalculator(onVariable: boolean) {
-    if (this.useCalculatorOnVariable === onVariable)
-      this.shouldShowCalculator = !this.shouldShowCalculator;
-    else this.currentCalculatedValue = '';
+  showCalculator(inputType: InputType) {
+    this.whereToUseCalculatedValue =
+      this.whereToUseCalculatedValue === inputType ? null : inputType;
+    this.shouldShowCalculator = this.whereToUseCalculatedValue !== null;
+    console.log(this.whereToUseCalculatedValue);
+    console.log(this.shouldShowCalculator);
 
-    this.useCalculatorOnVariable = onVariable;
+    this.currentCalculatedValue = '';
   }
 
   onCalculated(value: string): void {
@@ -289,46 +300,50 @@ export class FunctionInputComponent implements OnInit {
   }
 
   useCalculatedValue(): void {
-    if (this.useCalculatorOnVariable) {
-      const controlName = 'realNumberValue';
-      const control = this.form.get(controlName);
-      const newValue = this.currentCalculatedValue;
-
-      this.form.patchValue({
-        [controlName]: newValue,
-      });
-
-      // Trigger validation on the control
-      control?.updateValueAndValidity();
-
-      // If the control is still invalid after validation, display the error errorMessage
-      if (control?.invalid && control?.touched) {
-        const errors = control?.errors;
-        console.error('Validation error:', errors);
+    let controlName: string;
+    switch (this.whereToUseCalculatedValue) {
+      case InputType.PRECISION: {
+        controlName = 'precisionValue';
+        break;
       }
-    } else {
-      const controlName = 'precisionValue';
-      const control = this.form.get(controlName);
-      const newValue = this.currentCalculatedValue;
-
-      this.form.patchValue({
-        [controlName]: newValue,
-      });
-
-      // Trigger validation on the control
-      control?.updateValueAndValidity();
-
-      // If the control is still invalid after validation, display the error errorMessage
-      if (control?.invalid && control?.touched) {
-        const errors = control?.errors;
-        console.error('Validation error:', errors);
+      case InputType.ORDER: {
+        controlName = 'orderValue';
+        break;
       }
+      case InputType.ALPHA: {
+        controlName = 'aParameterValue';
+        break;
+      }
+      case InputType.BETA: {
+        controlName = 'bParameterValue';
+        break;
+      }
+      case InputType.VARIABLE:
+      default: {
+        controlName = 'variableValue';
+      }
+    }
+
+    const control = this.form.get(controlName);
+    const newValue = this.currentCalculatedValue;
+
+    this.form.patchValue({
+      [controlName]: newValue,
+    });
+
+    // Trigger validation on the control
+    control?.updateValueAndValidity();
+
+    // If the control is still invalid after validation, display the error errorMessage
+    if (control?.invalid && control?.touched) {
+      const errors = control?.errors;
+      console.error('Validation error:', errors);
     }
   }
 
   useCalcValDisabled(): boolean {
     if (this.currentCalculatedValue.length < 1) return true;
-    if (this.useCalculatorOnVariable) return false;
+    if (this.whereToUseCalculatedValue) return false;
 
     const precisionNumberRegex =
       /^(0(\.\d+)?|0\.\d+|([0-9]\d*(\.\d+)?(e-?\d+)?))$/i;
@@ -338,9 +353,9 @@ export class FunctionInputComponent implements OnInit {
 
   createForm() {
     switch (this.parameter) {
-      case FUNCTION_TYPE.BESSEL_FIRST_KIND:
-      case FUNCTION_TYPE.BESSEL_SECOND_KIND:
-      case FUNCTION_TYPE.BESSEL_THIRD_KIND:
+      case FunctionType.BESSEL_FIRST_KIND:
+      case FunctionType.BESSEL_SECOND_KIND:
+      case FunctionType.BESSEL_THIRD_KIND:
         this.form = this.formBuilder.group({
           orderValue: ['0', [Validators.required, this.bigNumberValidator]],
           precisionValue: [
@@ -350,7 +365,7 @@ export class FunctionInputComponent implements OnInit {
           variableValue: ['0', [Validators.required, this.bigNumberValidator]],
         });
         break;
-      case FUNCTION_TYPE.LAGUERRE_POLYNOMIAL:
+      case FunctionType.LAGUERRE_POLYNOMIAL:
         this.form = this.formBuilder.group({
           orderValue: [
             '1',
@@ -359,9 +374,9 @@ export class FunctionInputComponent implements OnInit {
           variableValue: ['0', [Validators.required, this.bigNumberValidator]],
         });
         break;
-      case FUNCTION_TYPE.LEGENDRE_POLYNOMIAL:
-      case FUNCTION_TYPE.CHEBYSHEV_FIRST_KIND:
-      case FUNCTION_TYPE.CHEBYSHEV_SECOND_KIND:
+      case FunctionType.LEGENDRE_POLYNOMIAL:
+      case FunctionType.CHEBYSHEV_FIRST_KIND:
+      case FunctionType.CHEBYSHEV_SECOND_KIND:
         this.form = this.formBuilder.group({
           orderValue: [
             '0',
@@ -373,7 +388,7 @@ export class FunctionInputComponent implements OnInit {
           ],
         });
         break;
-      case FUNCTION_TYPE.JACOBI_POLYNOMIAL:
+      case FunctionType.JACOBI_POLYNOMIAL:
         this.form = this.formBuilder.group({
           orderValue: [
             '1',
@@ -454,24 +469,24 @@ export class FunctionInputComponent implements OnInit {
 
   assignInput() {
     switch (this.parameter) {
-      case FUNCTION_TYPE.BESSEL_FIRST_KIND:
-      case FUNCTION_TYPE.BESSEL_SECOND_KIND:
-      case FUNCTION_TYPE.BESSEL_THIRD_KIND:
+      case FunctionType.BESSEL_FIRST_KIND:
+      case FunctionType.BESSEL_SECOND_KIND:
+      case FunctionType.BESSEL_THIRD_KIND:
         this.inputs = [
           this.orderInputReal,
           this.precisionInput,
           this.variableInput,
         ];
         break;
-      case FUNCTION_TYPE.LAGUERRE_POLYNOMIAL:
+      case FunctionType.LAGUERRE_POLYNOMIAL:
         this.inputs = [this.orderInputNatural, this.variableInput];
         break;
-      case FUNCTION_TYPE.LEGENDRE_POLYNOMIAL:
-      case FUNCTION_TYPE.CHEBYSHEV_FIRST_KIND:
-      case FUNCTION_TYPE.CHEBYSHEV_SECOND_KIND:
+      case FunctionType.LEGENDRE_POLYNOMIAL:
+      case FunctionType.CHEBYSHEV_FIRST_KIND:
+      case FunctionType.CHEBYSHEV_SECOND_KIND:
         this.inputs = [this.orderInputNatural, this.variableInputConstrained];
         break;
-      case FUNCTION_TYPE.JACOBI_POLYNOMIAL:
+      case FunctionType.JACOBI_POLYNOMIAL:
         this.inputs = [
           this.orderInputNatural,
           this.variableInputN0,
@@ -499,4 +514,5 @@ interface IInput {
   formControlName: string;
   isInvalid: string;
   error: string;
+  inputType: InputType;
 }

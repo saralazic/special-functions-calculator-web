@@ -8,7 +8,7 @@ import { JacobiPolynomial } from 'src/app/models/functions/jacobi';
 import { LaguerrePolynomial } from 'src/app/models/functions/laguerre';
 import { LegendrePolynomial } from 'src/app/models/functions/legendre';
 import { SpecialFunction } from 'src/app/models/specialFunction';
-import { FUNCTION_TYPE } from '../app/data/constants';
+import { FunctionType } from '../app/models/enums';
 import { BIG_NUMBER_CONSTANTS, math_64 } from './big_numbers_math';
 
 const math = math_64;
@@ -44,30 +44,30 @@ export function drawGraph(
 }
 
 export function loadTranslationForFunction(
-  type: FUNCTION_TYPE,
+  type: FunctionType,
   translations: any
 ): any {
   let fn: any;
   switch (type) {
-    case FUNCTION_TYPE.BESSEL_FIRST_KIND:
+    case FunctionType.BESSEL_FIRST_KIND:
       fn = translations.bessel_1;
       break;
-    case FUNCTION_TYPE.BESSEL_SECOND_KIND:
+    case FunctionType.BESSEL_SECOND_KIND:
       fn = translations.bessel_2;
       break;
-    case FUNCTION_TYPE.LEGENDRE_POLYNOMIAL:
+    case FunctionType.LEGENDRE_POLYNOMIAL:
       fn = translations.legendre;
       break;
-    case FUNCTION_TYPE.LAGUERRE_POLYNOMIAL:
+    case FunctionType.LAGUERRE_POLYNOMIAL:
       fn = translations.laguerre;
       break;
-    case FUNCTION_TYPE.CHEBYSHEV_FIRST_KIND:
+    case FunctionType.CHEBYSHEV_FIRST_KIND:
       fn = translations.chebyshev_1;
       break;
-    case FUNCTION_TYPE.CHEBYSHEV_SECOND_KIND:
+    case FunctionType.CHEBYSHEV_SECOND_KIND:
       fn = translations.chebyshev_2;
       break;
-    case FUNCTION_TYPE.JACOBI_POLYNOMIAL:
+    case FunctionType.JACOBI_POLYNOMIAL:
       fn = translations.jacobi;
       break;
     default:
@@ -81,25 +81,25 @@ export function loadTranslationForFunction(
 export function createChosenFunction(parameter: string): SpecialFunction {
   let spef: SpecialFunction;
   switch (parameter) {
-    case FUNCTION_TYPE.BESSEL_FIRST_KIND:
+    case FunctionType.BESSEL_FIRST_KIND:
       spef = new BesselFirstKind();
       break;
-    case FUNCTION_TYPE.BESSEL_SECOND_KIND:
+    case FunctionType.BESSEL_SECOND_KIND:
       spef = new BesselSecondKind();
       break;
-    case FUNCTION_TYPE.LEGENDRE_POLYNOMIAL:
+    case FunctionType.LEGENDRE_POLYNOMIAL:
       spef = new LegendrePolynomial();
       break;
-    case FUNCTION_TYPE.LAGUERRE_POLYNOMIAL:
+    case FunctionType.LAGUERRE_POLYNOMIAL:
       spef = new LaguerrePolynomial();
       break;
-    case FUNCTION_TYPE.CHEBYSHEV_FIRST_KIND:
+    case FunctionType.CHEBYSHEV_FIRST_KIND:
       spef = new ChebyshevPolynomialOfFirstKind();
       break;
-    case FUNCTION_TYPE.CHEBYSHEV_SECOND_KIND:
+    case FunctionType.CHEBYSHEV_SECOND_KIND:
       spef = new ChebyshevPolynomialOfSecondKind();
       break;
-    case FUNCTION_TYPE.JACOBI_POLYNOMIAL:
+    case FunctionType.JACOBI_POLYNOMIAL:
       spef = new JacobiPolynomial();
       break;
     default:

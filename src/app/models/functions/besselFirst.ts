@@ -1,4 +1,4 @@
-import { FUNCTION_TYPE } from '../../data/constants';
+import { FunctionType } from '../enums';
 import { getE, getPi } from '../../../utilities/utilities';
 import {
   FunctionParamsForCalculation,
@@ -12,7 +12,7 @@ export class BesselFirstKind extends SpecialFunction {
   math = math_64;
 
   constructor() {
-    super(FUNCTION_TYPE.BESSEL_FIRST_KIND);
+    super(FunctionType.BESSEL_FIRST_KIND);
   }
 
   calculate(params: FunctionParamsForCalculation): number {

@@ -1,5 +1,5 @@
 import { MathType } from 'mathjs';
-import { FUNCTION_TYPE } from 'src/app/data/constants';
+import { FunctionType } from 'src/app/models/enums';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 import { loadTranslationForFunction } from 'src/utilities/utilities';
 import {
@@ -13,7 +13,7 @@ export class LegendrePolynomial extends SpecialFunction {
   math = math_64;
 
   constructor() {
-    super(FUNCTION_TYPE.LEGENDRE_POLYNOMIAL);
+    super(FunctionType.LEGENDRE_POLYNOMIAL);
   }
 
   calculate(params: FunctionParamsForCalculation): number {
