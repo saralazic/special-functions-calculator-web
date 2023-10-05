@@ -1,4 +1,4 @@
-import { BigNumber, MathType, re } from 'mathjs';
+import { BigNumber, MathType } from 'mathjs';
 import { FunctionType } from 'src/app/models/enums';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 import {

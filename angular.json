@@ -13,8 +13,17 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "typed-function",
+              "seedrandom",
+              "javascript-natural-sort",
+              "plotly.js-basic-dist",
+              "escape-latex",
+              "fraction.js",
+              "complex.js"
+            ],
             "buildOptimizer": false,
-            "outputPath": "dist/spef-calculator",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -56,8 +65,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "12mb",
+                  "maximumError": "14mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -66,7 +75,7 @@
                 }
               ],
               "outputHashing": "all",
-              "optimization": true
+              "optimization": false
             },
             "development": {
               "buildOptimizer": false,

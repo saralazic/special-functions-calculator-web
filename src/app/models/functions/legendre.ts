@@ -1,11 +1,9 @@
 import { MathType } from 'mathjs';
 import { FunctionType } from 'src/app/models/enums';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
-import { loadTranslationForFunction } from 'src/utilities/utilities';
 import {
   FunctionParamsForCalculation,
   FunctionParamsForCalculationWithBigNumbers,
-  ISpecialFunctionTranslations,
   SpecialFunction,
 } from '../specialFunction';
 

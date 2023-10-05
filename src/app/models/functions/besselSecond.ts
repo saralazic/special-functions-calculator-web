@@ -1,18 +1,14 @@
+import * as math from 'mathjs';
+import { BigNumber } from 'mathjs';
+import { math_64 } from 'src/utilities/big_numbers_math';
+import { getPi } from '../../../utilities/utilities';
 import { FunctionType } from '../enums';
-import {
-  getPi,
-  loadTranslationForFunction,
-} from '../../../utilities/utilities';
 import {
   FunctionParamsForCalculation,
   FunctionParamsForCalculationWithBigNumbers,
-  ISpecialFunctionTranslations,
   SpecialFunction,
 } from '../specialFunction';
-import { math_64 } from 'src/utilities/big_numbers_math';
-import { BigNumber } from 'mathjs';
 import { BesselFirstKind } from './besselFirst';
-import * as math from 'mathjs';
 
 export class BesselSecondKind extends SpecialFunction {
   math = math_64;
