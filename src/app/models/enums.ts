@@ -1,4 +1,4 @@
-export enum FUNCTION_TYPE {
+export enum FunctionType {
   BESSEL_FIRST_KIND = 'bessel1',
   BESSEL_SECOND_KIND = 'bessel2',
   BESSEL_THIRD_KIND = 'bessel3',
@@ -9,4 +9,10 @@ export enum FUNCTION_TYPE {
   CHEBYSHEV_SECOND_KIND = 'chebyshev2',
 }
 
-export const CHARACTERISTICS = [];
+export enum InputType {
+  VARIABLE,
+  PRECISION,
+  ORDER,
+  ALPHA,
+  BETA,
+}
