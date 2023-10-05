@@ -28,14 +28,12 @@ export class BesselSecondKind extends SpecialFunction {
     if (alpha % 2) JminusAlpha = -JminusAlpha;
 
     const limit = (expr: string, variable: string, value: number): number => {
-      // Compute the limit by evaluating the expression with a small delta around the value
       return (
         math.evaluate(expr, { [variable]: value + eps }) -
         math.evaluate(expr, { [variable]: value - eps })
       );
     };
 
-    // Compute the limit using the custom function
     const val = limit(
       '(Math.cos(alpha * Math.PI) * Jalpha - JminusAlpha) / Math.sin(alpha * Math.PI)',
       'alpha',

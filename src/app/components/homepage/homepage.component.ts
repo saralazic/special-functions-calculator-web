@@ -32,7 +32,7 @@ export class HomepageComponent {
     this.subscription = this.languageService
       .getLanguageChangeObservable()
       .subscribe(() => {
-        this.loadTranslations(); // Load translations whenever language changes
+        this.loadTranslations();
       });
   }
 

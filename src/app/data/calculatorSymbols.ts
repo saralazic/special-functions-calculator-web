@@ -65,7 +65,6 @@ export const unaryOps2: ISymbolWithData[] = [
     data: BIG_NUMBER_CONSTANTS.TWO,
   },
   { symbol: 'factorial', label: 'x!', data: BIG_NUMBER_CONSTANTS.ONE },
-  // { symbol: 'ee', label: 'EE', data: BIG_MATH_CONSTANTS.ONE },
   { symbol: 'ln', label: 'ln', data: getE() },
   { symbol: 'lg', label: 'lg', data: BIG_NUMBER_CONSTANTS.TEN },
   { symbol: 'lg', label: 'log<sub>2</sub>', data: BIG_NUMBER_CONSTANTS.TWO },

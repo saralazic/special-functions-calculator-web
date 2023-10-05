@@ -1,6 +1,5 @@
 import { all, create } from 'mathjs';
 
-// Initialize the math object globally at an appropriate place (e.g., top of the file or in a service)
 export const math_64 = create(all, { number: 'BigNumber', precision: 64 });
 
 export class BIG_NUMBER_CONSTANTS {

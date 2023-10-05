@@ -29,9 +29,9 @@ export function drawGraph(
   const trace: Partial<Plotly.ScatterData> = {
     x: xValues,
     y: yValues,
-    type: 'scatter', // Change the type according to the plot you want (e.g., 'scatter', 'bar', etc.)
-    mode: 'lines+markers', // Change the mode according to your preference
-    marker: { size: 1 }, // Set the size property to adjust the marker size (you can change the value as needed)
+    type: 'scatter',
+    mode: 'lines+markers',
+    marker: { size: 1 },
   };
 
   const layout: Partial<Plotly.Layout> = {
@@ -141,7 +141,6 @@ export function checkIfBigNumberIsPrecision(value: string): boolean {
   const zero = BIG_NUMBER_CONSTANTS.ZERO;
   const one = BIG_NUMBER_CONSTANTS.ONE;
 
-  // Convert the result of math.compare() to a native JavaScript number using Number()
   return (
     Number(math.compare(valueNumber, zero)) > 0 &&
     Number(math.compare(valueNumber, one)) < 0

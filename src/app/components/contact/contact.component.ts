@@ -11,7 +11,7 @@ import { LanguageService } from 'src/app/services/language-service/language.serv
 })
 export class ContactComponent implements OnInit {
   private subscription?: Subscription;
-  contactForm!: FormGroup; // Add "!" to indicate it will be initialized in ngOnInit
+  contactForm!: FormGroup;
 
   phoneIconPath = 'assets/icons/phone.svg';
   emailIconPath = 'assets/icons/email.svg';
@@ -38,7 +38,7 @@ export class ContactComponent implements OnInit {
     this.subscription = this.languageService
       .getLanguageChangeObservable()
       .subscribe(() => {
-        this.loadTranslations(); // Load translations whenever language changes
+        this.loadTranslations();
       });
   }
 
@@ -73,9 +73,6 @@ export class ContactComponent implements OnInit {
       const formData = this.contactForm.value;
 
       this.showResponse = true;
-
-      // You can perform further actions like sending the form data to a server
-      // or displaying a success message here.
 
       const recipient = 'sara.lazic@outlook.com';
       const subject = formData.subject;

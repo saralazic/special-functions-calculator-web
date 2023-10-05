@@ -71,7 +71,7 @@ export class CalculatorComponent {
     }
   }
 
-  //**wrapper */
+  /** wrapper methods */
   setOperator(operator: string): void {
     this.expression.setOperator(operator);
   }

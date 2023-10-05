@@ -19,8 +19,8 @@
     "module": "ES2022",
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
-    "allowSyntheticDefaultImports": true /* Add this line */,
-    "esModuleInterop": true /* Add this line */,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true
   },

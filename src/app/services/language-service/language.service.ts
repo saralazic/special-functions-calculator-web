@@ -13,11 +13,11 @@ export class LanguageService {
   }
 
   getSelectedLanguage(): string {
-    return localStorage.getItem(this.storageKey) || 'sr'; // Default language is English
+    return localStorage.getItem(this.storageKey) || 'sr';
   }
 
   setSelectedLanguage(language: string): void {
     localStorage.setItem(this.storageKey, language);
-    this.languageChange$.next(language); // Emit the selected language
+    this.languageChange$.next(language);
   }
 }

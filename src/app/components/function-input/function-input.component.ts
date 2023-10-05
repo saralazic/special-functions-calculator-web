@@ -158,7 +158,7 @@ export class FunctionInputComponent implements OnInit {
     this.subscription = this.languageService
       .getLanguageChangeObservable()
       .subscribe(() => {
-        this.loadTranslations(); // Load translations whenever language changes
+        this.loadTranslations();
       });
   }
 
@@ -334,10 +334,12 @@ export class FunctionInputComponent implements OnInit {
       [controlName]: newValue,
     });
 
-    // Trigger validation on the control
+    /* Trigger validation on the control */
     control?.updateValueAndValidity();
 
-    // If the control is still invalid after validation, display the error errorMessage
+    /** Validate calculated value with appropriate form
+     * if invalid show error
+     */
     if (control?.invalid && control?.touched) {
       const errors = control?.errors;
       console.error('Validation error:', errors);
