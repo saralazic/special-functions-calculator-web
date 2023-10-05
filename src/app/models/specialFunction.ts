@@ -1,11 +1,11 @@
 import { loadTranslationForFunction } from 'src/utilities/utilities';
-import { FUNCTION_TYPE } from '../data/constants';
+import { FunctionType } from './enums';
 
 export abstract class SpecialFunction {
-  public functionType: FUNCTION_TYPE;
+  public functionType: FunctionType;
   public translations?: ISpecialFunctionTranslations;
 
-  constructor(type: FUNCTION_TYPE) {
+  constructor(type: FunctionType) {
     this.functionType = type;
   }
 

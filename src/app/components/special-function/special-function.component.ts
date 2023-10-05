@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { FUNCTION_TYPE } from 'src/app/data/constants';
+import { FunctionType } from 'src/app/models/enums';
 import {
   FunctionParams,
   SpecialFunction,
@@ -54,9 +54,9 @@ export class SpecialFunctionComponent implements OnInit {
 
   generateCoordinates(n: number, eps: number) {
     if (
-      this.parameter === FUNCTION_TYPE.LEGENDRE_POLYNOMIAL ||
-      this.parameter === FUNCTION_TYPE.CHEBYSHEV_FIRST_KIND ||
-      this.parameter === FUNCTION_TYPE.CHEBYSHEV_SECOND_KIND
+      this.parameter === FunctionType.LEGENDRE_POLYNOMIAL ||
+      this.parameter === FunctionType.CHEBYSHEV_FIRST_KIND ||
+      this.parameter === FunctionType.CHEBYSHEV_SECOND_KIND
     ) {
       const startValue: number = -0.999999;
       const endValue: number = 0.999999;

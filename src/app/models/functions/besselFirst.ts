@@ -1,7 +1,7 @@
 import * as math from 'mathjs';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
+import { FunctionType } from '../enums';
 import { getE, getPi } from '../../../utilities/utilities';
-import { FUNCTION_TYPE } from '../../data/constants';
 import {
   FunctionParamsForCalculation,
   FunctionParamsForCalculationWithBigNumbers,
@@ -12,7 +12,7 @@ export class BesselFirstKind extends SpecialFunction {
   math = math_64;
 
   constructor() {
-    super(FUNCTION_TYPE.BESSEL_FIRST_KIND);
+    super(FunctionType.BESSEL_FIRST_KIND);
   }
 
   calculate(params: FunctionParamsForCalculation): number {

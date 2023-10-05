@@ -1,6 +1,6 @@
 import { BigNumber, MathType } from 'mathjs';
-import { FUNCTION_TYPE } from 'src/app/data/constants';
 import { math_64 } from 'src/utilities/big_numbers_math';
+import { FunctionType } from 'src/app/models/enums';
 import {
   FunctionParamsForCalculation,
   FunctionParamsForCalculationWithBigNumbers,
@@ -11,7 +11,7 @@ export class ChebyshevPolynomialOfFirstKind extends SpecialFunction {
   math = math_64;
 
   constructor() {
-    super(FUNCTION_TYPE.CHEBYSHEV_FIRST_KIND);
+    super(FunctionType.CHEBYSHEV_FIRST_KIND);
   }
 
   calculate(params: FunctionParamsForCalculation): number {

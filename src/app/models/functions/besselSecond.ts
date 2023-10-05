@@ -2,7 +2,7 @@ import * as math from 'mathjs';
 import { BigNumber } from 'mathjs';
 import { math_64 } from 'src/utilities/big_numbers_math';
 import { getPi } from '../../../utilities/utilities';
-import { FUNCTION_TYPE } from '../../data/constants';
+import { FunctionType } from '../enums';
 import {
   FunctionParamsForCalculation,
   FunctionParamsForCalculationWithBigNumbers,
@@ -15,7 +15,7 @@ export class BesselSecondKind extends SpecialFunction {
   J: BesselFirstKind;
 
   constructor() {
-    super(FUNCTION_TYPE.BESSEL_SECOND_KIND);
+    super(FunctionType.BESSEL_SECOND_KIND);
     this.J = new BesselFirstKind();
   }
 
