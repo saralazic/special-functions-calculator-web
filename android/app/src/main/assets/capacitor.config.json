@@ -1,8 +1,0 @@
-{
-	"appId": "com.calculator.spef",
-	"appName": "spef-calculator-android",
-	"webDir": "dist",
-	"server": {
-		"androidScheme": "https"
-	}
-}
