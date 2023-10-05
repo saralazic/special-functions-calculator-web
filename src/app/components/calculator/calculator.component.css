@@ -33,13 +33,6 @@
 	white-space: nowrap;
   }
   
-  .input-container {
-	flex: 1;
-	display: flex;
-	align-items: center;
-	overflow-x: auto; 
-  }
-  
   input::-webkit-scrollbar {
 	width: 8px; 
   }

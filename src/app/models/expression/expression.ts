@@ -4,6 +4,8 @@ import { Stack } from 'src/utilities/stack';
 import { getE, getPi, round } from 'src/utilities/utilities';
 import { IExpression } from './IExpression';
 
+/** This is for calculator component */
+/** Does evaluation of expressions using BigMath */
 export class Expression implements IExpression {
   math = math_64;
 

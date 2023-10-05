@@ -48,6 +48,8 @@ export class HeaderComponent {
   getLanguageIconStyle(language?: string) {
     const selectedLanguage =
       language || this.languageService.getSelectedLanguage();
+
+    /** TODO: Icon is smaller than circle around it (button), I should fix it */
     const imageUrl = `url('assets/icons/${selectedLanguage}.png')`;
     return { 'background-image': imageUrl };
   }

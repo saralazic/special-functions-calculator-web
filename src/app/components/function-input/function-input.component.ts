@@ -3,7 +3,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
-  FormControl,
   FormGroup,
   ValidationErrors,
   Validators,
@@ -15,10 +14,18 @@ import {
   FunctionParams,
   FunctionParamsForCalculation,
   FunctionParamsForCalculationWithBigNumbers,
-} from 'src/app/models/specialFunction';
+} from 'src/app/models/functions/specialFunction';
 import { LanguageService } from 'src/app/services/language-service/language.service';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 import { checkIfBigNumberIsPrecision } from 'src/utilities/utilities';
+import {
+  bigNumberValidatorForPrecision,
+  bigNumberValidatorNatural,
+  bigNumberValidatorConstrained,
+  bigNumberValidatorN0,
+  bigNumberValidatorForParams,
+  bigNumberValidator,
+} from 'src/utilities/validators';
 
 @Component({
   selector: 'app-function-input',
@@ -26,13 +33,19 @@ import { checkIfBigNumberIsPrecision } from 'src/utilities/utilities';
   styleUrls: ['./function-input.component.css'],
 })
 export class FunctionInputComponent implements OnInit {
+  /** since this is only input form, values are sent to parent component -> special-function
+   * and than parent component will call functions which perform calculation
+   */
   @Output() formValuesChanged = new EventEmitter<any>();
+
+  /** parameter is chosen function */
   @Input() parameter: string | null = null;
 
   private subscription?: Subscription;
 
   form!: FormGroup;
 
+  /** labels which need translation */
   labelOrderNatural: string = '';
   labelOrderReal: string = '';
   labelPrecision: string = '';
@@ -41,20 +54,6 @@ export class FunctionInputComponent implements OnInit {
   aInputLabel: string = '';
   bInputLabel: string = '';
   labelVariableConstrained: string = '';
-  errorMessage: string = '';
-  basicInformationsLabel: string = '';
-  useCalculatedValueLabel: string = '';
-  calculateAndDrawLabel: string = '';
-
-  currentCalculatedValue: string;
-
-  shouldShowCalculator: boolean;
-  whereToUseCalculatedValue: InputType | null;
-
-  calculatorIconPath = 'assets/icons/calculator.svg';
-
-  calculatorError?: string;
-
   orderInputReal: IInput;
   orderInputNatural: IInput;
   precisionInput: IInput;
@@ -63,7 +62,28 @@ export class FunctionInputComponent implements OnInit {
   variableInputN0: IInput;
   aInput: IInput;
   bInput: IInput;
+  basicInformationsLabel: string = '';
+  useCalculatedValueLabel: string = '';
+  calculateAndDrawLabel: string = '';
 
+  errorMessage: string = '';
+
+  /** value which is result of calculator usage */
+  currentCalculatedValue: string;
+
+  /** helpers for calculator use */
+  shouldShowCalculator: boolean;
+  whereToUseCalculatedValue: InputType | null;
+
+  calculatorIconPath = 'assets/icons/calculator.svg';
+  calculatorError?: string;
+
+  /** Array of inputs created dynamically based on which function user has chosen
+   * this inputs include:
+   * 1. validation (domain, precision needs to be decimal between 0 and 1 etc.)
+   * 2. appropriate errors
+   * 3. field input type which is needed for calculator usage
+   */
   inputs: IInput[] = [];
 
   constructor(
@@ -72,10 +92,12 @@ export class FunctionInputComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder
   ) {
+    //** initially we don't show calculator */
     this.shouldShowCalculator = false;
     this.whereToUseCalculatedValue = null;
     this.currentCalculatedValue = '';
 
+    //** initialize all possible inputs, but I will render only the ones I really need */
     this.orderInputReal = {
       label: this.labelOrderReal,
       formControlName: 'orderValue',
@@ -151,8 +173,10 @@ export class FunctionInputComponent implements OnInit {
 
   ngOnInit() {
     this.parameter = this.route.snapshot.paramMap.get('parameter');
+    /** next line creates input depending on parameter (chosen function) */
     this.assignInput();
     this.loadTranslations();
+    /** next line literally just creates form, again based on needs for chosen function */
     this.createForm();
 
     this.subscription = this.languageService
@@ -174,6 +198,7 @@ export class FunctionInputComponent implements OnInit {
       const paramAlpha = this.form.get('aParameterValue')?.value || '0';
       const paramBeta = this.form.get('bParameterValue')?.value || '0';
 
+      /** All the calculation in app should be done with big numbers (64 precision) */
       const paramsBig = {
         alphaBig: orderValue,
         epsBig: precisionValue,
@@ -182,6 +207,7 @@ export class FunctionInputComponent implements OnInit {
         b: paramBeta,
       } as FunctionParamsForCalculationWithBigNumbers;
 
+      /** I actually don't need this, I created it for test purposes */
       const paramsR = {
         alpha: +orderValue,
         eps: +precisionValue,
@@ -195,97 +221,9 @@ export class FunctionInputComponent implements OnInit {
         bignumber: paramsBig,
       } as FunctionParams;
 
+      /** now I am just sending data to parent component */
       this.formValuesChanged.emit(params);
     }
-  }
-
-  bigNumberValidator(control: AbstractControl): ValidationErrors | null {
-    const bigNumberRegex = /^-?\d+(\.\d+)?([eE]-?\d+)?$/;
-    if (control.value && !bigNumberRegex.test(control.value)) {
-      return { invalidBigNumber: true };
-    }
-    return null;
-  }
-
-  bigNumberValidatorNatural(control: AbstractControl): ValidationErrors | null {
-    const bigNumberRegex = /^-?\d+(\.\d+)?([eE]-?\d+)?$/;
-    if (control.value && !bigNumberRegex.test(control.value)) {
-      return { invalidBigNumber: true };
-    }
-
-    let nBig = math_64.bignumber(control.value);
-    if (!(math_64.isInteger(nBig) && math_64.isPositive(nBig))) {
-      return { invalidBigNumber: true };
-    }
-
-    return null;
-  }
-
-  bigNumberValidatorN0(control: AbstractControl): ValidationErrors | null {
-    const bigNumberRegex = /^-?\d+(\.\d+)?([eE]-?\d+)?$/;
-    if (control.value && !bigNumberRegex.test(control.value)) {
-      return { invalidBigNumber: true };
-    }
-
-    let nBig = math_64.bignumber(control.value);
-    if (!(math_64.isInteger(nBig) && !math_64.isNegative(nBig))) {
-      return { invalidBigNumber: true };
-    }
-
-    return null;
-  }
-
-  bigNumberValidatorForParams(
-    control: AbstractControl
-  ): ValidationErrors | null {
-    const bigNumberRegex = /^-?\d+(\.\d+)?([eE]-?\d+)?$/;
-    if (control.value && !bigNumberRegex.test(control.value)) {
-      return { invalidBigNumber: true };
-    }
-
-    let k = math_64.bignumber(control.value);
-    if (!(Number(math_64.compare(k, BIG_NUMBER_CONSTANTS.MINUS_ONE)) >= 0)) {
-      return { invalidBigNumber: true };
-    }
-
-    return null;
-  }
-
-  bigNumberValidatorConstrained(
-    control: AbstractControl
-  ): ValidationErrors | null {
-    const bigNumberRegex = /^-?\d+(\.\d+)?([eE]-?\d+)?$/;
-    if (control.value && !bigNumberRegex.test(control.value)) {
-      return { invalidBigNumber: true };
-    }
-
-    let k = math_64.bignumber(control.value);
-    if (
-      !(
-        Number(math_64.compare(k, BIG_NUMBER_CONSTANTS.MINUS_ONE)) >= 0 &&
-        Number(math_64.compare(k, BIG_NUMBER_CONSTANTS.ONE)) <= 0
-      )
-    ) {
-      return { invalidBigNumber: true };
-    }
-
-    return null;
-  }
-
-  bigNumberValidatorForPrecision(
-    control: AbstractControl
-  ): ValidationErrors | null {
-    const precisionNumberRegex = /^-?\d+(\.\d+)?([eE]-?\d+)?$/;
-
-    if (!control.value || !precisionNumberRegex.test(control.value)) {
-      return { invalidPrecisionNumber: true };
-    }
-
-    if (!checkIfBigNumberIsPrecision(control.value)) {
-      return { invalidPrecisionNumber: true };
-    }
-
-    return null;
   }
 
   showCalculator(inputType: InputType) {
@@ -362,65 +300,53 @@ export class FunctionInputComponent implements OnInit {
       case FunctionType.BESSEL_SECOND_KIND:
       case FunctionType.BESSEL_THIRD_KIND:
         this.form = this.formBuilder.group({
-          orderValue: ['0', [Validators.required, this.bigNumberValidator]],
+          orderValue: ['0', [Validators.required, bigNumberValidator]],
           precisionValue: [
             '1e-64',
-            [Validators.required, this.bigNumberValidatorForPrecision],
+            [Validators.required, bigNumberValidatorForPrecision],
           ],
-          variableValue: ['0', [Validators.required, this.bigNumberValidator]],
+          variableValue: ['0', [Validators.required, bigNumberValidator]],
         });
         break;
       case FunctionType.LAGUERRE_POLYNOMIAL:
         this.form = this.formBuilder.group({
-          orderValue: [
-            '1',
-            [Validators.required, this.bigNumberValidatorNatural],
-          ],
-          variableValue: ['0', [Validators.required, this.bigNumberValidator]],
+          orderValue: ['1', [Validators.required, bigNumberValidatorNatural]],
+          variableValue: ['0', [Validators.required, bigNumberValidator]],
         });
         break;
       case FunctionType.LEGENDRE_POLYNOMIAL:
       case FunctionType.CHEBYSHEV_FIRST_KIND:
       case FunctionType.CHEBYSHEV_SECOND_KIND:
         this.form = this.formBuilder.group({
-          orderValue: [
-            '0',
-            [Validators.required, this.bigNumberValidatorNatural],
-          ],
+          orderValue: ['0', [Validators.required, bigNumberValidatorNatural]],
           variableValue: [
             '0',
-            [Validators.required, this.bigNumberValidatorConstrained],
+            [Validators.required, bigNumberValidatorConstrained],
           ],
         });
         break;
       case FunctionType.JACOBI_POLYNOMIAL:
         this.form = this.formBuilder.group({
-          orderValue: [
-            '1',
-            [Validators.required, this.bigNumberValidatorNatural],
-          ],
-          variableValue: [
-            '0',
-            [Validators.required, this.bigNumberValidatorN0],
-          ],
+          orderValue: ['1', [Validators.required, bigNumberValidatorNatural]],
+          variableValue: ['0', [Validators.required, bigNumberValidatorN0]],
           aParameterValue: [
             '0',
-            [Validators.required, this.bigNumberValidatorForParams],
+            [Validators.required, bigNumberValidatorForParams],
           ],
           bParameterValue: [
             '0',
-            [Validators.required, this.bigNumberValidatorForParams],
+            [Validators.required, bigNumberValidatorForParams],
           ],
         });
         break;
       default:
         this.form = this.formBuilder.group({
-          orderValue: ['', [Validators.required, this.bigNumberValidator]],
+          orderValue: ['', [Validators.required, bigNumberValidator]],
           precisionValue: [
             '1e-64',
-            [Validators.required, this.bigNumberValidatorForPrecision],
+            [Validators.required, bigNumberValidatorForPrecision],
           ],
-          variableValue: ['0', [Validators.required, this.bigNumberValidator]],
+          variableValue: ['0', [Validators.required, bigNumberValidator]],
         });
         break;
     }
@@ -516,6 +442,8 @@ export class FunctionInputComponent implements OnInit {
     }
   }
 
+  /** for function information I want to open new window */
+  /** TODO: logically this belongs to parent component, not here, I should move it there */
   openNewWindow() {
     window.open(`/function-informations/${this.parameter}`, '_blank');
   }

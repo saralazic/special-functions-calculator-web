@@ -7,7 +7,7 @@ import {
   FunctionParamsForCalculation,
   FunctionParamsForCalculationWithBigNumbers,
   SpecialFunction,
-} from '../specialFunction';
+} from './specialFunction';
 import { BesselFirstKind } from './besselFirst';
 
 export class BesselSecondKind extends SpecialFunction {

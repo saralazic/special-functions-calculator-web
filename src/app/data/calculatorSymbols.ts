@@ -4,6 +4,19 @@ import { ISymbol, ISymbolWithData } from '../models/symbol';
 
 const math = math_64;
 
+export const digits: string[] = [
+  '0',
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+];
+
 export const operators: ISymbol[] = [
   { symbol: '+', label: '&#43;' },
   { symbol: '-', label: '&minus;' },
@@ -78,3 +91,5 @@ export const hyperbolic: ISymbol[] = [
   { symbol: 'acosh', label: 'cosh<sup>-1</sup>' },
   { symbol: 'atanh', label: 'tanh<sup>-1</sup>' },
 ];
+
+export const MULTIPLY_SIGN_ASCII_CODE = '&#215;';

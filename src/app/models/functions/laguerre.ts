@@ -5,7 +5,7 @@ import {
   FunctionParamsForCalculation,
   FunctionParamsForCalculationWithBigNumbers,
   SpecialFunction,
-} from '../specialFunction';
+} from './specialFunction';
 
 export class LaguerrePolynomial extends SpecialFunction {
   math = math_64;
