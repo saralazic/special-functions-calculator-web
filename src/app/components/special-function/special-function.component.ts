@@ -24,6 +24,8 @@ export class SpecialFunctionComponent implements OnInit {
 
   private subscription?: Subscription;
   private spef?: SpecialFunction;
+  slideTriggered: boolean = false;
+
   parameter: string | null = null;
   value?: number;
   valueBig?: string;
@@ -74,6 +76,8 @@ export class SpecialFunctionComponent implements OnInit {
   /** When child component sends value, it triggers this method */
   onFormValuesChanged(data: FunctionParams) {
     if (data) {
+      this.slideTriggered = true;
+
       this.valueBig = this.spef?.calculateBig(data.bignumber);
 
       this.value = this.spef?.calculate(data.real);
