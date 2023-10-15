@@ -26,3 +26,8 @@
   justify-content: center;
   height: 100%;
 }
+
+.custom-mat-button {
+  background-color: var(--burgundy) !important; /* Burgundy background color */
+  color: #fff !important; /* White text color */
+}

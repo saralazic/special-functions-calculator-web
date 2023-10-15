@@ -1,6 +1,17 @@
 <div class="center">
-  <h1>{{name}}</h1>
+  <h1>
+    <span>{{name}}</span>
+    <img
+      class="icon"
+      src="{{ infoIconPath }}"
+      alt="Calculator Icon"
+      (click)="openNewWindow()"
+      type="button"
+      matTooltip="{{ infoTooltip }}"
+    />
+  </h1>
 </div>
+
 
 <div class="content">
   <div [ngClass]="{'slide-left': slideTriggered}" class="container">

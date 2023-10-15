@@ -23,6 +23,7 @@ import { HeaderComponent } from './components/marginals/header/header.component'
 import { SpecialFunctionComponent } from './components/function/special-function/special-function.component';
 import { SvgIconComponent } from './components/svg-icon/svg-icon.component';
 import { ResultDisplayComponent } from './components/function/result-display/result-display.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { ResultDisplayComponent } from './components/function/result-display/res
     MatInputModule,
     MatSelectModule,
     MatSliderModule,
+    MatTooltipModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

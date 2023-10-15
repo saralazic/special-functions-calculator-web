@@ -53,6 +53,9 @@ export class SpecialFunctionComponent implements OnInit {
   value?: number;
   valueBig?: string;
   name?: string;
+  infoTooltip?: string;
+
+  infoIconPath = 'assets/icons/info.png';
 
   constructor(
     private route: ActivatedRoute,
@@ -93,6 +96,7 @@ export class SpecialFunctionComponent implements OnInit {
       .subscribe((translations: any) => {
         let spefTranslations = this.spef?.loadTranslations(translations);
         this.name = spefTranslations?.name;
+        this.infoTooltip = translations.tooltips.info;
       });
   }
 
@@ -110,5 +114,7 @@ export class SpecialFunctionComponent implements OnInit {
     }
   }
 
-  //** TODO: find better way to show calculation result!! */
+  openNewWindow() {
+    window.open(`/function-informations/${this.parameter}`, '_blank');
+  }
 }

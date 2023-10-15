@@ -19,15 +19,20 @@
                 alt="Calculator Icon"
                 class="icon"
                 (click)="showCalculator(input.inputType)"
-                type="button"/>
+                type="button"
+                matTooltip="{{ calculatorTooltip }}"
+                />
             </mat-form-field>
         </div>
-        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid"> {{ calculateAndDrawLabel }}</button>
-        <br>
+        <button mat-raised-button type="submit" [disabled]="form.invalid" class="custom-mat-button"> {{ calculateAndDrawLabel }}</button>
+        &nbsp;
+        <button mat-raised-button type="button" class="custom-mat-button" (click) = "clearContent()"> {{ clearLabel }}</button>
     </form>
+
+<!-- In this version button is icon next to function name in special-function component -->
+<!-- 
     <br>
-    <br>
-    <button mat-raised-button color="primary"  (click)="openNewWindow()">{{ basicInformationsLabel }}</button>
+    <button mat-raised-button (click)="openNewWindow()" class="custom-mat-button">{{ basicInformationsLabel }}</button> -->
 
 
 
