@@ -1,8 +1,21 @@
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { FunctionType } from 'src/app/models/enums';
 import {
   FunctionParams,
   SpecialFunction,
@@ -18,9 +31,19 @@ import {
   selector: 'app-special-function',
   templateUrl: './special-function.component.html',
   styleUrls: ['./special-function.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      state('void', style({ opacity: 0 })),
+      transition(':enter', [animate('300ms', style({ opacity: 1 }))]),
+      transition(':leave', [animate('300ms', style({ opacity: 0 }))]),
+    ]),
+  ],
 })
 export class SpecialFunctionComponent implements OnInit {
   @ViewChild('graphContainer') graphContainer!: ElementRef;
+
+  /** I am emitting result of calculation to display component in order to show it nicely */
+  @Output() calculationResult = new EventEmitter<string>();
 
   private subscription?: Subscription;
   private spef?: SpecialFunction;
@@ -83,6 +106,7 @@ export class SpecialFunctionComponent implements OnInit {
       this.value = this.spef?.calculate(data.real);
 
       this.drawGraphic(data.real.alpha, data.real.eps);
+      this.calculationResult.emit(this.valueBig);
     }
   }
 

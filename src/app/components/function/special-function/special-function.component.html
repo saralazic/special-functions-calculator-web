@@ -7,14 +7,12 @@
     <div class="left-half">
       <app-function-input [parameter]="parameter" (formValuesChanged)="onFormValuesChanged($event)"></app-function-input>
     </div>
-    
+
     <div class="right-half">
-      {{value}}
-      <br>
-      {{valueBig}}
-      <br>
-      <div #graphContainer></div>
+      <div class="result-display">
+        <app-result-display *ngIf="valueBig" [result]="valueBig" (calculationResult)="valueBig = $event"></app-result-display>
+      </div>
+      <div class = "graph" #graphContainer></div>
     </div>
   </div>
-  
 </div>
