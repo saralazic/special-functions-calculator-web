@@ -28,6 +28,18 @@
 }
 
 .custom-mat-button {
-  background-color: var(--burgundy) !important; /* Burgundy background color */
-  color: #fff !important; /* White text color */
+  background-color: var(--burgundy) !important; 
+  color: #fff !important;
+}
+
+.custom-mat-button:hover {
+  background-color: var(--visited-function) !important;
+}
+
+.padding-btn{
+  padding-top: 8px;
+}
+
+.custom-mat-form-field {
+  margin-bottom: 0px; 
 }

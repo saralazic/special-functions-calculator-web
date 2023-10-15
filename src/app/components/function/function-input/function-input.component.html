@@ -1,7 +1,7 @@
 <div class="container">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div *ngFor="let input of inputs">
-            <mat-form-field appearance="fill" class="form-field mat-form-field">
+            <mat-form-field appearance="fill" class="form-field mat-form-field custom-mat-form-field">
                 <mat-label>{{input.label}}</mat-label>
                     <input
                     matInput
@@ -38,8 +38,8 @@
 
     <div class="center" *ngIf = "shouldShowCalculator">
         <app-calculator (calculated)="onCalculated($event)"></app-calculator>
-        <br>
-        <button mat-raised-button color="primary" (click)="useCalculatedValue()" [disabled]="useCalcValDisabled()">{{ useCalculatedValueLabel }}</button>
-      
+        <div class="padding-btn">
+            <button mat-raised-button (click)="useCalculatedValue()" [disabled]="useCalcValDisabled()" class="custom-mat-button">{{ useCalculatedValueLabel }}</button>
+        </div>      
     </div>
 </div>
