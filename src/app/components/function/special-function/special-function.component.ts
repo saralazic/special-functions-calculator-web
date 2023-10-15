@@ -87,6 +87,7 @@ export class SpecialFunctionComponent implements OnInit {
       eps
     );
     drawGraph(this.graphContainer?.nativeElement, xArr, yArr);
+    this.graphContainer.nativeElement.style.display = 'block';
   }
 
   loadTranslations() {
@@ -111,7 +112,12 @@ export class SpecialFunctionComponent implements OnInit {
 
       this.drawGraphic(data.real.alpha, data.real.eps);
       this.calculationResult.emit(this.valueBig);
+      return;
     }
+
+    this.valueBig = '';
+    this.slideTriggered = false;
+    this.graphContainer.nativeElement.style.display = 'none';
   }
 
   openNewWindow() {

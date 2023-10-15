@@ -224,8 +224,8 @@ export class FunctionInputComponent implements OnInit {
     this.whereToUseCalculatedValue =
       this.whereToUseCalculatedValue === inputType ? null : inputType;
     this.shouldShowCalculator = this.whereToUseCalculatedValue !== null;
-    console.log(this.whereToUseCalculatedValue);
-    console.log(this.shouldShowCalculator);
+    // console.log(this.whereToUseCalculatedValue);
+    // console.log(this.shouldShowCalculator);
 
     this.currentCalculatedValue = '';
   }
@@ -440,6 +440,7 @@ export class FunctionInputComponent implements OnInit {
 
   clearContent() {
     this.resetFormToInitialValues();
+    this.formValuesChanged.emit(null);
   }
 
   private resetFormToInitialValues() {

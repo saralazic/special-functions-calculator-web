@@ -4,7 +4,7 @@
   width: 67%;
   flex-direction: row;
   align-items: center;
-  height: 100%;
+  height: 640px;
   transition: transform 0.5s;
   position: relative;
 }
