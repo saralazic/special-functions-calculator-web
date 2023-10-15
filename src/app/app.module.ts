@@ -24,6 +24,7 @@ import { SpecialFunctionComponent } from './components/function/special-function
 import { SvgIconComponent } from './components/svg-icon/svg-icon.component';
 import { ResultDisplayComponent } from './components/function/result-display/result-display.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSelectModule,
     MatSliderModule,
     MatTooltipModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
