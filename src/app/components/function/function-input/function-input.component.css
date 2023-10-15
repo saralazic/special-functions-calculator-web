@@ -37,6 +37,11 @@
   background-color: var(--visited-function) !important;
 }
 
+.custom-mat-button:disabled {
+  background-color: gray !important; 
+  color: darkgray !important;
+}
+
 .padding-btn{
   padding-top: 8px;
 }
