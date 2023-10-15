@@ -44,3 +44,15 @@
 .custom-mat-form-field {
   margin-bottom: 0px; 
 }
+
+.custom-mat-input{
+  max-width: 440px;
+  overflow-x: scroll;
+}
+
+.custom-mat-input {
+  max-width: 440px; 
+  overflow-x: scroll; 
+  scrollbar-width: thick; 
+  scrollbar-color: var(--burgundy) gray;
+}
