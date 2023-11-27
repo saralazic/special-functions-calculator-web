@@ -55,6 +55,7 @@
   "input": {
     "labelOrderNatural": "Order (natural number):",
     "labelOrderReal": "Order (natural number):",
+    "labelOrderNonNegative": "Order (nonnegative integer):",
     "labelPrecision": "Precision (0.00...00x or xe-y):",
     "labelVariable": "Variable (real number):",
     "labelVariableConstrained": "Variable (real number between -1 and 1):",

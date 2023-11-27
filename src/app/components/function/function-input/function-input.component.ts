@@ -40,6 +40,7 @@ export class FunctionInputComponent implements OnInit {
   /** labels which need translation */
   labelOrderNatural: string = '';
   labelOrderReal: string = '';
+  labelOrderNonNegative: string = '';
   labelPrecision: string = '';
   labelVariable: string = '';
   labelVariableN0: string = '';
@@ -48,6 +49,7 @@ export class FunctionInputComponent implements OnInit {
   labelVariableConstrained: string = '';
   orderInputReal: IInput;
   orderInputNatural: IInput;
+  orderInputNonNegative: IInput;
   precisionInput: IInput;
   variableInput: IInput;
   variableInputConstrained: IInput;
@@ -103,6 +105,15 @@ export class FunctionInputComponent implements OnInit {
 
     this.orderInputNatural = {
       label: this.labelOrderNatural,
+      formControlName: 'orderValue',
+      isInvalid:
+        "form.get('orderValue')?.invalid && form.get('orderValue')?.touched",
+      error: this.errorMessage,
+      inputType: InputType.ORDER,
+    };
+
+    this.orderInputNonNegative = {
+      label: this.labelOrderNonNegative,
       formControlName: 'orderValue',
       isInvalid:
         "form.get('orderValue')?.invalid && form.get('orderValue')?.touched",
@@ -321,7 +332,7 @@ export class FunctionInputComponent implements OnInit {
         break;
       case FunctionType.JACOBI_POLYNOMIAL:
         this.form = this.formBuilder.group({
-          orderValue: ['1', [Validators.required, bigNumberValidatorNatural]],
+          orderValue: ['0', [Validators.required, bigNumberValidatorN0]],
           variableValue: ['0', [Validators.required, bigNumberValidatorN0]],
           aParameterValue: [
             '0',
@@ -353,6 +364,7 @@ export class FunctionInputComponent implements OnInit {
       .subscribe((translations: any) => {
         this.labelOrderNatural = translations.input.labelOrderNatural;
         this.labelOrderReal = translations.input.labelOrderReal;
+        this.labelOrderNonNegative = translations.input.labelOrderNonNegative;
         this.labelPrecision = translations.input.labelPrecision;
         this.labelVariable = translations.input.labelVariable;
         this.labelVariableConstrained =
@@ -381,6 +393,9 @@ export class FunctionInputComponent implements OnInit {
 
     this.orderInputNatural.label = this.labelOrderNatural;
     this.orderInputNatural.error = this.errorMessage;
+
+    this.orderInputNonNegative.label = this.labelOrderNonNegative;
+    this.orderInputNonNegative.error = this.errorMessage;
 
     this.precisionInput.label = this.labelPrecision;
     this.precisionInput.error = this.errorMessage;
@@ -422,7 +437,7 @@ export class FunctionInputComponent implements OnInit {
         break;
       case FunctionType.JACOBI_POLYNOMIAL:
         this.inputs = [
-          this.orderInputNatural,
+          this.orderInputNonNegative,
           this.variableInputN0,
           this.aInput,
           this.bInput,
@@ -463,7 +478,7 @@ export class FunctionInputComponent implements OnInit {
         this.form.get('variableValue')?.setValue('0');
         break;
       case FunctionType.JACOBI_POLYNOMIAL:
-        this.form.get('orderValue')?.setValue('1');
+        this.form.get('orderValue')?.setValue('0');
         this.form.get('variableValue')?.setValue('0');
         this.form.get('aParameterValue')?.setValue('0');
         this.form.get('bParameterValue')?.setValue('0');

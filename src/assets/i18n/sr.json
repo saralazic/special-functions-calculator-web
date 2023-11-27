@@ -55,6 +55,7 @@
   "input": {
     "labelOrderNatural": "Red funkcije (prirodan broj):",
     "labelOrderReal": "Red funkcije (realan broj):",
+    "labelOrderNonNegative": "Red funkcije (nenegativan ceo broj):",
     "labelPrecision": "Preciznost (0.00...00x or xe-y):",
     "labelVariable": "Promenljiva (realan broj):",
     "labelVariableConstrained": "Promenljiva (realan broj [-1,1]):",

@@ -19,16 +19,16 @@ export class JacobiPolynomial extends SpecialFunction {
     const a = params.a ?? 0;
     const b = params.b ?? 0;
 
-    let t = (x - 1) ** alpha;
+    let t = (1 - x) ** alpha;
     let sum = t;
     let p;
     let R;
 
-    for (let k = 0; k <= alpha; k++) {
+    for (let k = 1; k <= alpha; k++) {
       p = alpha - k + 1;
       R = p * (p + a);
       R /= k * (k + b);
-      R *= (x + 1) / (x - 1);
+      R *= (1 + x) / (1 - x);
       t *= R;
       sum += t;
     }
@@ -45,12 +45,11 @@ export class JacobiPolynomial extends SpecialFunction {
     const b = this.math.bignumber(params.b ?? '0');
 
     const xPlus1 = this.math.add(x, BIG_NUMBER_CONSTANTS.ONE);
-    const xMinus1 = this.math.subtract(x, BIG_NUMBER_CONSTANTS.ONE);
+    const OneMinusX = this.math.subtract(BIG_NUMBER_CONSTANTS.ONE, x);
 
     const alphaPlus1 = this.math.add(alpha, BIG_NUMBER_CONSTANTS.ONE);
 
-    let t: MathType = this.math.subtract(x, BIG_NUMBER_CONSTANTS.ONE);
-    t = this.math.pow(t, alpha);
+    let t: MathType = this.math.pow(OneMinusX, alpha);
     let sum = t;
 
     let p, R, kBig: MathType;
@@ -66,9 +65,9 @@ export class JacobiPolynomial extends SpecialFunction {
       R = this.math.add(p, a);
       R = this.math.multiply(R, p);
       R = this.math.divide(R, kBig);
-      R = this.math.divide(R, this.math.subtract(kBig, b));
+      R = this.math.divide(R, this.math.add(kBig, b));
       R = this.math.multiply(R, xPlus1);
-      R = this.math.divide(R, xMinus1);
+      R = this.math.divide(R, OneMinusX);
 
       t = this.math.multiply(t, R);
       sum = this.math.add(sum, t);
