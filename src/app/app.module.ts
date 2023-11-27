@@ -13,15 +13,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AboutComponent } from './components/about/about.component';
-import { CalculatorComponent } from './components/calculator/calculator.component';
+import { CalculatorComponent } from './components/function/calculator/calculator.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { FunctionInformationComponent } from './components/function-information/function-information.component';
-import { FunctionInputComponent } from './components/function-input/function-input.component';
+import { FunctionInputComponent } from './components/function/function-input/function-input.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { FooterComponent } from './components/marginals/footer/footer.component';
 import { HeaderComponent } from './components/marginals/header/header.component';
-import { SpecialFunctionComponent } from './components/special-function/special-function.component';
+import { SpecialFunctionComponent } from './components/function/special-function/special-function.component';
 import { SvgIconComponent } from './components/svg-icon/svg-icon.component';
+import { ResultDisplayComponent } from './components/function/result-display/result-display.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,7 @@ import { SvgIconComponent } from './components/svg-icon/svg-icon.component';
     CalculatorComponent,
     FunctionInputComponent,
     FunctionInformationComponent,
+    ResultDisplayComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +58,8 @@ import { SvgIconComponent } from './components/svg-icon/svg-icon.component';
     MatInputModule,
     MatSelectModule,
     MatSliderModule,
+    MatTooltipModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

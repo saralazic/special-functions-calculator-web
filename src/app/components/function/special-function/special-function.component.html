@@ -1,0 +1,29 @@
+<div class="center">
+  <h1>
+    <span>{{name}}</span>
+    <img
+      class="icon"
+      src="{{ infoIconPath }}"
+      alt="Calculator Icon"
+      (click)="openNewWindow()"
+      type="button"
+      matTooltip="{{ infoTooltip }}"
+    />
+  </h1>
+</div>
+
+
+<div class="content">
+  <div [ngClass]="{'slide-left': slideTriggered}" class="container">
+    <div class="left-half">
+      <app-function-input [parameter]="parameter" (formValuesChanged)="onFormValuesChanged($event)"></app-function-input>
+    </div>
+
+    <div class="right-half">
+      <div class="result-display">
+        <app-result-display *ngIf="valueBig" [result]="valueBig" (calculationResult)="valueBig = $event"></app-result-display>
+      </div>
+      <div class = "graph" #graphContainer></div>
+    </div>
+  </div>
+</div>

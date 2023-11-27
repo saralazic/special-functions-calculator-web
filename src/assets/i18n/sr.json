@@ -64,7 +64,12 @@
     "errorMessage": "Unesite validnu vrednost!",
     "buttonBasicInformations": "Osnovne informacije o ovoj funkciji",
     "buttonUseCalculatedValue": "Upotrebi ovu vrednost",
-    "buttonCalculateAndDrawGraph": "Izračunaj vrednost i nacrtaj grafik"
+    "buttonCalculateAndDrawGraph": "Izračunaj",
+    "clear": "Resetuj"
+  },
+  "tooltips": {
+    "info": "Saznaj više o ovim funkcijama",
+    "calculator": "Otvori kalkulator za izračunavanje ulaznih vrednosti"
 
   }
 }

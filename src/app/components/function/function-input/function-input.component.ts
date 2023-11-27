@@ -1,12 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FunctionType, InputType } from 'src/app/models/enums';
@@ -16,8 +10,6 @@ import {
   FunctionParamsForCalculationWithBigNumbers,
 } from 'src/app/models/functions/specialFunction';
 import { LanguageService } from 'src/app/services/language-service/language.service';
-import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
-import { checkIfBigNumberIsPrecision } from 'src/utilities/utilities';
 import {
   bigNumberValidatorForPrecision,
   bigNumberValidatorNatural,
@@ -65,6 +57,8 @@ export class FunctionInputComponent implements OnInit {
   basicInformationsLabel: string = '';
   useCalculatedValueLabel: string = '';
   calculateAndDrawLabel: string = '';
+  clearLabel: string = '';
+  calculatorTooltip?: string;
 
   errorMessage: string = '';
 
@@ -75,7 +69,7 @@ export class FunctionInputComponent implements OnInit {
   shouldShowCalculator: boolean;
   whereToUseCalculatedValue: InputType | null;
 
-  calculatorIconPath = 'assets/icons/calculator.svg';
+  calculatorIconPath = 'assets/icons/calculator-alternative-2.png';
   calculatorError?: string;
 
   /** Array of inputs created dynamically based on which function user has chosen
@@ -230,8 +224,8 @@ export class FunctionInputComponent implements OnInit {
     this.whereToUseCalculatedValue =
       this.whereToUseCalculatedValue === inputType ? null : inputType;
     this.shouldShowCalculator = this.whereToUseCalculatedValue !== null;
-    console.log(this.whereToUseCalculatedValue);
-    console.log(this.shouldShowCalculator);
+    // console.log(this.whereToUseCalculatedValue);
+    // console.log(this.shouldShowCalculator);
 
     this.currentCalculatedValue = '';
   }
@@ -374,6 +368,8 @@ export class FunctionInputComponent implements OnInit {
           translations.input.buttonUseCalculatedValue;
         this.calculateAndDrawLabel =
           translations.input.buttonCalculateAndDrawGraph;
+        this.clearLabel = translations.input.clear;
+        this.calculatorTooltip = translations.tooltips.calculator;
 
         this.loadInputTranslations();
       });
@@ -442,10 +438,42 @@ export class FunctionInputComponent implements OnInit {
     }
   }
 
-  /** for function information I want to open new window */
-  /** TODO: logically this belongs to parent component, not here, I should move it there */
-  openNewWindow() {
-    window.open(`/function-informations/${this.parameter}`, '_blank');
+  clearContent() {
+    this.resetFormToInitialValues();
+    this.formValuesChanged.emit(null);
+  }
+
+  private resetFormToInitialValues() {
+    switch (this.parameter) {
+      case FunctionType.BESSEL_FIRST_KIND:
+      case FunctionType.BESSEL_SECOND_KIND:
+      case FunctionType.BESSEL_THIRD_KIND:
+        this.form.get('orderValue')?.setValue('0');
+        this.form.get('precisionValue')?.setValue('1e-64');
+        this.form.get('variableValue')?.setValue('0');
+        break;
+      case FunctionType.LAGUERRE_POLYNOMIAL:
+        this.form.get('orderValue')?.setValue('1');
+        this.form.get('variableValue')?.setValue('0');
+        break;
+      case FunctionType.LEGENDRE_POLYNOMIAL:
+      case FunctionType.CHEBYSHEV_FIRST_KIND:
+      case FunctionType.CHEBYSHEV_SECOND_KIND:
+        this.form.get('orderValue')?.setValue('0');
+        this.form.get('variableValue')?.setValue('0');
+        break;
+      case FunctionType.JACOBI_POLYNOMIAL:
+        this.form.get('orderValue')?.setValue('1');
+        this.form.get('variableValue')?.setValue('0');
+        this.form.get('aParameterValue')?.setValue('0');
+        this.form.get('bParameterValue')?.setValue('0');
+        break;
+      default:
+        this.form.get('orderValue')?.setValue('');
+        this.form.get('precisionValue')?.setValue('1e-64');
+        this.form.get('variableValue')?.setValue('0');
+        break;
+    }
   }
 }
 

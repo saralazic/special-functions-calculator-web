@@ -1,8 +1,21 @@
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { FunctionType } from 'src/app/models/enums';
 import {
   FunctionParams,
   SpecialFunction,
@@ -18,16 +31,31 @@ import {
   selector: 'app-special-function',
   templateUrl: './special-function.component.html',
   styleUrls: ['./special-function.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      state('void', style({ opacity: 0 })),
+      transition(':enter', [animate('300ms', style({ opacity: 1 }))]),
+      transition(':leave', [animate('300ms', style({ opacity: 0 }))]),
+    ]),
+  ],
 })
 export class SpecialFunctionComponent implements OnInit {
   @ViewChild('graphContainer') graphContainer!: ElementRef;
 
+  /** I am emitting result of calculation to display component in order to show it nicely */
+  @Output() calculationResult = new EventEmitter<string>();
+
   private subscription?: Subscription;
   private spef?: SpecialFunction;
+  slideTriggered: boolean = false;
+
   parameter: string | null = null;
   value?: number;
   valueBig?: string;
   name?: string;
+  infoTooltip?: string;
+
+  infoIconPath = 'assets/icons/info.png';
 
   constructor(
     private route: ActivatedRoute,
@@ -59,6 +87,7 @@ export class SpecialFunctionComponent implements OnInit {
       eps
     );
     drawGraph(this.graphContainer?.nativeElement, xArr, yArr);
+    this.graphContainer.nativeElement.style.display = 'block';
   }
 
   loadTranslations() {
@@ -68,19 +97,30 @@ export class SpecialFunctionComponent implements OnInit {
       .subscribe((translations: any) => {
         let spefTranslations = this.spef?.loadTranslations(translations);
         this.name = spefTranslations?.name;
+        this.infoTooltip = translations.tooltips.info;
       });
   }
 
   /** When child component sends value, it triggers this method */
   onFormValuesChanged(data: FunctionParams) {
     if (data) {
+      this.slideTriggered = true;
+
       this.valueBig = this.spef?.calculateBig(data.bignumber);
 
       this.value = this.spef?.calculate(data.real);
 
       this.drawGraphic(data.real.alpha, data.real.eps);
+      this.calculationResult.emit(this.valueBig);
+      return;
     }
+
+    this.valueBig = '';
+    this.slideTriggered = false;
+    this.graphContainer.nativeElement.style.display = 'none';
   }
 
-  //** TODO: find better way to show calculation result!! */
+  openNewWindow() {
+    window.open(`/function-informations/${this.parameter}`, '_blank');
+  }
 }

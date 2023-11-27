@@ -4,7 +4,7 @@ import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { FunctionInformationComponent } from './components/function-information/function-information.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
-import { SpecialFunctionComponent } from './components/special-function/special-function.component';
+import { SpecialFunctionComponent } from './components/function/special-function/special-function.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/homepage', pathMatch: 'full' },
