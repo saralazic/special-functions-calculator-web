@@ -110,6 +110,8 @@ export class SpecialFunctionComponent implements OnInit {
 
       this.value = this.spef?.calculate(data.real);
 
+      console.log(this.value);
+
       this.drawGraphic(data.real.alpha, data.real.eps);
       this.calculationResult.emit(this.valueBig);
       return;
