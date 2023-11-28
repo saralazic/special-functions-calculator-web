@@ -323,7 +323,7 @@ export class FunctionInputComponent implements OnInit {
       case FunctionType.CHEBYSHEV_FIRST_KIND:
       case FunctionType.CHEBYSHEV_SECOND_KIND:
         this.form = this.formBuilder.group({
-          orderValue: ['0', [Validators.required, bigNumberValidatorNatural]],
+          orderValue: ['1', [Validators.required, bigNumberValidatorNatural]],
           variableValue: [
             '0',
             [Validators.required, bigNumberValidatorConstrained],

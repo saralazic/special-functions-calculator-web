@@ -79,14 +79,25 @@ export class SpecialFunctionComponent implements OnInit {
     this.subscription?.unsubscribe();
   }
 
-  drawGraphic(n: number, eps: number) {
+  drawGraphic(n: number, eps: number, x: number) {
     const { xArr, yArr } = generateCoordinates(
       this.parameter,
       this.spef,
       n,
-      eps
+      eps,
+      x
     );
-    drawGraph(this.graphContainer?.nativeElement, xArr, yArr);
+    drawGraph(
+      this.graphContainer?.nativeElement,
+      xArr,
+      yArr,
+      x,
+      this.spef?.calculate({
+        alpha: n,
+        x: x,
+        eps: eps,
+      }) ?? 0
+    );
     this.graphContainer.nativeElement.style.display = 'block';
   }
 
@@ -112,7 +123,7 @@ export class SpecialFunctionComponent implements OnInit {
 
       console.log(this.value);
 
-      this.drawGraphic(data.real.alpha, data.real.eps);
+      this.drawGraphic(data.real.alpha, data.real.eps, data.real.x);
       this.calculationResult.emit(this.valueBig);
       return;
     }
