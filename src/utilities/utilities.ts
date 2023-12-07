@@ -23,22 +23,44 @@ export function factorial(n: number): number {
 
 export function drawGraph(
   element: HTMLElement,
-  xValues: number[],
-  yValues: number[]
+  xCoordinates: number[],
+  yCoordinates: number[],
+  x: number,
+  y: number
 ) {
-  const trace: Partial<Plotly.ScatterData> = {
-    x: xValues,
-    y: yValues,
+  const functionGraph: Partial<Plotly.ScatterData> = {
+    x: xCoordinates,
+    y: yCoordinates,
     type: 'scatter',
     mode: 'lines+markers',
-    marker: { size: 1 },
+    marker: { size: 0.5 },
+  };
+
+  const calculatedValue: Partial<Plotly.ScatterData> = {
+    x: [x],
+    y: [y],
+    mode: 'markers',
+    type: 'scatter',
+    marker: { size: 5, color: 'red' }, // Color for the specific spot
   };
 
   const layout: Partial<Plotly.Layout> = {
-    // Add any layout configuration you need here
+    title: 'Graph',
+    xaxis: {
+      title: 'x',
+    },
+    yaxis: {
+      title: 'f(x)',
+    },
+    showlegend: false,
+    margin: {
+      r: 50,
+      b: 50,
+      t: 50,
+    },
+    hovermode: 'closest', // Show hover information for the closest data point
   };
-
-  const data = [trace];
+  const data = [functionGraph, calculatedValue];
 
   Plotly.newPlot(element, data, layout);
 }
@@ -154,38 +176,27 @@ export function generateCoordinates(
   parameter: string | null,
   spef: SpecialFunction | undefined,
   n: number,
-  eps: number
+  eps: number,
+  x: number
 ) {
+  const numParameters: number = 201;
+  let startValue: number, endValue: number;
+
   /** For this three functions domain is (-1,1), for the rest I will use 0-10 */
-  if (
+  const drawFullDomain =
     parameter === FunctionType.LEGENDRE_POLYNOMIAL ||
     parameter === FunctionType.CHEBYSHEV_FIRST_KIND ||
-    parameter === FunctionType.CHEBYSHEV_SECOND_KIND
-  ) {
-    const startValue: number = -0.999999;
-    const endValue: number = 0.999999;
-    const numParameters: number = 201;
+    parameter === FunctionType.CHEBYSHEV_SECOND_KIND;
 
-    const step: number = (endValue - startValue) / (numParameters - 1);
-    const xArr: number[] = Array.from(
-      { length: numParameters },
-      (_, index) => startValue + index * step
-    );
+  startValue = drawFullDomain ? -0.999999 : x - 5;
+  endValue = drawFullDomain ? 0.999999 : x + 5;
 
-    const yArr = xArr.map(
-      (x) =>
-        spef?.calculate({
-          alpha: n,
-          x: x,
-          eps: eps,
-        }) ?? 0
-    );
+  const step: number = (endValue - startValue) / (numParameters - 1);
+  const xArr: number[] = Array.from(
+    { length: numParameters },
+    (_, index) => startValue + index * step
+  );
 
-    return { xArr, yArr };
-  }
-
-  /** TODO: Should I change this so I draw around calculated value and show this value different color? */
-  const xArr = Array.from({ length: 201 }, (_, index) => index * 0.05);
   const yArr = xArr.map(
     (x) =>
       spef?.calculate({
