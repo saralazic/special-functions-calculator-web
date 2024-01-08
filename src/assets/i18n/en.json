@@ -12,7 +12,8 @@
     "legendre": "Legendre polynomials",
     "jacobi": "Jacobi polynomials",
     "chebyshev_1": "Chebyshev polynomials of the first kind",
-    "chebyshev_2": "Chebyshev polynomials of the second kind"
+    "chebyshev_2": "Chebyshev polynomials of the second kind",
+    "hermite_1": "Physicist's Hermite polynomial"
   },
   "footer": {
     "about": "About",
@@ -51,6 +52,9 @@
   },
   "jacobi":{
     "name": "Jacobi polynomials"
+  },
+  "hermite_1":{
+    "name": "Physicist's Hermite polynomials"
   },
   "input": {
     "labelOrderNatural": "Order (natural number):",

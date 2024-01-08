@@ -7,6 +7,7 @@ export enum FunctionType {
   JACOBI_POLYNOMIAL = 'jacobi',
   CHEBYSHEV_FIRST_KIND = 'chebyshev1',
   CHEBYSHEV_SECOND_KIND = 'chebyshev2',
+  HERMITE_PHYSICIST = 'hermite1',
 }
 
 export enum InputType {

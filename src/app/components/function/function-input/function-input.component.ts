@@ -430,6 +430,9 @@ export class FunctionInputComponent implements OnInit {
       case FunctionType.LAGUERRE_POLYNOMIAL:
         this.inputs = [this.orderInputNatural, this.variableInput];
         break;
+      case FunctionType.HERMITE_PHYSICIST:
+        this.inputs = [this.orderInputNatural, this.variableInput];
+        break;
       case FunctionType.LEGENDRE_POLYNOMIAL:
       case FunctionType.CHEBYSHEV_FIRST_KIND:
       case FunctionType.CHEBYSHEV_SECOND_KIND:
