@@ -7,6 +7,7 @@ import {
   SpecialFunction,
 } from './specialFunction';
 import { factorial } from 'mathjs';
+import { factorialBigNumber } from 'src/utilities/utilities';
 
 export class HermitePhysicist extends SpecialFunction {
   math = math_64;
@@ -20,17 +21,19 @@ export class HermitePhysicist extends SpecialFunction {
 
     const alphaFactorial = factorial(alpha);
 
-    let t = ((2 * x) ^ alpha) / alphaFactorial;
-    let sum = t;
+    let sum = 0;
 
-    let R: number;
-
-    const c = -(2 * x) ^ -2;
-
-    for (let k = 1; 2 * k <= alpha; k++) {
-      R = (c * (alpha - 2 * k + 1) * (alpha - 2 * k + 2)) / k;
-      t *= R;
+    let k = 0,
+      t,
+      n2k,
+      den;
+    while (2 * k <= alpha) {
+      n2k = alpha - 2 * k;
+      den = factorial(k) * factorial(n2k);
+      den = den * (-1) ** k;
+      t = (2 * x) ** n2k / den;
       sum += t;
+      k++;
     }
 
     return alphaFactorial * sum;
@@ -42,37 +45,35 @@ export class HermitePhysicist extends SpecialFunction {
     const alpha = this.math.bignumber(alphaBig);
     const x = this.math.bignumber(xBig);
 
-    const alphaFactorial = this.math.factorial(alpha);
+    const alphaFactorial = factorialBigNumber(alpha);
 
     const x2 = this.math.multiply(BIG_NUMBER_CONSTANTS.TWO, x);
 
-    let t = this.math.pow(x2, alpha);
-    t = this.math.divide(t, alphaFactorial);
+    let sum: math.MathType = 0,
+      t;
 
-    let sum = t;
+    let k = 0,
+      n2k,
+      m,
+      den;
 
-    let R;
+    while (Number(this.math.compare(this.math.multiply(2, k), alpha)) <= 0) {
+      n2k = this.math.subtract(
+        alpha,
+        this.math.multiply(BIG_NUMBER_CONSTANTS.TWO, k)
+      );
+      m = this.math.pow(-1, k);
 
-    let c = this.math.pow(x2, this.math.unaryMinus(BIG_NUMBER_CONSTANTS.TWO));
-    c = this.math.unaryMinus(c);
-
-    for (
-      let k = 1;
-      Number(this.math.compare(this.math.multiply(2, k), alpha)) <= 0;
-      k++
-    ) {
-      //  R = (c * (alpha - 2 * k + 1) * (alpha - 2 * k + 2)) / k;
-      let m = this.math.subtract(
-        this.math.add(alpha, BIG_NUMBER_CONSTANTS.ONE),
-        this.math.multiply(2, k)
+      den = this.math.multiply(
+        this.math.factorial(k),
+        this.math.factorial(n2k as math.BigNumber)
       );
 
-      R = this.math.multiply(m, this.math.add(m, BIG_NUMBER_CONSTANTS.ONE));
-      R = this.math.multiply(R, c);
-      R = this.math.divide(R, k);
+      t = this.math.multiply(m, this.math.pow(x2, n2k as math.BigNumber));
 
-      t = this.math.multiply(R, t);
-      sum = this.math.add(t, sum);
+      sum = this.math.add(sum, t);
+
+      k++;
     }
 
     return sum.toString();
