@@ -8,6 +8,7 @@ export enum FunctionType {
   CHEBYSHEV_FIRST_KIND = 'chebyshev1',
   CHEBYSHEV_SECOND_KIND = 'chebyshev2',
   HERMITE_PHYSICIST = 'hermite1',
+  HERMITE_PROBABILISTIC = 'hermite2',
 }
 
 export enum InputType {

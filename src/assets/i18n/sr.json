@@ -13,8 +13,8 @@
     "jacobi": "Jakobijevi polinomi",
     "chebyshev_1": "Čebiševljevi polinomi prve vrste",
     "chebyshev_2": "Čebiševljevi polinomi druge vrste",
-    "hermite_1": "Fizički Ermitov polinom"
-
+    "hermite_1": "Fizički Ermitov polinom",
+    "hermite_2": "Probabilistički Ermitov polinom"
   },
   "footer": {
     "about": "O aplikaciji",
@@ -56,6 +56,9 @@
   },
   "hermite_1":{
     "name": "Ermitovi fizički polinomi"
+  },
+  "hermite_2": {
+    "name": "Probabilistički Ermitov polinom"
   },
   "input": {
     "labelOrderNatural": "Red funkcije (prirodan broj):",

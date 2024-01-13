@@ -329,12 +329,10 @@ export class FunctionInputComponent implements OnInit {
         });
         break;
       case FunctionType.HERMITE_PHYSICIST:
+      case FunctionType.HERMITE_PROBABILISTIC:
         this.form = this.formBuilder.group({
           orderValue: ['0', [Validators.required, bigNumberValidatorN0]],
-          variableValue: [
-            '0',
-            [Validators.required, bigNumberValidatorConstrained],
-          ],
+          variableValue: ['0', [Validators.required, bigNumberValidator]],
         });
         break;
       case FunctionType.JACOBI_POLYNOMIAL:
@@ -438,6 +436,7 @@ export class FunctionInputComponent implements OnInit {
         this.inputs = [this.orderInputNatural, this.variableInput];
         break;
       case FunctionType.HERMITE_PHYSICIST:
+      case FunctionType.HERMITE_PROBABILISTIC:
         this.inputs = [this.orderInputNonNegative, this.variableInput];
         break;
       case FunctionType.LEGENDRE_POLYNOMIAL:
@@ -479,6 +478,11 @@ export class FunctionInputComponent implements OnInit {
         break;
       case FunctionType.LAGUERRE_POLYNOMIAL:
         this.form.get('orderValue')?.setValue('1');
+        this.form.get('variableValue')?.setValue('0');
+        break;
+      case FunctionType.HERMITE_PHYSICIST:
+      case FunctionType.HERMITE_PROBABILISTIC:
+        this.form.get('orderValue')?.setValue('0');
         this.form.get('variableValue')?.setValue('0');
         break;
       case FunctionType.LEGENDRE_POLYNOMIAL:
