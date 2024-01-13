@@ -35,6 +35,8 @@ export class HermitePhysicist extends SpecialFunction {
       k++;
     }
 
+    console.log(alphaFactorial * sum);
+
     return alphaFactorial * sum;
   }
 
@@ -69,6 +71,7 @@ export class HermitePhysicist extends SpecialFunction {
       );
 
       t = this.math.multiply(m, this.math.pow(x2, n2k as math.BigNumber));
+      t = this.math.divide(t, den);
 
       sum = this.math.add(sum, t);
 

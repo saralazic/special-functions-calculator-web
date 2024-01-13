@@ -13,7 +13,8 @@
     "jacobi": "Jacobi polynomials",
     "chebyshev_1": "Chebyshev polynomials of the first kind",
     "chebyshev_2": "Chebyshev polynomials of the second kind",
-    "hermite_1": "Physicist's Hermite polynomial"
+    "hermite_1": "Physicist's Hermite polynomial",
+    "hermite_2": "Probabilist's Hermite polynomials"
   },
   "footer": {
     "about": "About",
@@ -55,6 +56,9 @@
   },
   "hermite_1":{
     "name": "Physicist's Hermite polynomials"
+  },
+  "hermite_2":{
+    "name": "Probabilist's Hermite polynomials"
   },
   "input": {
     "labelOrderNatural": "Order (natural number):",

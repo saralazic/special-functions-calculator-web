@@ -5,6 +5,7 @@ import { BesselSecondKind } from 'src/app/models/functions/besselSecond';
 import { ChebyshevPolynomialOfFirstKind } from 'src/app/models/functions/chebyshevFirst';
 import { ChebyshevPolynomialOfSecondKind } from 'src/app/models/functions/chebyshevSecond';
 import { HermitePhysicist } from 'src/app/models/functions/hermitePhysicist';
+import { HermiteProbabilistic } from 'src/app/models/functions/hermiteProbabilistic';
 import { JacobiPolynomial } from 'src/app/models/functions/jacobi';
 import { LaguerrePolynomial } from 'src/app/models/functions/laguerre';
 import { LegendrePolynomial } from 'src/app/models/functions/legendre';
@@ -96,6 +97,9 @@ export function loadTranslationForFunction(
     case FunctionType.HERMITE_PHYSICIST:
       fn = translations.hermite_1;
       break;
+    case FunctionType.HERMITE_PROBABILISTIC:
+      fn = translations.hermite_2;
+      break;
     default:
       fn = translations.bessel_1;
       break;
@@ -130,6 +134,9 @@ export function createChosenFunction(parameter: string): SpecialFunction {
       break;
     case FunctionType.HERMITE_PHYSICIST:
       spef = new HermitePhysicist();
+      break;
+    case FunctionType.HERMITE_PROBABILISTIC:
+      spef = new HermiteProbabilistic();
       break;
     default:
       spef = new BesselFirstKind();
@@ -195,8 +202,8 @@ export function generateCoordinates(
     parameter === FunctionType.CHEBYSHEV_FIRST_KIND ||
     parameter === FunctionType.CHEBYSHEV_SECOND_KIND;
 
-  startValue = drawFullDomain ? -0.999999 : x - 5;
-  endValue = drawFullDomain ? 0.999999 : x + 5;
+  startValue = drawFullDomain ? -0.999999 : x - 3;
+  endValue = drawFullDomain ? 0.999999 : x + 3;
 
   const step: number = (endValue - startValue) / (numParameters - 1);
   const xArr: number[] = Array.from(
