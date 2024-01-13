@@ -22,12 +22,6 @@ export function factorial(n: number): number {
   }
 }
 
-export function factorialBigNumber(n: BigNumber): BigNumber {
-  if (n.equals(BIG_NUMBER_CONSTANTS.ZERO) && n.equals(BIG_NUMBER_CONSTANTS.ONE))
-    return BIG_NUMBER_CONSTANTS.ONE;
-  return math_64.factorial(n);
-}
-
 export function drawGraph(
   element: HTMLElement,
   xCoordinates: number[],

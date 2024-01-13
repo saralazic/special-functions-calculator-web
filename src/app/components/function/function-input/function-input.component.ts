@@ -235,8 +235,6 @@ export class FunctionInputComponent implements OnInit {
     this.whereToUseCalculatedValue =
       this.whereToUseCalculatedValue === inputType ? null : inputType;
     this.shouldShowCalculator = this.whereToUseCalculatedValue !== null;
-    // console.log(this.whereToUseCalculatedValue);
-    // console.log(this.shouldShowCalculator);
 
     this.currentCalculatedValue = '';
   }
@@ -324,6 +322,15 @@ export class FunctionInputComponent implements OnInit {
       case FunctionType.CHEBYSHEV_SECOND_KIND:
         this.form = this.formBuilder.group({
           orderValue: ['1', [Validators.required, bigNumberValidatorNatural]],
+          variableValue: [
+            '0',
+            [Validators.required, bigNumberValidatorConstrained],
+          ],
+        });
+        break;
+      case FunctionType.HERMITE_PHYSICIST:
+        this.form = this.formBuilder.group({
+          orderValue: ['0', [Validators.required, bigNumberValidatorN0]],
           variableValue: [
             '0',
             [Validators.required, bigNumberValidatorConstrained],
@@ -431,7 +438,7 @@ export class FunctionInputComponent implements OnInit {
         this.inputs = [this.orderInputNatural, this.variableInput];
         break;
       case FunctionType.HERMITE_PHYSICIST:
-        this.inputs = [this.orderInputNatural, this.variableInput];
+        this.inputs = [this.orderInputNonNegative, this.variableInput];
         break;
       case FunctionType.LEGENDRE_POLYNOMIAL:
       case FunctionType.CHEBYSHEV_FIRST_KIND:

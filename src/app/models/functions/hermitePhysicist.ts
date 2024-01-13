@@ -7,7 +7,6 @@ import {
   SpecialFunction,
 } from './specialFunction';
 import { factorial } from 'mathjs';
-import { factorialBigNumber } from 'src/utilities/utilities';
 
 export class HermitePhysicist extends SpecialFunction {
   math = math_64;
@@ -45,7 +44,7 @@ export class HermitePhysicist extends SpecialFunction {
     const alpha = this.math.bignumber(alphaBig);
     const x = this.math.bignumber(xBig);
 
-    const alphaFactorial = factorialBigNumber(alpha);
+    const alphaFactorial = this.math.factorial(alpha);
 
     const x2 = this.math.multiply(BIG_NUMBER_CONSTANTS.TWO, x);
 
@@ -75,6 +74,8 @@ export class HermitePhysicist extends SpecialFunction {
 
       k++;
     }
+
+    sum = this.math.multiply(alphaFactorial, sum);
 
     return sum.toString();
   }
