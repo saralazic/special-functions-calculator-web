@@ -61,6 +61,7 @@ export function drawGraph(
       t: 50,
     },
     hovermode: 'closest', // Show hover information for the closest data point
+    autosize: false,
   };
   const data = [functionGraph, calculatedValue];
 
