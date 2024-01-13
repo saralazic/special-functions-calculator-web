@@ -35,8 +35,6 @@ export class HermitePhysicist extends SpecialFunction {
       k++;
     }
 
-    console.log(alphaFactorial * sum);
-
     return alphaFactorial * sum;
   }
 

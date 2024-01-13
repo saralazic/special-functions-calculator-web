@@ -57,14 +57,11 @@ export class BesselSecondKind extends SpecialFunction {
     const sin = this.math.sin(alphaPi as BigNumber);
 
     const Jalpha = this.math.bignumber(this.J.calculateBig(params));
-    console.log('J alpha: ' + Jalpha);
 
     let JminusAlpha = Jalpha;
 
     // JminusAlpha is (-1)^n Jalpha
     // if (alphaBig % 2 === 1) JminusAlpha = this.math.unaryMinus(JminusAlpha);
-
-    console.log('J minus alpha: ' + JminusAlpha);
 
     let result = this.math.multiply(cos, Jalpha);
     result = this.math.subtract(result, JminusAlpha);
