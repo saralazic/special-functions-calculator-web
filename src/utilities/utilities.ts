@@ -4,6 +4,7 @@ import { BesselFirstKind } from 'src/app/models/functions/besselFirst';
 import { BesselSecondKind } from 'src/app/models/functions/besselSecond';
 import { ChebyshevPolynomialOfFirstKind } from 'src/app/models/functions/chebyshevFirst';
 import { ChebyshevPolynomialOfSecondKind } from 'src/app/models/functions/chebyshevSecond';
+import { HermitePhysicist } from 'src/app/models/functions/hermitePhysicist';
 import { JacobiPolynomial } from 'src/app/models/functions/jacobi';
 import { LaguerrePolynomial } from 'src/app/models/functions/laguerre';
 import { LegendrePolynomial } from 'src/app/models/functions/legendre';
@@ -92,6 +93,9 @@ export function loadTranslationForFunction(
     case FunctionType.JACOBI_POLYNOMIAL:
       fn = translations.jacobi;
       break;
+    case FunctionType.HERMITE_PHYSICIST:
+      fn = translations.hermite_1;
+      break;
     default:
       fn = translations.bessel_1;
       break;
@@ -123,6 +127,9 @@ export function createChosenFunction(parameter: string): SpecialFunction {
       break;
     case FunctionType.JACOBI_POLYNOMIAL:
       spef = new JacobiPolynomial();
+      break;
+    case FunctionType.HERMITE_PHYSICIST:
+      spef = new HermitePhysicist();
       break;
     default:
       spef = new BesselFirstKind();
@@ -182,7 +189,7 @@ export function generateCoordinates(
   const numParameters: number = 201;
   let startValue: number, endValue: number;
 
-  /** For this three functions domain is (-1,1), for the rest I will use 0-10 */
+  /** For this three functions domain is (-1,1), for the rest I will use domain around x */
   const drawFullDomain =
     parameter === FunctionType.LEGENDRE_POLYNOMIAL ||
     parameter === FunctionType.CHEBYSHEV_FIRST_KIND ||

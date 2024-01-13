@@ -23,7 +23,7 @@ export class BesselSecondKind extends SpecialFunction {
 
   calculate(params: FunctionParamsForCalculation): number {
     const { alpha, x } = params;
-    const eps: number = params.eps ?? 10 ^ -15;
+    const eps: number = params.eps ?? 10 ** -15;
 
     const Jalpha = this.J.calculate(params);
     let JminusAlpha = Jalpha;

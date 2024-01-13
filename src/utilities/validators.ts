@@ -15,7 +15,7 @@ export function bigNumberValidator(
 export function bigNumberValidatorNatural(
   control: AbstractControl
 ): ValidationErrors | null {
-  const bigNumberRegex = /^-?\d+(\.\d+)?([eE]-?\d+)?$/;
+  const bigNumberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
   if (control.value && !bigNumberRegex.test(control.value)) {
     return { invalidBigNumber: true };
   }
@@ -31,7 +31,7 @@ export function bigNumberValidatorNatural(
 export function bigNumberValidatorN0(
   control: AbstractControl
 ): ValidationErrors | null {
-  const bigNumberRegex = /^-?\d+(\.\d+)?([eE]-?\d+)?$/;
+  const bigNumberRegex = /^[+-]?\d+(\.\d+)?([eE]-?\d+)?$/;
   if (control.value && !bigNumberRegex.test(control.value)) {
     return { invalidBigNumber: true };
   }

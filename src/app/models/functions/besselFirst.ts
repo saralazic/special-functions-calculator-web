@@ -1,7 +1,7 @@
 import * as math from 'mathjs';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 import { FunctionType } from '../enums';
-import { gammaBig, getE, getPi } from '../../../utilities/utilities';
+import { gammaBig } from '../../../utilities/utilities';
 import {
   FunctionParamsForCalculation,
   FunctionParamsForCalculationWithBigNumbers,
@@ -17,7 +17,7 @@ export class BesselFirstKind extends SpecialFunction {
 
   calculate(params: FunctionParamsForCalculation): number {
     const { alpha, x } = params;
-    const eps: number = params.eps ?? 10 ^ -15;
+    const eps: number = params.eps ?? 10 ** -15;
 
     const xHalf = x / 2.0;
     const xHalfSqr = xHalf ** 2;

@@ -22,6 +22,7 @@ export class HomepageComponent {
   jacobi?: string;
   chebyshev_1?: string;
   chebyshev_2?: string;
+  hermite_1?: string;
 
   constructor(
     private http: HttpClient,
@@ -56,6 +57,7 @@ export class HomepageComponent {
         this.jacobi = translations.homepage.jacobi;
         this.chebyshev_1 = translations.homepage.chebyshev_1;
         this.chebyshev_2 = translations.homepage.chebyshev_2;
+        this.hermite_1 = translations.homepage.hermite_1;
       });
   }
 }
