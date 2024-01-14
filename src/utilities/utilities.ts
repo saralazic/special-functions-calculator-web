@@ -23,6 +23,20 @@ export function factorial(n: number): number {
   }
 }
 
+export function binomialCoefficient(n: number, k: number): number {
+  const den = factorial(k) * factorial(n - k);
+  return factorial(n) / den;
+}
+
+export function binomialCoefficientBig(n: BigNumber, k: BigNumber): BigNumber {
+  const den = math_64.multiply(
+    math_64.factorial(k),
+    math_64.factorial(math_64.subtract(n, k))
+  );
+
+  return math_64.divide(math_64.factorial(n), den) as BigNumber;
+}
+
 export function drawGraph(
   element: HTMLElement,
   xCoordinates: number[],

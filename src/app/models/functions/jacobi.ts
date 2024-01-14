@@ -1,6 +1,10 @@
-import { MathType } from 'mathjs';
+import { BigNumber, MathType } from 'mathjs';
 import { FunctionType } from 'src/app/models/enums';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
+import {
+  binomialCoefficient,
+  binomialCoefficientBig,
+} from 'src/utilities/utilities';
 import {
   FunctionParamsForCalculation,
   FunctionParamsForCalculationWithBigNumbers,
@@ -19,18 +23,14 @@ export class JacobiPolynomial extends SpecialFunction {
     const a = params.a ?? 0;
     const b = params.b ?? 0;
 
-    let t = (x - 1) ** alpha;
-    let sum = t;
-    let p;
-    let R;
+    let sum = 0;
+    let t;
 
-    const q = (1 + x) / (x - 1);
-
-    for (let k = 1; k <= alpha; k++) {
-      p = alpha - k + 1;
-      R = p * (p + a) * q;
-      R /= k * (k + b);
-      t *= R;
+    for (let k = 0; k <= alpha; k++) {
+      t = (x - 1) ** (alpha - k) * (1 + x) ** k;
+      t *=
+        binomialCoefficient(alpha + a, k) *
+        binomialCoefficient(alpha + b, alpha - k);
       sum += t;
     }
 
@@ -48,14 +48,12 @@ export class JacobiPolynomial extends SpecialFunction {
     const xPlus1 = this.math.add(x, BIG_NUMBER_CONSTANTS.ONE);
     const xMinus1 = this.math.subtract(x, BIG_NUMBER_CONSTANTS.ONE);
 
-    const alphaPlus1 = this.math.add(alpha, BIG_NUMBER_CONSTANTS.ONE);
+    const alphaPlusA = this.math.add(alpha, a);
+    const alphaPlusB = this.math.add(alpha, b);
 
-    let t: MathType = this.math.pow(xMinus1, alpha);
-    let sum = t;
+    let sum = BIG_NUMBER_CONSTANTS.ZERO;
 
-    let p, R, kBig: MathType;
-
-    const q = this.math.divide(xPlus1, xMinus1);
+    let t1, t2, t, kBig: MathType;
 
     for (
       let k = 1;
@@ -63,16 +61,15 @@ export class JacobiPolynomial extends SpecialFunction {
       k++
     ) {
       kBig = this.math.bignumber(k);
-      p = this.math.subtract(alphaPlus1, kBig);
-
-      R = this.math.add(p, a);
-      R = this.math.multiply(R, p);
-      R = this.math.multiply(R, q);
-      R = this.math.divide(R, kBig);
-      R = this.math.divide(R, this.math.add(kBig, b));
-
-      t = this.math.multiply(t, R);
-      sum = this.math.add(sum, t);
+      const nk = this.math.subtract(alpha, kBig);
+      const bca = binomialCoefficientBig(alphaPlusA, kBig);
+      const bcb = binomialCoefficientBig(alphaPlusB, nk);
+      const factorNK = this.math.pow(xMinus1, nk);
+      const factorK = this.math.pow(xPlus1, kBig);
+      t1 = this.math.multiply(bca, bcb);
+      t2 = this.math.multiply(factorNK, factorK);
+      t = this.math.multiply(t1, t2);
+      sum = this.math.add(sum, t) as BigNumber;
     }
 
     const res = this.math.divide(
