@@ -19,6 +19,9 @@ export class BesselFirstKind extends SpecialFunction {
     const { alpha, x } = params;
     const eps: number = params.eps ?? 10 ** -15;
 
+    // console.log('x: ' + x);
+    // console.log('alpha: ' + alpha);
+
     const xHalf = x / 2.0;
     const xHalfSqr = xHalf ** 2;
 
@@ -47,6 +50,9 @@ export class BesselFirstKind extends SpecialFunction {
   calculateBig(params: FunctionParamsForCalculationWithBigNumbers): string {
     const { alphaBig, xBig } = params;
     const epsBig = params.epsBig ?? '1e-64';
+
+    // console.log('xBig: ' + xBig);
+    // console.log('alphaBig: ' + alphaBig);
 
     const alpha = this.math.bignumber(alphaBig);
     const eps = this.math.bignumber(epsBig);

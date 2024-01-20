@@ -17,6 +17,7 @@ import {
   bigNumberValidatorN0,
   bigNumberValidatorForParams,
   bigNumberValidator,
+  bigNumberValidatorLegendre,
 } from 'src/utilities/validators';
 
 @Component({
@@ -47,12 +48,14 @@ export class FunctionInputComponent implements OnInit {
   aInputLabel: string = '';
   bInputLabel: string = '';
   labelVariableConstrained: string = '';
+  labelVariableLegendre: string = '';
   orderInputReal: IInput;
   orderInputNatural: IInput;
   orderInputNonNegative: IInput;
   precisionInput: IInput;
   variableInput: IInput;
   variableInputConstrained: IInput;
+  variableInputLegendre: IInput;
   variableInputN0: IInput;
   aInput: IInput;
   bInput: IInput;
@@ -141,6 +144,15 @@ export class FunctionInputComponent implements OnInit {
 
     this.variableInputConstrained = {
       label: this.labelVariableConstrained,
+      formControlName: 'variableValue',
+      isInvalid:
+        "form.get('variableValue')?.invalid && form.get('variableValue')?.touched",
+      error: this.errorMessage,
+      inputType: InputType.VARIABLE,
+    };
+
+    this.variableInputLegendre = {
+      label: this.labelVariableLegendre,
       formControlName: 'variableValue',
       isInvalid:
         "form.get('variableValue')?.invalid && form.get('variableValue')?.touched",
@@ -303,7 +315,7 @@ export class FunctionInputComponent implements OnInit {
       case FunctionType.BESSEL_SECOND_KIND:
       case FunctionType.BESSEL_THIRD_KIND:
         this.form = this.formBuilder.group({
-          orderValue: ['0', [Validators.required, bigNumberValidator]],
+          orderValue: ['1', [Validators.required, bigNumberValidatorNatural]],
           precisionValue: [
             '1e-64',
             [Validators.required, bigNumberValidatorForPrecision],
@@ -318,6 +330,14 @@ export class FunctionInputComponent implements OnInit {
         });
         break;
       case FunctionType.LEGENDRE_POLYNOMIAL:
+        this.form = this.formBuilder.group({
+          orderValue: ['1', [Validators.required, bigNumberValidatorNatural]],
+          variableValue: [
+            '0',
+            [Validators.required, bigNumberValidatorLegendre],
+          ],
+        });
+        break;
       case FunctionType.CHEBYSHEV_FIRST_KIND:
       case FunctionType.CHEBYSHEV_SECOND_KIND:
         this.form = this.formBuilder.group({
@@ -351,7 +371,7 @@ export class FunctionInputComponent implements OnInit {
         break;
       default:
         this.form = this.formBuilder.group({
-          orderValue: ['', [Validators.required, bigNumberValidator]],
+          orderValue: ['1', [Validators.required, bigNumberValidatorNatural]],
           precisionValue: [
             '1e-64',
             [Validators.required, bigNumberValidatorForPrecision],
@@ -374,6 +394,7 @@ export class FunctionInputComponent implements OnInit {
         this.labelVariable = translations.input.labelVariable;
         this.labelVariableConstrained =
           translations.input.labelVariableConstrained;
+        this.labelVariableLegendre = translations.input.labelVariableLegendre;
         this.labelVariableN0 = translations.input.labelVariableN0;
         this.errorMessage = translations.input.errorMessage;
         this.aInputLabel = translations.input.aInputLabel;
@@ -417,6 +438,9 @@ export class FunctionInputComponent implements OnInit {
     this.variableInputConstrained.label = this.labelVariableConstrained;
     this.variableInputConstrained.error = this.errorMessage;
 
+    this.variableInputLegendre.label = this.labelVariableLegendre;
+    this.variableInputLegendre.error = this.errorMessage;
+
     this.variableInputN0.label = this.labelVariableN0;
     this.variableInputN0.error = this.errorMessage;
   }
@@ -427,7 +451,7 @@ export class FunctionInputComponent implements OnInit {
       case FunctionType.BESSEL_SECOND_KIND:
       case FunctionType.BESSEL_THIRD_KIND:
         this.inputs = [
-          this.orderInputReal,
+          this.orderInputNatural,
           this.precisionInput,
           this.variableInput,
         ];
@@ -440,6 +464,8 @@ export class FunctionInputComponent implements OnInit {
         this.inputs = [this.orderInputNonNegative, this.variableInput];
         break;
       case FunctionType.LEGENDRE_POLYNOMIAL:
+        this.inputs = [this.orderInputNatural, this.variableInputLegendre];
+        break;
       case FunctionType.CHEBYSHEV_FIRST_KIND:
       case FunctionType.CHEBYSHEV_SECOND_KIND:
         this.inputs = [this.orderInputNatural, this.variableInputConstrained];
@@ -454,7 +480,7 @@ export class FunctionInputComponent implements OnInit {
         break;
       default:
         this.inputs = [
-          this.orderInputReal,
+          this.orderInputNatural,
           this.precisionInput,
           this.variableInput,
         ];
