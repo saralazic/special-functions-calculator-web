@@ -498,7 +498,7 @@ export class FunctionInputComponent implements OnInit {
       case FunctionType.BESSEL_FIRST_KIND:
       case FunctionType.BESSEL_SECOND_KIND:
       case FunctionType.BESSEL_THIRD_KIND:
-        this.form.get('orderValue')?.setValue('0');
+        this.form.get('orderValue')?.setValue('1');
         this.form.get('precisionValue')?.setValue('1e-64');
         this.form.get('variableValue')?.setValue('0');
         break;
@@ -524,7 +524,7 @@ export class FunctionInputComponent implements OnInit {
         this.form.get('bParameterValue')?.setValue('0');
         break;
       default:
-        this.form.get('orderValue')?.setValue('');
+        this.form.get('orderValue')?.setValue('0');
         this.form.get('precisionValue')?.setValue('1e-64');
         this.form.get('variableValue')?.setValue('0');
         break;
