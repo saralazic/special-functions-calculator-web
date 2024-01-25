@@ -8,7 +8,7 @@ import {
   FunctionParams,
   FunctionParamsForCalculation,
   FunctionParamsForCalculationWithBigNumbers,
-} from 'src/app/models/functions/specialFunction';
+} from 'src/app/services/functions/specialFunction';
 import { LanguageService } from 'src/app/services/language-service/language.service';
 import {
   bigNumberValidatorForPrecision,

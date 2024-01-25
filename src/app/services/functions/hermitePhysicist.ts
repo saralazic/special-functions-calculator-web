@@ -1,6 +1,6 @@
 import * as math from 'mathjs';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
-import { FunctionType } from '../enums';
+import { FunctionType } from '../../models/enums';
 import {
   FunctionParamsForCalculation,
   FunctionParamsForCalculationWithBigNumbers,
@@ -26,6 +26,7 @@ export class HermitePhysicist extends SpecialFunction {
       t,
       n2k,
       den;
+
     while (2 * k <= alpha) {
       n2k = alpha - 2 * k;
       den = factorial(k) * factorial(n2k);
