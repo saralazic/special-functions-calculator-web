@@ -2,11 +2,11 @@ import { BigNumber, MathType } from 'mathjs';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 import { Stack } from 'src/utilities/stack';
 import { getE, getPi, round } from 'src/utilities/utilities';
-import { IExpression } from './IExpression';
+import { IExpression as ICalculatorService } from './ICalculatorService';
 
 /** This is for calculator component */
 /** Does evaluation of expressions using BigMath */
-export class Expression implements IExpression {
+export class CalculatorService implements ICalculatorService {
   math = math_64;
 
   expression: string;

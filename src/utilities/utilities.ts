@@ -1,15 +1,15 @@
 import { all, BigNumber, create, MathType } from 'mathjs';
 import * as Plotly from 'plotly.js-basic-dist';
-import { BesselFirstKind } from 'src/app/models/functions/besselFirst';
-import { BesselSecondKind } from 'src/app/models/functions/besselSecond';
-import { ChebyshevPolynomialOfFirstKind } from 'src/app/models/functions/chebyshevFirst';
-import { ChebyshevPolynomialOfSecondKind } from 'src/app/models/functions/chebyshevSecond';
-import { HermitePhysicist } from 'src/app/models/functions/hermitePhysicist';
-import { HermiteProbabilistic } from 'src/app/models/functions/hermiteProbabilistic';
-import { JacobiPolynomial } from 'src/app/models/functions/jacobi';
-import { LaguerrePolynomial } from 'src/app/models/functions/laguerre';
-import { LegendrePolynomial } from 'src/app/models/functions/legendre';
-import { SpecialFunction } from 'src/app/models/functions/specialFunction';
+import { BesselFirstKind } from 'src/app/services/functions/besselFirst';
+import { BesselSecondKind } from 'src/app/services/functions/besselSecond';
+import { ChebyshevPolynomialOfFirstKind } from 'src/app/services/functions/chebyshevFirst';
+import { ChebyshevPolynomialOfSecondKind } from 'src/app/services/functions/chebyshevSecond';
+import { HermitePhysicist } from 'src/app/services/functions/hermitePhysicist';
+import { HermiteProbabilistic } from 'src/app/services/functions/hermiteProbabilistic';
+import { JacobiPolynomial } from 'src/app/services/functions/jacobi';
+import { LaguerrePolynomial } from 'src/app/services/functions/laguerre';
+import { LegendrePolynomial } from 'src/app/services/functions/legendre';
+import { SpecialFunction } from 'src/app/services/functions/specialFunction';
 import { FunctionType } from '../app/models/enums';
 import { BIG_NUMBER_CONSTANTS, math_64 } from './big_numbers_math';
 
@@ -21,6 +21,20 @@ export function factorial(n: number): number {
   } else {
     return n * factorial(n - 1);
   }
+}
+
+export function binomialCoefficient(n: number, k: number): number {
+  const den = factorial(k) * factorial(n - k);
+  return factorial(n) / den;
+}
+
+export function binomialCoefficientBig(n: BigNumber, k: BigNumber): BigNumber {
+  const den = math_64.multiply(
+    math_64.factorial(k),
+    math_64.factorial(math_64.subtract(n, k))
+  );
+
+  return math_64.divide(math_64.factorial(n), den) as BigNumber;
 }
 
 export function drawGraph(

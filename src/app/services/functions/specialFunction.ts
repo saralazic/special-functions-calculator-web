@@ -1,5 +1,5 @@
 import { loadTranslationForFunction } from 'src/utilities/utilities';
-import { FunctionType } from '../enums';
+import { FunctionType } from '../../models/enums';
 
 /** Every special function has its own class which extends this abstract class
  * it has information about function, translations

@@ -12,7 +12,7 @@ import {
   unaryOps2,
 } from 'src/app/data/calculatorSymbols';
 import { Keys } from 'src/app/models/enums';
-import { Expression } from 'src/app/models/expression/expression';
+import { CalculatorService } from 'src/app/services/calculator/calculatorService';
 import { ISymbol } from 'src/app/models/symbol';
 import { getE, getPi } from 'src/utilities/utilities';
 
@@ -22,7 +22,7 @@ import { getE, getPi } from 'src/utilities/utilities';
   styleUrls: ['./calculator.component.css'],
 })
 export class CalculatorComponent {
-  public expression = new Expression('0');
+  public expression = new CalculatorService('0');
   public digits = digits;
   public operators = operators;
   public operators2 = operators2;

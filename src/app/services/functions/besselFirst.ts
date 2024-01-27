@@ -1,6 +1,6 @@
 import * as math from 'mathjs';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
-import { FunctionType } from '../enums';
+import { FunctionType } from '../../models/enums';
 import { gammaBig } from '../../../utilities/utilities';
 import {
   FunctionParamsForCalculation,
@@ -18,6 +18,9 @@ export class BesselFirstKind extends SpecialFunction {
   calculate(params: FunctionParamsForCalculation): number {
     const { alpha, x } = params;
     const eps: number = params.eps ?? 10 ** -15;
+
+    // console.log('x: ' + x);
+    // console.log('alpha: ' + alpha);
 
     const xHalf = x / 2.0;
     const xHalfSqr = xHalf ** 2;
@@ -47,6 +50,9 @@ export class BesselFirstKind extends SpecialFunction {
   calculateBig(params: FunctionParamsForCalculationWithBigNumbers): string {
     const { alphaBig, xBig } = params;
     const epsBig = params.epsBig ?? '1e-64';
+
+    // console.log('xBig: ' + xBig);
+    // console.log('alphaBig: ' + alphaBig);
 
     const alpha = this.math.bignumber(alphaBig);
     const eps = this.math.bignumber(epsBig);

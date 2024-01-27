@@ -22,7 +22,7 @@
     "copyright": "School of Electrical Engineering, University of Belgrade"
   },
   "about": {
-    "text": "The application 'Calculator of some special functions' was created as a result of the master's thesis of the same name, B.Sc. Eng. Sara Lazić, from the subject of Special Functions at the master academic studies in Software Engineering at the Faculty of Electrical Engineering, University of Belgrade, under the mentorship of prof. Dr. Bratislav Iričanin. The goal of this application is to allow users to quickly and efficiently evaluate the values ​​of some special functions that are most often encountered in various fields of science and engineering. The calculator provides support for calculating and graphically displaying the values ​​of the following functions: Bessel functions of the first, second and third kind, Laguerre polynomials, Legendre polynomials, Jacobi polynomials, as well as Chebyshev polynomials of the first and second kind."
+    "text": "The application 'Calculator of some special functions' was created as a result of the master's thesis of the same name, B.Sc. Eng. Sara Lazić, from the subject of Special Functions at the master academic studies in Software Engineering at the Faculty of Electrical Engineering, University of Belgrade, under the mentorship of prof. Dr. Bratislav Iričanin. The goal of this application is to allow users to quickly and efficiently evaluate the values ​​of some special functions that are most often encountered in various fields of science and engineering. The calculator provides support for calculating and graphically displaying the values ​​of the following functions: Bessel functions of the first kind, probabilist's Hermite polynomials, physicist's Hermite polynomial Laguerre polynomials, Legendre polynomials, Jacobi polynomials, as well as Chebyshev polynomials of the first and second kind."
   },
   "contact": {
     "title": "Contact us",
@@ -66,15 +66,16 @@
     "labelOrderNonNegative": "Order (nonnegative integer):",
     "labelPrecision": "Precision (0.00...00x or xe-y):",
     "labelVariable": "Variable (real number):",
-    "labelVariableConstrained": "Variable (real number between -1 and 1):",
-    "labelVariableN0": "Variable (natural number or 0):",
+    "labelVariableConstrained": "Variable (real number, [-1,1]):",
+    "labelVariableLegendre": "Variable (real number, (-1,1)):",
+    "labelVariableN0": "Variable (nonnegative integer):",
     "aInputLabel": "Parameter alpha (real number greater than -1):",
     "bInputLabel": "Parameter beta (real number greater than -1):",
     "errorMessage": "Please enter a valid value",
     "buttonBasicInformations": "Basic informations about this function",
     "buttonUseCalculatedValue": "Use this value",
     "buttonCalculateAndDrawGraph": "Calculate",
-    "clear": "Clear all inputs"
+    "clear": "Reset"
   },
   "tooltips": {
     "info": "Find out more about this functions",

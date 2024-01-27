@@ -2,7 +2,7 @@ import * as math from 'mathjs';
 import { BigNumber } from 'mathjs';
 import { math_64 } from 'src/utilities/big_numbers_math';
 import { getPi } from '../../../utilities/utilities';
-import { FunctionType } from '../enums';
+import { FunctionType } from '../../models/enums';
 import {
   FunctionParamsForCalculation,
   FunctionParamsForCalculationWithBigNumbers,

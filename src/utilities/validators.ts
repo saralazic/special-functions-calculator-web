@@ -5,7 +5,7 @@ import { checkIfBigNumberIsPrecision } from './utilities';
 export function bigNumberValidator(
   control: AbstractControl
 ): ValidationErrors | null {
-  const bigNumberRegex = /^-?\d+(\.\d+)?([eE]-?\d+)?$/;
+  const bigNumberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
   if (control.value && !bigNumberRegex.test(control.value)) {
     return { invalidBigNumber: true };
   }
@@ -47,13 +47,13 @@ export function bigNumberValidatorN0(
 export function bigNumberValidatorForParams(
   control: AbstractControl
 ): ValidationErrors | null {
-  const bigNumberRegex = /^-?\d+(\.\d+)?([eE]-?\d+)?$/;
+  const bigNumberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
   if (control.value && !bigNumberRegex.test(control.value)) {
     return { invalidBigNumber: true };
   }
 
   let k = math_64.bignumber(control.value);
-  if (!(Number(math_64.compare(k, BIG_NUMBER_CONSTANTS.MINUS_ONE)) >= 0)) {
+  if (!(Number(math_64.compare(k, BIG_NUMBER_CONSTANTS.MINUS_ONE)) > 0)) {
     return { invalidBigNumber: true };
   }
 
@@ -63,7 +63,7 @@ export function bigNumberValidatorForParams(
 export function bigNumberValidatorConstrained(
   control: AbstractControl
 ): ValidationErrors | null {
-  const bigNumberRegex = /^-?\d+(\.\d+)?([eE]-?\d+)?$/;
+  const bigNumberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
   if (control.value && !bigNumberRegex.test(control.value)) {
     return { invalidBigNumber: true };
   }
@@ -73,6 +73,27 @@ export function bigNumberValidatorConstrained(
     !(
       Number(math_64.compare(k, BIG_NUMBER_CONSTANTS.MINUS_ONE)) >= 0 &&
       Number(math_64.compare(k, BIG_NUMBER_CONSTANTS.ONE)) <= 0
+    )
+  ) {
+    return { invalidBigNumber: true };
+  }
+
+  return null;
+}
+
+export function bigNumberValidatorLegendre(
+  control: AbstractControl
+): ValidationErrors | null {
+  const bigNumberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
+  if (control.value && !bigNumberRegex.test(control.value)) {
+    return { invalidBigNumber: true };
+  }
+
+  let k = math_64.bignumber(control.value);
+  if (
+    !(
+      Number(math_64.compare(k, BIG_NUMBER_CONSTANTS.MINUS_ONE)) > 0 &&
+      Number(math_64.compare(k, BIG_NUMBER_CONSTANTS.ONE)) < 0
     )
   ) {
     return { invalidBigNumber: true };

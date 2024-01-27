@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SpecialFunction } from 'src/app/models/functions/specialFunction';
+import { SpecialFunction } from 'src/app/services/functions/specialFunction';
 import { LanguageService } from 'src/app/services/language-service/language.service';
 import { createChosenFunction } from 'src/utilities/utilities';
 
