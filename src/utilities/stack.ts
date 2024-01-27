@@ -9,7 +9,7 @@ export class Stack<T> {
     return this.items.pop();
   }
 
-  peek(): T | undefined {
+  top(): T | undefined {
     return this.items[this.items.length - 1];
   }
 

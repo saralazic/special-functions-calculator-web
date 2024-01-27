@@ -1,6 +1,7 @@
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 import { getE } from 'src/utilities/utilities';
 import { ISymbol, ISymbolWithData } from '../models/symbol';
+import _ from 'lodash';
 
 const math = math_64;
 
@@ -91,5 +92,16 @@ export const hyperbolic: ISymbol[] = [
   { symbol: 'acosh', label: 'cosh<sup>-1</sup>' },
   { symbol: 'atanh', label: 'tanh<sup>-1</sup>' },
 ];
+
+export const unaryOps = _.flatten([
+  unaryOps1,
+  unaryOps2,
+  trigonometry,
+  hyperbolic,
+]);
+export const unarySymbols = unaryOps.map((op) => op.symbol);
+
+export const binaryOps = _.flatten([operators, operators2]);
+export const binarySymbols = binaryOps.map((op) => op.symbol);
 
 export const MULTIPLY_SIGN_ASCII_CODE = '&#215;';
