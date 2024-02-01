@@ -1,7 +1,7 @@
-import { operators } from 'src/app/data/calculatorSymbols';
+import { isUnaryOperator, operators } from 'src/app/data/calculatorSymbols';
 
 export interface IOperatorPriority {
-  operators: string[];
+  operators?: string[];
   ipr: number; // input priority
   spr: number; // output priority
   R: number; //rank
@@ -28,7 +28,7 @@ const operatorsPriorities = [
   },
   {
     operators: ['('],
-    ipr: 7,
+    ipr: 8,
     spr: 0,
     R: 0,
   },
@@ -48,11 +48,23 @@ export function getPriority(s: string | undefined): IOperatorPriority {
     R: 0,
   };
 
+  const defBin = {
+    ipr: 6,
+    spr: 0,
+    R: -1,
+  };
+
+  const defUn = {
+    ipr: 7,
+    spr: 0,
+    R: 0,
+  };
+
   if (s === undefined) return empty;
 
   const priority = operatorsPriorities.find(
     (symbol) => !!symbol.operators.find((op) => op === s)
   );
 
-  return priority ?? empty;
+  return priority ?? (isUnaryOperator(s) ? defUn : defBin);
 }

@@ -2,7 +2,6 @@
     <form method="POST">
       <div>
           <div>
-            <!--  <span *ngIf="getOperand()!='';" [innerHTML]="getOperand()"></span> -->
               <span *ngIf="getRadians(); else badgeGrads" class="rad">Rad</span>
               <ng-template #badgeGrads><span class="rad">Grad</span></ng-template>
           </div>

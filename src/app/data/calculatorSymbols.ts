@@ -1,9 +1,5 @@
-import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
-import { getE } from 'src/utilities/utilities';
-import { ISymbol, ISymbolWithData } from '../models/symbol';
+import { ISymbol } from '../models/symbol';
 import _ from 'lodash';
-
-const math = math_64;
 
 export const digits: string[] = [
   '0',
@@ -28,7 +24,7 @@ export const operators: ISymbol[] = [
 export const operators2: ISymbol[] = [
   { symbol: 'xy', label: 'x<sup>y</sup>' },
   { symbol: 'yx', label: 'y<sup>x</sup>' },
-  { symbol: 'sqrt', label: '<sup>y</sup>&radic;x' },
+  { symbol: 'sqrty', label: '<sup>y</sup>&radic;x' },
   { symbol: 'log', label: 'log<sub>y</sub>x' },
 ];
 
@@ -46,42 +42,37 @@ export const brackets: ISymbol[] = [
   { symbol: ')', label: ')' },
 ];
 
-export const unaryOps1: ISymbolWithData[] = [
-  { symbol: 'pow', label: 'x<sup>2</sup>', data: BIG_NUMBER_CONSTANTS.TWO },
-  { symbol: 'pow', label: 'x<sup>3</sup>', data: BIG_NUMBER_CONSTANTS.THREE },
-  { symbol: 'pow_base', label: 'e<sup>x</sup>', data: getE() },
+export const unaryOps1: ISymbol[] = [
+  { symbol: 'pow_2', label: 'x<sup>2</sup>' },
+  { symbol: 'pow_3', label: 'x<sup>3</sup>' },
+  { symbol: 'pow_base_e', label: 'e<sup>x</sup>' },
   {
-    symbol: 'div',
+    symbol: '1div',
     label: '<sup>1</sup>/<sub>x</sub>',
-    data: BIG_NUMBER_CONSTANTS.ONE,
   },
   {
-    symbol: 'sqrt',
+    symbol: 'sqrt2',
     label: '<sup>2</sup>&radic;x',
-    data: BIG_NUMBER_CONSTANTS.TWO,
   },
   {
     symbol: 'sqrt3',
     label: '<sup>3</sup>&radic;x',
-    data: math.divide(BIG_NUMBER_CONSTANTS.ONE, BIG_NUMBER_CONSTANTS.THREE),
   },
 ];
 
-export const unaryOps2: ISymbolWithData[] = [
+export const unaryOps2: ISymbol[] = [
   {
-    symbol: 'pow_base',
+    symbol: 'pow_base_10',
     label: '10<sup>x</sup>',
-    data: BIG_NUMBER_CONSTANTS.TEN,
   },
   {
-    symbol: 'pow_base',
+    symbol: 'pow_base_2',
     label: '2<sup>x</sup>',
-    data: BIG_NUMBER_CONSTANTS.TWO,
   },
-  { symbol: 'factorial', label: 'x!', data: BIG_NUMBER_CONSTANTS.ONE },
-  { symbol: 'ln', label: 'ln', data: getE() },
-  { symbol: 'lg', label: 'lg', data: BIG_NUMBER_CONSTANTS.TEN },
-  { symbol: 'lg', label: 'log<sub>2</sub>', data: BIG_NUMBER_CONSTANTS.TWO },
+  { symbol: 'factorial', label: 'x!' },
+  { symbol: 'ln', label: 'ln' },
+  { symbol: 'lg', label: 'lg' },
+  { symbol: 'lg2', label: 'log<sub>2</sub>' },
 ];
 
 export const hyperbolic: ISymbol[] = [
@@ -98,6 +89,8 @@ export const unaryOps = _.flatten([
   unaryOps2,
   trigonometry,
   hyperbolic,
+  { symbol: 'invert_sign', label: '&#177;' },
+  { symbol: 'percent', label: '%' },
 ]);
 export const unarySymbols = unaryOps.map((op) => op.symbol);
 
@@ -105,3 +98,15 @@ export const binaryOps = _.flatten([operators, operators2]);
 export const binarySymbols = binaryOps.map((op) => op.symbol);
 
 export const MULTIPLY_SIGN_ASCII_CODE = '&#215;';
+
+export function isOperator(s: string): boolean {
+  const operands = unarySymbols.concat(binarySymbols);
+
+  const index = operands.indexOf(s);
+  return index != -1;
+}
+
+export function isUnaryOperator(s: string): boolean {
+  const index = unarySymbols.indexOf(s);
+  return index !== -1;
+}

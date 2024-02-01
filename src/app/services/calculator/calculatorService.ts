@@ -1,5 +1,10 @@
 import { BigNumber, MathType, re, string } from 'mathjs';
-import { binarySymbols, unarySymbols } from 'src/app/data/calculatorSymbols';
+import {
+  binarySymbols,
+  isOperator,
+  isUnaryOperator,
+  unarySymbols,
+} from 'src/app/data/calculatorSymbols';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 import { Stack } from 'src/utilities/stack';
 import { getE, getPi, round } from 'src/utilities/utilities';
@@ -49,6 +54,7 @@ export class CalculatorService implements ICalculatorService {
     this.start = false;
     this.isOperandReal = false;
 
+    //  console.log(this.expression);
     return result;
   }
 
@@ -75,7 +81,7 @@ export class CalculatorService implements ICalculatorService {
         result = this.math.divide(op1, op2);
         this.show(result);
         break;
-      case 'sqrt':
+      case 'sqrty':
         // Calculate cur = 1 / currentOperand
         const cur: MathType = this.math.divide(BIG_NUMBER_CONSTANTS.ONE, op2);
         // Calculate previousOperand^(1/currentOperand)
@@ -85,6 +91,14 @@ export class CalculatorService implements ICalculatorService {
       case 'pow':
       case 'xy':
         result = this.math.pow(op1, op2 as BigNumber);
+        this.show(result);
+        break;
+      case 'pow_2':
+        result = this.math.pow(op1, BIG_NUMBER_CONSTANTS.TWO);
+        this.show(result);
+        break;
+      case 'pow_3':
+        result = this.math.pow(op1, BIG_NUMBER_CONSTANTS.TWO);
         this.show(result);
         break;
       case 'yx':
@@ -113,7 +127,7 @@ export class CalculatorService implements ICalculatorService {
       case 'invert_sign':
         result = this.math.multiply(-1, operand);
         break;
-      case 'sqrt':
+      case 'sqrt2':
         result = this.math.sqrt(operand);
         break;
       case 'sqrt3':
@@ -133,19 +147,29 @@ export class CalculatorService implements ICalculatorService {
         const second = this.math.log(BIG_NUMBER_CONSTANTS.TEN);
         result = this.math.divide(first, second);
         break;
-      case 'pow_base':
+      case 'lg2':
+        const f = this.math.log(operand);
+        const s = this.math.log(BIG_NUMBER_CONSTANTS.TWO);
+        result = this.math.divide(f, s);
+        break;
+      case 'pow_base_10':
         result = this.math.pow(BIG_NUMBER_CONSTANTS.TEN, operand);
+        break;
+      case 'pow_base_2':
+        result = this.math.pow(BIG_NUMBER_CONSTANTS.TWO, operand);
+        break;
+      case 'pow_base_e':
+        result = this.math.pow(getE(), operand);
         break;
       case 'pow':
         let step = this.math.bignumber(operand as BigNumber);
         result = this.math.pow(operand, step);
         break;
-      case 'div':
+      case '1div':
         result = this.math.divide(1, operand);
         break;
       case 'sin':
         rad = this.radians ? operand : this.math.divide(operand, grad);
-
         result = this.math.sin(rad as BigNumber);
         break;
       case 'cos':
@@ -251,7 +275,7 @@ export class CalculatorService implements ICalculatorService {
   }
 
   setOperator(operator: string): void {
-    if (!this.isUnaryOperator(operator)) {
+    if (!isUnaryOperator(operator)) {
       // binary operator
       this.infix.push(this.currentOperand);
       this.currentOperand = '';
@@ -259,24 +283,24 @@ export class CalculatorService implements ICalculatorService {
 
     // unary operator
     this.infix.push(operator);
-    this.expression += operator;
+    //  this.expression += operator;
     this.start = true;
   }
 
   addConstant(value: string): string {
     this.currentOperand = value;
-    this.expression += value;
+    this.expression = value;
     return this.expression;
   }
 
   addSymbol(value: string, start: boolean): string {
-    // if (
-    //   start ||
-    //   this.start ||
-    //   (this.isOperandReal == false && this.expression == '' && value != '.')
-    // ) {
-    //   this.expression = '';
-    // }
+    if (
+      start ||
+      this.start ||
+      (this.isOperandReal == false && this.expression == '' && value != '.')
+    ) {
+      this.expression = '';
+    }
 
     this.start = start;
     this.currentOperand += value;
@@ -286,6 +310,7 @@ export class CalculatorService implements ICalculatorService {
       }
       this.isOperandReal = true;
     }
+
     this.expression += value;
     return this.expression;
   }
@@ -327,14 +352,14 @@ export class CalculatorService implements ICalculatorService {
     let x: string;
 
     while (next) {
-      //  console.log('iterration: ' + i);
+      console.log('iteration: ' + i);
 
-      if (!this.isOperator(next)) {
+      if (!isOperator(next)) {
         // operand
         postfix.push(next);
         rank = rank + 1;
       } else {
-        if (this.isUnaryOperator(next)) {
+        if (isUnaryOperator(next)) {
           stack.push(next);
         } else {
           while (
@@ -346,14 +371,14 @@ export class CalculatorService implements ICalculatorService {
             rank = rank + getPriority(x).R;
 
             if (rank < 1) {
-              // console.log('rank<1: ' + rank);
+              console.log('rank<1: ' + rank);
               return INVALID_EXPRESSION;
             }
           } // end_while
 
           if (stack.isEmpty() || next != ')') {
             stack.push(next);
-            // console.log(stack);
+            console.log(stack);
           } else {
             x = stack.pop() ?? '';
           }
@@ -369,7 +394,8 @@ export class CalculatorService implements ICalculatorService {
     }
 
     if (rank != 1) {
-      //  console.log('rank!= 1: ' + rank);
+      console.log('rank!= 1: ' + rank);
+      console.log(postfix);
       return INVALID_EXPRESSION;
     }
     return postfix;
@@ -383,16 +409,18 @@ export class CalculatorService implements ICalculatorService {
 
     while (i < postfix.length) {
       x = postfix[i++];
-      if (!this.isOperator(x)) {
+      if (!isOperator(x)) {
         // operand
+        console.log(i + ': ' + x);
         stack.push(x);
       } else {
-        if (this.isUnaryOperator(x)) {
+        if (isUnaryOperator(x)) {
           if (stack.isEmpty()) return INVALID_EXPRESSION;
           const operand = this.math.bignumber(stack.pop());
           rez = this.calculateUnaryOperation(x, operand);
           stack.push(rez.toString());
         } else {
+          console.log('bin: ' + i);
           // if it's not operand nor unary operator, it's binary operator
           if (stack.size() < 2) return INVALID_EXPRESSION;
           const operand2 = this.math.bignumber(stack.pop());
@@ -406,18 +434,6 @@ export class CalculatorService implements ICalculatorService {
     rez = stack.pop() ?? INVALID_EXPRESSION;
     if (stack.isEmpty()) return rez;
     return INVALID_EXPRESSION;
-  }
-
-  private isOperator(s: string): boolean {
-    const operands = unarySymbols.concat(binarySymbols);
-
-    const index = operands.indexOf(s);
-    return index != -1;
-  }
-
-  private isUnaryOperator(s: string): boolean {
-    const index = unarySymbols.indexOf(s);
-    return index !== -1;
   }
 }
 
