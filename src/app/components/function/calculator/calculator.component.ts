@@ -3,6 +3,7 @@ import {
   brackets,
   digits,
   hyperbolic,
+  MULTIPLY_SIGN_ASCII_CODE,
   operators,
   operators2,
   trigonometry,
@@ -29,6 +30,7 @@ export class CalculatorComponent {
   public unaryOps1 = unaryOps1;
   public unaryOps2 = unaryOps2;
   public hyperbolic = hyperbolic;
+  public operator = '';
 
   @Output() calculated: EventEmitter<string> = new EventEmitter<string>();
 
@@ -71,10 +73,17 @@ export class CalculatorComponent {
 
   /** wrapper methods */
   setOperator(operator: string): void {
+    this.operator = operator;
     this.calculatorService.setOperator(operator);
   }
 
+  getOperator(): string {
+    if (this.operator === Keys.STAR) return MULTIPLY_SIGN_ASCII_CODE; // code for dot instead of star
+    return this.operator;
+  }
+
   addBracket(bracket: string): void {
+    this.operator = bracket;
     this.calculatorService.addBracket(bracket === Keys.BRACKET_OPEN);
   }
 

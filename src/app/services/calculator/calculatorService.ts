@@ -27,18 +27,22 @@ export class CalculatorService implements ICalculatorService {
       this.currentOperand = '';
     }
 
-    console.log('infix: ' + this.infix);
+    // console.log('infix: ' + this.infix);
 
     const postfix = this.infixToPostfix();
 
-    console.log('postfix: ' + postfix);
+    // console.log('postfix: ' + postfix);
 
     if (postfix === INVALID_EXPRESSION) return postfix;
 
     let result = this.evaluatePostfixExpression(postfix);
 
     const resMath = this.math.bignumber(result);
-    if (Number(this.math.compare(resMath, this.math.bignumber('1e-63'))) <= 0)
+    if (
+      Number(
+        this.math.compare(this.math.abs(resMath), this.math.bignumber('1e-63'))
+      ) <= 0
+    )
       result = '0';
 
     this.infix = [];
@@ -47,7 +51,7 @@ export class CalculatorService implements ICalculatorService {
     this.start = false;
     this.isOperandReal = false;
 
-    //  console.log(this.expression);
+    // console.log(this.expression);
     return result;
   }
 
@@ -112,7 +116,7 @@ export class CalculatorService implements ICalculatorService {
     let rad: MathType = BIG_NUMBER_CONSTANTS.ZERO;
     let grad: MathType = this.math.divide(this.math.bignumber(180), getPi());
 
-    console.log(unaryOperator + ' ' + operand);
+    // console.log(unaryOperator + ' ' + operand);
 
     switch (unaryOperator) {
       case 'invert_sign':
@@ -344,12 +348,12 @@ export class CalculatorService implements ICalculatorService {
       if (!isOperator(next) && next != '(' && next != ')') {
         // operand
         postfix.push(next);
-        console.log(i + '. postfix: ' + postfix);
+        // console.log(i + '. postfix: ' + postfix);
         rank = rank + 1;
       } else {
         if (isUnaryOperator(next)) {
           stack.push(next);
-          console.log(i + '. stack: ' + stack.join());
+          // console.log(i + '. stack: ' + stack.join());
           rank = rank + getPriority(next).R;
         } else {
           while (
@@ -358,18 +362,18 @@ export class CalculatorService implements ICalculatorService {
           ) {
             x = stack.pop() ?? ''; // ?? because of pop return type can be undefined
             postfix.push(x);
-            console.log(i + '. postfix: ' + postfix);
+            // console.log(i + '. postfix: ' + postfix);
             rank = rank + getPriority(x).R;
 
             if (rank < 1) {
-              console.log('rank<1: ' + rank);
+              // console.log('rank<1: ' + rank);
               return INVALID_EXPRESSION;
             }
           } // end_while
 
           if (stack.isEmpty() || next != ')') {
             stack.push(next);
-            console.log(i + '. stack: ' + stack.join());
+            // console.log(i + '. stack: ' + stack.join());
           } else {
             x = stack.pop() ?? '';
           }
@@ -377,18 +381,18 @@ export class CalculatorService implements ICalculatorService {
       }
       next = i < this.infix.length ? this.infix[i++] : undefined;
     }
-    console.log('first while finished');
+    // console.log('first while finished');
 
     while (!stack.isEmpty()) {
       x = stack.pop() ?? '';
       postfix.push(x);
-      console.log(i + '. postfix: ' + postfix);
+      // console.log(i + '. postfix: ' + postfix);
       rank = rank + getPriority(x).R;
     }
 
     if (rank != 1) {
-      console.log('rank!= 1: ' + rank);
-      console.log(i + ' postfix: ' + postfix);
+      // console.log('rank!= 1: ' + rank);
+      // console.log(i + ' postfix: ' + postfix);
       return INVALID_EXPRESSION;
     }
     return postfix;
@@ -404,22 +408,23 @@ export class CalculatorService implements ICalculatorService {
       x = postfix[i++];
       if (!isOperator(x)) {
         // operand
-        console.log(i + ': ' + x);
         stack.push(x);
+        //  console.log(i + '. ' + stack.join());
       } else {
         if (isUnaryOperator(x)) {
           if (stack.isEmpty()) return INVALID_EXPRESSION;
           const operand = this.math.bignumber(stack.pop());
           rez = this.calculateUnaryOperation(x, operand);
           stack.push(rez.toString());
+          //  console.log(i + '. ' + stack.join());
         } else {
-          console.log('bin: ' + i);
           // if it's not operand nor unary operator, it's binary operator
           if (stack.size() < 2) return INVALID_EXPRESSION;
           const operand2 = this.math.bignumber(stack.pop());
           const operand1 = this.math.bignumber(stack.pop());
           rez = this.calculateBinaryOperation(operand1, operand2, x);
           stack.push(rez.toString());
+          //  console.log(i + '. ' + stack.join());
         }
       }
     } // end while

@@ -26,6 +26,6 @@ export class Stack<T> {
   }
 
   join(): string {
-    return this.items.join('');
+    return this.items.join(', ');
   }
 }
