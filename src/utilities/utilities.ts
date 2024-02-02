@@ -1,4 +1,4 @@
-import { all, BigNumber, create, MathType } from 'mathjs';
+import { BigNumber, MathType } from 'mathjs';
 import * as Plotly from 'plotly.js-basic-dist';
 import { BesselFirstKind } from 'src/app/services/functions/besselFirst';
 import { BesselSecondKind } from 'src/app/services/functions/besselSecond';
@@ -12,8 +12,6 @@ import { LegendrePolynomial } from 'src/app/services/functions/legendre';
 import { SpecialFunction } from 'src/app/services/functions/specialFunction';
 import { FunctionType } from '../app/models/enums';
 import { BIG_NUMBER_CONSTANTS, math_64 } from './big_numbers_math';
-
-const math = math_64;
 
 export function factorial(n: number): number {
   if (n === 0 || n === 1) {
@@ -162,15 +160,15 @@ export function createChosenFunction(parameter: string): SpecialFunction {
 }
 
 export function getE(): MathType {
-  return math.exp(BIG_NUMBER_CONSTANTS.ONE);
+  return math_64.exp(BIG_NUMBER_CONSTANTS.ONE);
 }
 
 export function getPi(): MathType {
   // const piValue: BigNumber = math.bignumber(
   //   '3.1415926535897932384626433832795028841971693993751058209749445923078164'
   // );
-  const piHalf: BigNumber = math.acos(BIG_NUMBER_CONSTANTS.ZERO);
-  return math.multiply(piHalf, BIG_NUMBER_CONSTANTS.TWO as BigNumber);
+  const piHalf: BigNumber = math_64.acos(BIG_NUMBER_CONSTANTS.ZERO);
+  return math_64.multiply(piHalf, BIG_NUMBER_CONSTANTS.TWO as BigNumber);
 }
 
 export function round(stringVal: string): string {
@@ -188,13 +186,13 @@ export function round(stringVal: string): string {
 }
 
 export function checkIfBigNumberIsPrecision(value: string): boolean {
-  const valueNumber = math.bignumber(value);
+  const valueNumber = math_64.bignumber(value);
   const zero = BIG_NUMBER_CONSTANTS.ZERO;
   const one = BIG_NUMBER_CONSTANTS.ONE;
 
   return (
-    Number(math.compare(valueNumber, zero)) > 0 &&
-    Number(math.compare(valueNumber, one)) < 0
+    Number(math_64.compare(valueNumber, zero)) > 0 &&
+    Number(math_64.compare(valueNumber, one)) < 0
   );
 }
 

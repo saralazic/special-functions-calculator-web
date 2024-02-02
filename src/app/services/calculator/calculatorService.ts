@@ -1,10 +1,5 @@
-import { BigNumber, MathType, re, string } from 'mathjs';
-import {
-  binarySymbols,
-  isOperator,
-  isUnaryOperator,
-  unarySymbols,
-} from 'src/app/data/calculatorSymbols';
+import { BigNumber, MathType } from 'mathjs';
+import { isOperator, isUnaryOperator } from 'src/app/data/calculatorSymbols';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 import { Stack } from 'src/utilities/stack';
 import { getE, getPi, round } from 'src/utilities/utilities';
@@ -14,8 +9,6 @@ import { getPriority } from './operatorsPriorities';
 /** This is for calculator component */
 /** Does evaluation of expressions using BigMath */
 export class CalculatorService implements ICalculatorService {
-  math = math_64;
-
   expression: string;
   currentOperand: string = '';
   start: boolean = false;
@@ -24,7 +17,7 @@ export class CalculatorService implements ICalculatorService {
 
   infix: string[] = [];
 
-  constructor() {
+  constructor(private math = math_64) {
     this.expression = '';
   }
 
@@ -106,9 +99,7 @@ export class CalculatorService implements ICalculatorService {
         this.show(result);
         break;
       case 'log':
-        const first = this.math.log(op1 as BigNumber);
-        const second = this.math.log(op2 as BigNumber);
-        result = this.math.divide(first, second);
+        result = this.math.log(op1 as BigNumber, op2 as BigNumber);
         this.show(result);
         break;
     }
@@ -143,14 +134,10 @@ export class CalculatorService implements ICalculatorService {
         result = this.math.log(operand);
         break;
       case 'lg':
-        const first = this.math.log(operand);
-        const second = this.math.log(BIG_NUMBER_CONSTANTS.TEN);
-        result = this.math.divide(first, second);
+        result = this.math.log(operand, BIG_NUMBER_CONSTANTS.TEN);
         break;
       case 'lg2':
-        const f = this.math.log(operand);
-        const s = this.math.log(BIG_NUMBER_CONSTANTS.TWO);
-        result = this.math.divide(f, s);
+        result = this.math.log(operand, BIG_NUMBER_CONSTANTS.TWO);
         break;
       case 'pow_base_10':
         result = this.math.pow(BIG_NUMBER_CONSTANTS.TEN, operand);
@@ -271,6 +258,9 @@ export class CalculatorService implements ICalculatorService {
       this.infix.push('(');
       return;
     }
+
+    this.infix.push(this.currentOperand);
+    this.currentOperand = '';
     this.infix.push(')');
   }
 
@@ -281,7 +271,6 @@ export class CalculatorService implements ICalculatorService {
       this.currentOperand = '';
     }
 
-    // unary operator
     this.infix.push(operator);
     //  this.expression += operator;
     this.start = true;
@@ -352,15 +341,16 @@ export class CalculatorService implements ICalculatorService {
     let x: string;
 
     while (next) {
-      console.log('iteration: ' + i);
-
-      if (!isOperator(next)) {
+      if (!isOperator(next) && next != '(' && next != ')') {
         // operand
         postfix.push(next);
+        console.log(i + '. postfix: ' + postfix);
         rank = rank + 1;
       } else {
         if (isUnaryOperator(next)) {
           stack.push(next);
+          console.log(i + '. stack: ' + stack.join());
+          rank = rank + getPriority(next).R;
         } else {
           while (
             !stack.isEmpty() &&
@@ -368,6 +358,7 @@ export class CalculatorService implements ICalculatorService {
           ) {
             x = stack.pop() ?? ''; // ?? because of pop return type can be undefined
             postfix.push(x);
+            console.log(i + '. postfix: ' + postfix);
             rank = rank + getPriority(x).R;
 
             if (rank < 1) {
@@ -378,7 +369,7 @@ export class CalculatorService implements ICalculatorService {
 
           if (stack.isEmpty() || next != ')') {
             stack.push(next);
-            console.log(stack);
+            console.log(i + '. stack: ' + stack.join());
           } else {
             x = stack.pop() ?? '';
           }
@@ -386,16 +377,18 @@ export class CalculatorService implements ICalculatorService {
       }
       next = i < this.infix.length ? this.infix[i++] : undefined;
     }
+    console.log('first while finished');
 
     while (!stack.isEmpty()) {
       x = stack.pop() ?? '';
       postfix.push(x);
+      console.log(i + '. postfix: ' + postfix);
       rank = rank + getPriority(x).R;
     }
 
     if (rank != 1) {
       console.log('rank!= 1: ' + rank);
-      console.log(postfix);
+      console.log(i + ' postfix: ' + postfix);
       return INVALID_EXPRESSION;
     }
     return postfix;
