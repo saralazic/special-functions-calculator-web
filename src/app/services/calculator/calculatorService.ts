@@ -245,7 +245,7 @@ export class CalculatorService implements ICalculatorService {
     return result;
   }
 
-  get(): string {
+  getExpression(): string {
     return this.expression;
   }
 
@@ -336,7 +336,7 @@ export class CalculatorService implements ICalculatorService {
     return this.expression;
   }
 
-  infixToPostfix() {
+  private infixToPostfix() {
     const stack = new Stack<string>();
     const postfix: string[] = [];
     let rank = 0;

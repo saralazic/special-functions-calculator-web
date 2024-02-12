@@ -1,0 +1,972 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>spef-calculator documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">spef-calculator documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  IInput</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/components/function/function-input/function-input.component.ts</code>
+        </p>
+
+
+
+
+        <section data-compodoc="block-index">
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#error" 
+>
+                                            error
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#formControlName" 
+>
+                                            formControlName
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#inputType" 
+>
+                                            inputType
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#isInvalid" 
+>
+                                            isInvalid
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#label" 
+>
+                                            label
+                                        </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section data-compodoc="block-properties">
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="error"></a>
+                                        <span class="name "><b>error</b>
+                                            <a href="#error">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>error:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="formControlName"></a>
+                                        <span class="name "><b>formControlName</b>
+                                            <a href="#formControlName">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>formControlName:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="inputType"></a>
+                                        <span class="name "><b>inputType</b>
+                                            <a href="#inputType">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>inputType:         <code><a href="../miscellaneous/enumerations.html#InputType" target="_self" >InputType</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="../miscellaneous/enumerations.html#InputType" target="_self" >InputType</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="isInvalid"></a>
+                                        <span class="name "><b>isInvalid</b>
+                                            <a href="#isInvalid">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>isInvalid:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="label"></a>
+                                        <span class="name "><b>label</b>
+                                            <a href="#label">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>label:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpClient } from &#x27;@angular/common/http&#x27;;
+import { Component, EventEmitter, Input, OnInit, Output } from &#x27;@angular/core&#x27;;
+import { FormBuilder, FormGroup, Validators } from &#x27;@angular/forms&#x27;;
+import { ActivatedRoute } from &#x27;@angular/router&#x27;;
+import { Subscription } from &#x27;rxjs&#x27;;
+import { FunctionType, InputType } from &#x27;src/app/models/enums&#x27;;
+import {
+  FunctionParams,
+  FunctionParamsForCalculation,
+  FunctionParamsForCalculationWithBigNumbers,
+} from &#x27;src/app/services/functions/specialFunction&#x27;;
+import { LanguageService } from &#x27;src/app/services/language-service/language.service&#x27;;
+import {
+  bigNumberValidatorForPrecision,
+  bigNumberValidatorNatural,
+  bigNumberValidatorConstrained,
+  bigNumberValidatorN0,
+  bigNumberValidatorForParams,
+  bigNumberValidator,
+  bigNumberValidatorLegendre,
+} from &#x27;src/utilities/validators&#x27;;
+
+@Component({
+  selector: &#x27;app-function-input&#x27;,
+  templateUrl: &#x27;./function-input.component.html&#x27;,
+  styleUrls: [&#x27;./function-input.component.css&#x27;],
+})
+export class FunctionInputComponent implements OnInit {
+  /** since this is only input form, values are sent to parent component -&gt; special-function
+   * and than parent component will call functions which perform calculation
+   */
+  @Output() formValuesChanged &#x3D; new EventEmitter&lt;any&gt;();
+
+  /** parameter is chosen function */
+  @Input() parameter: string | null &#x3D; null;
+
+  private subscription?: Subscription;
+
+  form!: FormGroup;
+
+  /** labels which need translation */
+  labelOrderNatural: string &#x3D; &#x27;&#x27;;
+  labelOrderReal: string &#x3D; &#x27;&#x27;;
+  labelOrderNonNegative: string &#x3D; &#x27;&#x27;;
+  labelPrecision: string &#x3D; &#x27;&#x27;;
+  labelVariable: string &#x3D; &#x27;&#x27;;
+  labelVariableN0: string &#x3D; &#x27;&#x27;;
+  aInputLabel: string &#x3D; &#x27;&#x27;;
+  bInputLabel: string &#x3D; &#x27;&#x27;;
+  labelVariableConstrained: string &#x3D; &#x27;&#x27;;
+  labelVariableLegendre: string &#x3D; &#x27;&#x27;;
+  orderInputReal: IInput;
+  orderInputNatural: IInput;
+  orderInputNonNegative: IInput;
+  precisionInput: IInput;
+  variableInput: IInput;
+  variableInputConstrained: IInput;
+  variableInputLegendre: IInput;
+  variableInputN0: IInput;
+  aInput: IInput;
+  bInput: IInput;
+  basicInformationsLabel: string &#x3D; &#x27;&#x27;;
+  useCalculatedValueLabel: string &#x3D; &#x27;&#x27;;
+  calculateAndDrawLabel: string &#x3D; &#x27;&#x27;;
+  clearLabel: string &#x3D; &#x27;&#x27;;
+  calculatorTooltip?: string;
+
+  errorMessage: string &#x3D; &#x27;&#x27;;
+
+  /** value which is result of calculator usage */
+  currentCalculatedValue: string;
+
+  /** helpers for calculator use */
+  shouldShowCalculator: boolean;
+  whereToUseCalculatedValue: InputType | null;
+
+  calculatorIconPath &#x3D; &#x27;assets/icons/calculator-alternative-2.png&#x27;;
+  calculatorError?: string;
+
+  /** Array of inputs created dynamically based on which function user has chosen
+   * this inputs include:
+   * 1. validation (domain, precision needs to be decimal between 0 and 1 etc.)
+   * 2. appropriate errors
+   * 3. field input type which is needed for calculator usage
+   */
+  inputs: IInput[] &#x3D; [];
+
+  constructor(
+    private http: HttpClient,
+    private languageService: LanguageService,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder
+  ) {
+    //** initially we don&#x27;t show calculator */
+    this.shouldShowCalculator &#x3D; false;
+    this.whereToUseCalculatedValue &#x3D; null;
+    this.currentCalculatedValue &#x3D; &#x27;&#x27;;
+
+    //** initialize all possible inputs, but I will render only the ones I really need */
+    this.orderInputReal &#x3D; {
+      label: this.labelOrderReal,
+      formControlName: &#x27;orderValue&#x27;,
+      isInvalid:
+        &quot;form.get(&#x27;orderValue&#x27;)?.invalid &amp;&amp; form.get(&#x27;orderValue&#x27;)?.touched&quot;,
+      error: this.errorMessage,
+      inputType: InputType.ORDER,
+    };
+
+    this.orderInputNatural &#x3D; {
+      label: this.labelOrderNatural,
+      formControlName: &#x27;orderValue&#x27;,
+      isInvalid:
+        &quot;form.get(&#x27;orderValue&#x27;)?.invalid &amp;&amp; form.get(&#x27;orderValue&#x27;)?.touched&quot;,
+      error: this.errorMessage,
+      inputType: InputType.ORDER,
+    };
+
+    this.orderInputNonNegative &#x3D; {
+      label: this.labelOrderNonNegative,
+      formControlName: &#x27;orderValue&#x27;,
+      isInvalid:
+        &quot;form.get(&#x27;orderValue&#x27;)?.invalid &amp;&amp; form.get(&#x27;orderValue&#x27;)?.touched&quot;,
+      error: this.errorMessage,
+      inputType: InputType.ORDER,
+    };
+
+    this.precisionInput &#x3D; {
+      label: this.labelPrecision,
+      formControlName: &#x27;precisionValue&#x27;,
+      isInvalid:
+        &quot;form.get(&#x27;precisionValue&#x27;)?.invalid &amp;&amp; form.get(&#x27;precisionValue&#x27;)?.touched&quot;,
+      error: this.errorMessage,
+      inputType: InputType.PRECISION,
+    };
+
+    this.variableInput &#x3D; {
+      label: this.labelVariable,
+      formControlName: &#x27;variableValue&#x27;,
+      isInvalid:
+        &quot;form.get(&#x27;variableValue&#x27;)?.invalid &amp;&amp; form.get(&#x27;variableValue&#x27;)?.touched&quot;,
+      error: this.errorMessage,
+      inputType: InputType.VARIABLE,
+    };
+
+    this.variableInputConstrained &#x3D; {
+      label: this.labelVariableConstrained,
+      formControlName: &#x27;variableValue&#x27;,
+      isInvalid:
+        &quot;form.get(&#x27;variableValue&#x27;)?.invalid &amp;&amp; form.get(&#x27;variableValue&#x27;)?.touched&quot;,
+      error: this.errorMessage,
+      inputType: InputType.VARIABLE,
+    };
+
+    this.variableInputLegendre &#x3D; {
+      label: this.labelVariableLegendre,
+      formControlName: &#x27;variableValue&#x27;,
+      isInvalid:
+        &quot;form.get(&#x27;variableValue&#x27;)?.invalid &amp;&amp; form.get(&#x27;variableValue&#x27;)?.touched&quot;,
+      error: this.errorMessage,
+      inputType: InputType.VARIABLE,
+    };
+
+    this.variableInputN0 &#x3D; {
+      label: this.labelVariableN0,
+      formControlName: &#x27;variableValue&#x27;,
+      isInvalid:
+        &quot;form.get(&#x27;variableValue&#x27;)?.invalid &amp;&amp; form.get(&#x27;variableValue&#x27;)?.touched&quot;,
+      error: this.errorMessage,
+      inputType: InputType.VARIABLE,
+    };
+
+    this.aInput &#x3D; {
+      label: this.aInputLabel,
+      formControlName: &#x27;aParameterValue&#x27;,
+      isInvalid:
+        &quot;form.get(&#x27;aParameterValue&#x27;)?.invalid &amp;&amp; form.get(&#x27;aParameterValue&#x27;)?.touched&quot;,
+      error: this.errorMessage,
+      inputType: InputType.ALPHA,
+    };
+
+    this.bInput &#x3D; {
+      label: this.bInputLabel,
+      formControlName: &#x27;bParameterValue&#x27;,
+      isInvalid:
+        &quot;form.get(&#x27;bParameterValue&#x27;)?.invalid &amp;&amp; form.get(&#x27;bParameterValue&#x27;)?.touched&quot;,
+      error: this.errorMessage,
+      inputType: InputType.BETA,
+    };
+  }
+
+  ngOnInit() {
+    this.parameter &#x3D; this.route.snapshot.paramMap.get(&#x27;parameter&#x27;);
+    /** next line creates input depending on parameter (chosen function) */
+    this.assignInput();
+    this.loadTranslations();
+    /** next line literally just creates form, again based on needs for chosen function */
+    this.createForm();
+
+    this.subscription &#x3D; this.languageService
+      .getLanguageChangeObservable()
+      .subscribe(() &#x3D;&gt; {
+        this.loadTranslations();
+      });
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
+  }
+
+  onSubmit(): void {
+    if (this.form.valid) {
+      const orderValue &#x3D; this.form.get(&#x27;orderValue&#x27;)?.value || &#x27;0&#x27;;
+      const precisionValue &#x3D; this.form.get(&#x27;precisionValue&#x27;)?.value || &#x27;1e-64&#x27;;
+      const variableValue &#x3D; this.form.get(&#x27;variableValue&#x27;)?.value || &#x27;0&#x27;;
+      const paramAlpha &#x3D; this.form.get(&#x27;aParameterValue&#x27;)?.value || &#x27;0&#x27;;
+      const paramBeta &#x3D; this.form.get(&#x27;bParameterValue&#x27;)?.value || &#x27;0&#x27;;
+
+      /** All the calculation in app should be done with big numbers (64 precision) */
+      const paramsBig &#x3D; {
+        alphaBig: orderValue,
+        epsBig: precisionValue,
+        xBig: variableValue,
+        a: paramAlpha,
+        b: paramBeta,
+      } as FunctionParamsForCalculationWithBigNumbers;
+
+      /** I actually don&#x27;t need this, I created it for test purposes */
+      const paramsR &#x3D; {
+        alpha: +orderValue,
+        eps: +precisionValue,
+        x: +variableValue,
+        a: +paramAlpha,
+        b: +paramBeta,
+      } as FunctionParamsForCalculation;
+
+      const params &#x3D; {
+        real: paramsR,
+        bignumber: paramsBig,
+      } as FunctionParams;
+
+      /** now I am just sending data to parent component */
+      this.formValuesChanged.emit(params);
+    }
+  }
+
+  showCalculator(inputType: InputType) {
+    this.whereToUseCalculatedValue &#x3D;
+      this.whereToUseCalculatedValue &#x3D;&#x3D;&#x3D; inputType ? null : inputType;
+    this.shouldShowCalculator &#x3D; this.whereToUseCalculatedValue !&#x3D;&#x3D; null;
+
+    this.currentCalculatedValue &#x3D; &#x27;&#x27;;
+  }
+
+  onCalculated(value: string): void {
+    console.log(&#x27;OnCalculated: &#x27; + value);
+    this.currentCalculatedValue &#x3D; value;
+  }
+
+  useCalculatedValue(): void {
+    let controlName: string;
+    switch (this.whereToUseCalculatedValue) {
+      case InputType.PRECISION: {
+        controlName &#x3D; &#x27;precisionValue&#x27;;
+        break;
+      }
+      case InputType.ORDER: {
+        controlName &#x3D; &#x27;orderValue&#x27;;
+        break;
+      }
+      case InputType.ALPHA: {
+        controlName &#x3D; &#x27;aParameterValue&#x27;;
+        break;
+      }
+      case InputType.BETA: {
+        controlName &#x3D; &#x27;bParameterValue&#x27;;
+        break;
+      }
+      case InputType.VARIABLE:
+      default: {
+        controlName &#x3D; &#x27;variableValue&#x27;;
+      }
+    }
+
+    const control &#x3D; this.form.get(controlName);
+    const newValue &#x3D; this.currentCalculatedValue;
+
+    this.form.patchValue({
+      [controlName]: newValue,
+    });
+
+    /* Trigger validation on the control */
+    control?.updateValueAndValidity();
+
+    /** Validate calculated value with appropriate form
+     * if invalid show error
+     */
+    if (control?.invalid &amp;&amp; control?.touched) {
+      const errors &#x3D; control?.errors;
+      console.error(&#x27;Validation error:&#x27;, errors);
+    }
+  }
+
+  useCalcValDisabled(): boolean {
+    if (this.currentCalculatedValue.length &lt; 1) return true;
+    if (this.whereToUseCalculatedValue) return false;
+
+    const precisionNumberRegex &#x3D;
+      /^(0(\.\d+)?|0\.\d+|([0-9]\d*(\.\d+)?(e-?\d+)?))$/i;
+
+    return !precisionNumberRegex.test(this.currentCalculatedValue);
+  }
+
+  createForm() {
+    switch (this.parameter) {
+      case FunctionType.BESSEL_FIRST_KIND:
+      case FunctionType.BESSEL_SECOND_KIND:
+      case FunctionType.BESSEL_THIRD_KIND:
+        this.form &#x3D; this.formBuilder.group({
+          orderValue: [&#x27;1&#x27;, [Validators.required, bigNumberValidatorNatural]],
+          precisionValue: [
+            &#x27;1e-64&#x27;,
+            [Validators.required, bigNumberValidatorForPrecision],
+          ],
+          variableValue: [&#x27;0&#x27;, [Validators.required, bigNumberValidator]],
+        });
+        break;
+      case FunctionType.LAGUERRE_POLYNOMIAL:
+        this.form &#x3D; this.formBuilder.group({
+          orderValue: [&#x27;1&#x27;, [Validators.required, bigNumberValidatorNatural]],
+          variableValue: [&#x27;0&#x27;, [Validators.required, bigNumberValidator]],
+        });
+        break;
+      case FunctionType.LEGENDRE_POLYNOMIAL:
+        this.form &#x3D; this.formBuilder.group({
+          orderValue: [&#x27;1&#x27;, [Validators.required, bigNumberValidatorNatural]],
+          variableValue: [
+            &#x27;0&#x27;,
+            [Validators.required, bigNumberValidatorLegendre],
+          ],
+        });
+        break;
+      case FunctionType.CHEBYSHEV_FIRST_KIND:
+      case FunctionType.CHEBYSHEV_SECOND_KIND:
+        this.form &#x3D; this.formBuilder.group({
+          orderValue: [&#x27;1&#x27;, [Validators.required, bigNumberValidatorNatural]],
+          variableValue: [
+            &#x27;0&#x27;,
+            [Validators.required, bigNumberValidatorConstrained],
+          ],
+        });
+        break;
+      case FunctionType.HERMITE_PHYSICIST:
+      case FunctionType.HERMITE_PROBABILISTIC:
+        this.form &#x3D; this.formBuilder.group({
+          orderValue: [&#x27;0&#x27;, [Validators.required, bigNumberValidatorN0]],
+          variableValue: [&#x27;0&#x27;, [Validators.required, bigNumberValidator]],
+        });
+        break;
+      case FunctionType.JACOBI_POLYNOMIAL:
+        this.form &#x3D; this.formBuilder.group({
+          orderValue: [&#x27;0&#x27;, [Validators.required, bigNumberValidatorN0]],
+          variableValue: [&#x27;0&#x27;, [Validators.required, bigNumberValidator]],
+          aParameterValue: [
+            &#x27;0&#x27;,
+            [Validators.required, bigNumberValidatorForParams],
+          ],
+          bParameterValue: [
+            &#x27;0&#x27;,
+            [Validators.required, bigNumberValidatorForParams],
+          ],
+        });
+        break;
+      default:
+        this.form &#x3D; this.formBuilder.group({
+          orderValue: [&#x27;1&#x27;, [Validators.required, bigNumberValidatorNatural]],
+          precisionValue: [
+            &#x27;1e-64&#x27;,
+            [Validators.required, bigNumberValidatorForPrecision],
+          ],
+          variableValue: [&#x27;0&#x27;, [Validators.required, bigNumberValidator]],
+        });
+        break;
+    }
+  }
+
+  loadTranslations() {
+    const selectedLanguage &#x3D; this.languageService.getSelectedLanguage();
+    this.http
+      .get(&#x60;./assets/i18n/${selectedLanguage}.json&#x60;)
+      .subscribe((translations: any) &#x3D;&gt; {
+        this.labelOrderNatural &#x3D; translations.input.labelOrderNatural;
+        this.labelOrderReal &#x3D; translations.input.labelOrderReal;
+        this.labelOrderNonNegative &#x3D; translations.input.labelOrderNonNegative;
+        this.labelPrecision &#x3D; translations.input.labelPrecision;
+        this.labelVariable &#x3D; translations.input.labelVariable;
+        this.labelVariableConstrained &#x3D;
+          translations.input.labelVariableConstrained;
+        this.labelVariableLegendre &#x3D; translations.input.labelVariableLegendre;
+        this.labelVariableN0 &#x3D; translations.input.labelVariableN0;
+        this.errorMessage &#x3D; translations.input.errorMessage;
+        this.aInputLabel &#x3D; translations.input.aInputLabel;
+        this.bInputLabel &#x3D; translations.input.bInputLabel;
+
+        this.basicInformationsLabel &#x3D;
+          translations.input.buttonBasicInformations;
+        this.useCalculatedValueLabel &#x3D;
+          translations.input.buttonUseCalculatedValue;
+        this.calculateAndDrawLabel &#x3D;
+          translations.input.buttonCalculateAndDrawGraph;
+        this.clearLabel &#x3D; translations.input.clear;
+        this.calculatorTooltip &#x3D; translations.tooltips.calculator;
+
+        this.loadInputTranslations();
+      });
+  }
+
+  loadInputTranslations() {
+    this.orderInputReal.label &#x3D; this.labelOrderReal;
+    this.orderInputReal.error &#x3D; this.errorMessage;
+
+    this.orderInputNatural.label &#x3D; this.labelOrderNatural;
+    this.orderInputNatural.error &#x3D; this.errorMessage;
+
+    this.orderInputNonNegative.label &#x3D; this.labelOrderNonNegative;
+    this.orderInputNonNegative.error &#x3D; this.errorMessage;
+
+    this.precisionInput.label &#x3D; this.labelPrecision;
+    this.precisionInput.error &#x3D; this.errorMessage;
+
+    this.variableInput.label &#x3D; this.labelVariable;
+    this.variableInput.error &#x3D; this.errorMessage;
+
+    this.aInput.label &#x3D; this.aInputLabel;
+    this.aInput.error &#x3D; this.errorMessage;
+
+    this.bInput.label &#x3D; this.bInputLabel;
+    this.bInput.error &#x3D; this.errorMessage;
+
+    this.variableInputConstrained.label &#x3D; this.labelVariableConstrained;
+    this.variableInputConstrained.error &#x3D; this.errorMessage;
+
+    this.variableInputLegendre.label &#x3D; this.labelVariableLegendre;
+    this.variableInputLegendre.error &#x3D; this.errorMessage;
+
+    this.variableInputN0.label &#x3D; this.labelVariableN0;
+    this.variableInputN0.error &#x3D; this.errorMessage;
+  }
+
+  assignInput() {
+    switch (this.parameter) {
+      case FunctionType.BESSEL_FIRST_KIND:
+      case FunctionType.BESSEL_SECOND_KIND:
+      case FunctionType.BESSEL_THIRD_KIND:
+        this.inputs &#x3D; [
+          this.orderInputNatural,
+          this.precisionInput,
+          this.variableInput,
+        ];
+        break;
+      case FunctionType.LAGUERRE_POLYNOMIAL:
+        this.inputs &#x3D; [this.orderInputNatural, this.variableInput];
+        break;
+      case FunctionType.HERMITE_PHYSICIST:
+      case FunctionType.HERMITE_PROBABILISTIC:
+        this.inputs &#x3D; [this.orderInputNonNegative, this.variableInput];
+        break;
+      case FunctionType.LEGENDRE_POLYNOMIAL:
+        this.inputs &#x3D; [this.orderInputNatural, this.variableInputLegendre];
+        break;
+      case FunctionType.CHEBYSHEV_FIRST_KIND:
+      case FunctionType.CHEBYSHEV_SECOND_KIND:
+        this.inputs &#x3D; [this.orderInputNatural, this.variableInputConstrained];
+        break;
+      case FunctionType.JACOBI_POLYNOMIAL:
+        this.inputs &#x3D; [
+          this.orderInputNonNegative,
+          this.variableInput,
+          this.aInput,
+          this.bInput,
+        ];
+        break;
+      default:
+        this.inputs &#x3D; [
+          this.orderInputNatural,
+          this.precisionInput,
+          this.variableInput,
+        ];
+        break;
+    }
+  }
+
+  clearContent() {
+    this.resetFormToInitialValues();
+    this.formValuesChanged.emit(null);
+  }
+
+  private resetFormToInitialValues() {
+    switch (this.parameter) {
+      case FunctionType.BESSEL_FIRST_KIND:
+      case FunctionType.BESSEL_SECOND_KIND:
+      case FunctionType.BESSEL_THIRD_KIND:
+        this.form.get(&#x27;orderValue&#x27;)?.setValue(&#x27;1&#x27;);
+        this.form.get(&#x27;precisionValue&#x27;)?.setValue(&#x27;1e-64&#x27;);
+        this.form.get(&#x27;variableValue&#x27;)?.setValue(&#x27;0&#x27;);
+        break;
+      case FunctionType.LAGUERRE_POLYNOMIAL:
+        this.form.get(&#x27;orderValue&#x27;)?.setValue(&#x27;1&#x27;);
+        this.form.get(&#x27;variableValue&#x27;)?.setValue(&#x27;0&#x27;);
+        break;
+      case FunctionType.HERMITE_PHYSICIST:
+      case FunctionType.HERMITE_PROBABILISTIC:
+        this.form.get(&#x27;orderValue&#x27;)?.setValue(&#x27;0&#x27;);
+        this.form.get(&#x27;variableValue&#x27;)?.setValue(&#x27;0&#x27;);
+        break;
+      case FunctionType.LEGENDRE_POLYNOMIAL:
+      case FunctionType.CHEBYSHEV_FIRST_KIND:
+      case FunctionType.CHEBYSHEV_SECOND_KIND:
+        this.form.get(&#x27;orderValue&#x27;)?.setValue(&#x27;0&#x27;);
+        this.form.get(&#x27;variableValue&#x27;)?.setValue(&#x27;0&#x27;);
+        break;
+      case FunctionType.JACOBI_POLYNOMIAL:
+        this.form.get(&#x27;orderValue&#x27;)?.setValue(&#x27;0&#x27;);
+        this.form.get(&#x27;variableValue&#x27;)?.setValue(&#x27;0&#x27;);
+        this.form.get(&#x27;aParameterValue&#x27;)?.setValue(&#x27;0&#x27;);
+        this.form.get(&#x27;bParameterValue&#x27;)?.setValue(&#x27;0&#x27;);
+        break;
+      default:
+        this.form.get(&#x27;orderValue&#x27;)?.setValue(&#x27;0&#x27;);
+        this.form.get(&#x27;precisionValue&#x27;)?.setValue(&#x27;1e-64&#x27;);
+        this.form.get(&#x27;variableValue&#x27;)?.setValue(&#x27;0&#x27;);
+        break;
+    }
+  }
+}
+
+interface IInput {
+  label: string;
+  formControlName: string;
+  isInvalid: string;
+  error: string;
+  inputType: InputType;
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'IInput.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -6,7 +6,6 @@ export interface IOperatorPriority {
   spr: number; // output priority
   R: number; //rank
 }
-
 const operatorsPriorities = [
   {
     operators: ['+', '-'],
@@ -56,7 +55,7 @@ export function getPriority(s: string | undefined): IOperatorPriority {
 
   const defUn = {
     ipr: 7,
-    spr: 0,
+    spr: 7,
     R: 0, // rang is 1-N where N is number of operands needed for this operation
   };
 

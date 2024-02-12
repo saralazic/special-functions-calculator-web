@@ -1,0 +1,1726 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>spef-calculator documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">spef-calculator documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  CalculatorComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/components/function/calculator/calculator.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-calculator</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./calculator.component.css</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./calculator.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#brackets" >brackets</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#calculatorService" >calculatorService</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#digits" >digits</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#hyperbolic" >hyperbolic</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#operator" >operator</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#operators" >operators</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#operators2" >operators2</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#trigonometry" >trigonometry</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#unaryOps1" >unaryOps1</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#unaryOps2" >unaryOps2</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addBracket" >addBracket</a>
+                            </li>
+                            <li>
+                                <a href="#addConstant" >addConstant</a>
+                            </li>
+                            <li>
+                                <a href="#addSymbol" >addSymbol</a>
+                            </li>
+                            <li>
+                                <a href="#calculate" >calculate</a>
+                            </li>
+                            <li>
+                                <a href="#clear" >clear</a>
+                            </li>
+                            <li>
+                                <a href="#getExpression" >getExpression</a>
+                            </li>
+                            <li>
+                                <a href="#getLabel" >getLabel</a>
+                            </li>
+                            <li>
+                                <a href="#getOperator" >getOperator</a>
+                            </li>
+                            <li>
+                                <a href="#getRadians" >getRadians</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#keyEvent" >keyEvent</a>
+                            </li>
+                            <li>
+                                <a href="#removeSymbol" >removeSymbol</a>
+                            </li>
+                            <li>
+                                <a href="#setOperator" >setOperator</a>
+                            </li>
+                            <li>
+                                <a href="#setRadians" >setRadians</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#calculated" >calculated</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>HostListeners</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#window:keyup" >window:keyup</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+        </tbody>
+    </table>
+</section>
+
+
+
+    <section data-compodoc="block-outputs">
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="calculated"></a>
+                        <b>calculated</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter&lt;string&gt;</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:38</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section data-compodoc="block-methods">
+    <h3>HostListeners</h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="window:keyup"></a>
+                    <span class="name">
+                        <span ><b>window:keyup</b></span>
+                        <a href="#window:keyup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <i>Arguments : </i><code>'$event' </code>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>window:keyup(event: KeyboardEvent)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="45"
+                                    class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addBracket"></a>
+                    <span class="name">
+                        <span ><b>addBracket</b></span>
+                        <a href="#addBracket"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addBracket(bracket: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="88"
+                                    class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:88</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>bracket</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addConstant"></a>
+                    <span class="name">
+                        <span ><b>addConstant</b></span>
+                        <a href="#addConstant"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addConstant(isConstantPi: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="110"
+                                    class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:110</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>isConstantPi</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addSymbol"></a>
+                    <span class="name">
+                        <span ><b>addSymbol</b></span>
+                        <a href="#addSymbol"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addSymbol(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="115"
+                                    class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:115</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>value</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="calculate"></a>
+                    <span class="name">
+                        <span ><b>calculate</b></span>
+                        <a href="#calculate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>calculate()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="123"
+                                    class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:123</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clear"></a>
+                    <span class="name">
+                        <span ><b>clear</b></span>
+                        <a href="#clear"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>clear()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="97"
+                                    class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:97</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getExpression"></a>
+                    <span class="name">
+                        <span ><b>getExpression</b></span>
+                        <a href="#getExpression"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getExpression()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="93"
+                                    class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:93</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getLabel"></a>
+                    <span class="name">
+                        <span ><b>getLabel</b></span>
+                        <a href="#getLabel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getLabel(symbol: <a href="../interfaces/ISymbol.html" target="_self">ISymbol</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="40"
+                                    class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>symbol</td>
+                                            <td>
+                                                            <code><a href="../interfaces/ISymbol.html" target="_self" >ISymbol</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOperator"></a>
+                    <span class="name">
+                        <span ><b>getOperator</b></span>
+                        <a href="#getOperator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getOperator()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="83"
+                                    class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:83</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getRadians"></a>
+                    <span class="name">
+                        <span ><b>getRadians</b></span>
+                        <a href="#getRadians"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getRadians()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="106"
+                                    class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:106</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="keyEvent"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>keyEvent</b></span>
+                        <a href="#keyEvent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>keyEvent(event: KeyboardEvent)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@HostListener(&#x27;window:keyup&#x27;, [&#x27;$event&#x27;])<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="45"
+                                    class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>KeyboardEvent</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeSymbol"></a>
+                    <span class="name">
+                        <span ><b>removeSymbol</b></span>
+                        <a href="#removeSymbol"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeSymbol()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="119"
+                                    class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:119</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setOperator"></a>
+                    <span class="name">
+                        <span ><b>setOperator</b></span>
+                        <a href="#setOperator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setOperator(operator: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="78"
+                                    class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:78</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>wrapper methods</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>operator</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setRadians"></a>
+                    <span class="name">
+                        <span ><b>setRadians</b></span>
+                        <a href="#setRadians"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setRadians()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="101"
+                                    class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:101</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="brackets"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>brackets</b></span>
+                        <a href="#brackets"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>brackets</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="calculatorService"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>calculatorService</b></span>
+                        <a href="#calculatorService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new CalculatorService()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="digits"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>digits</b></span>
+                        <a href="#digits"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>digits</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hyperbolic"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>hyperbolic</b></span>
+                        <a href="#hyperbolic"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>hyperbolic</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="operator"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>operator</b></span>
+                        <a href="#operator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="operators"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>operators</b></span>
+                        <a href="#operators"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>operators</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="operators2"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>operators2</b></span>
+                        <a href="#operators2"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>operators2</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="trigonometry"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>trigonometry</b></span>
+                        <a href="#trigonometry"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>trigonometry</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="unaryOps1"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>unaryOps1</b></span>
+                        <a href="#unaryOps1"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>unaryOps1</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="unaryOps2"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>unaryOps2</b></span>
+                        <a href="#unaryOps2"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>unaryOps2</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/components/function/calculator/calculator.component.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, HostListener, Output } from &#x27;@angular/core&#x27;;
+import {
+  brackets,
+  digits,
+  hyperbolic,
+  MULTIPLY_SIGN_ASCII_CODE,
+  operators,
+  operators2,
+  trigonometry,
+  unaryOps1,
+  unaryOps2,
+} from &#x27;src/app/data/calculatorSymbols&#x27;;
+import { Keys } from &#x27;src/app/models/enums&#x27;;
+import {
+  CalculatorService,
+  INVALID_EXPRESSION,
+} from &#x27;src/app/services/calculator/calculatorService&#x27;;
+import { ISymbol } from &#x27;src/app/models/symbol&#x27;;
+import { getE, getPi } from &#x27;src/utilities/utilities&#x27;;
+
+@Component({
+  selector: &#x27;app-calculator&#x27;,
+  templateUrl: &#x27;./calculator.component.html&#x27;,
+  styleUrls: [&#x27;./calculator.component.css&#x27;],
+})
+export class CalculatorComponent {
+  public calculatorService &#x3D; new CalculatorService();
+  public digits &#x3D; digits;
+  public operators &#x3D; operators;
+  public operators2 &#x3D; operators2;
+  public trigonometry &#x3D; trigonometry;
+  public brackets &#x3D; brackets;
+  public unaryOps1 &#x3D; unaryOps1;
+  public unaryOps2 &#x3D; unaryOps2;
+  public hyperbolic &#x3D; hyperbolic;
+  public operator &#x3D; &#x27;&#x27;;
+
+  @Output() calculated: EventEmitter&lt;string&gt; &#x3D; new EventEmitter&lt;string&gt;();
+
+  getLabel(symbol: ISymbol) {
+    return symbol.label;
+  }
+
+  @HostListener(&#x27;window:keyup&#x27;, [&#x27;$event&#x27;])
+  keyEvent(event: KeyboardEvent) {
+    const key &#x3D; event.key;
+    const symbols &#x3D; [...this.digits, Keys.DOT];
+    const operations &#x3D; [&#x27;+&#x27;, &#x27;-&#x27;, &#x27;*&#x27;, &#x27;/&#x27;];
+
+    switch (key) {
+      case Keys.BACKSPACE:
+        this.removeSymbol();
+        break;
+
+      case Keys.ENTER:
+        this.calculate();
+        break;
+
+      case Keys.ESC:
+        this.clear();
+        break;
+
+      case Keys.PERCENT:
+        this.setOperator(&#x27;percent&#x27;);
+        break;
+
+      default:
+        if (symbols.includes(key)) {
+          this.addSymbol(key);
+        } else if (operations.includes(key)) {
+          this.setOperator(key);
+        }
+        break;
+    }
+  }
+
+  /** wrapper methods */
+  setOperator(operator: string): void {
+    this.operator &#x3D; operator;
+    this.calculatorService.setOperator(operator);
+  }
+
+  getOperator(): string {
+    if (this.operator &#x3D;&#x3D;&#x3D; Keys.STAR) return MULTIPLY_SIGN_ASCII_CODE; // code for dot instead of star
+    return this.operator;
+  }
+
+  addBracket(bracket: string): void {
+    this.operator &#x3D; bracket;
+    this.calculatorService.addBracket(bracket &#x3D;&#x3D;&#x3D; Keys.BRACKET_OPEN);
+  }
+
+  getExpression() {
+    return this.calculatorService.getExpression();
+  }
+
+  clear(): any {
+    return this.calculatorService.clear();
+  }
+
+  setRadians(): boolean {
+    let switcher &#x3D; !this.getRadians();
+    return this.calculatorService.setRadians(switcher);
+  }
+
+  getRadians(): boolean {
+    return this.calculatorService.radians;
+  }
+
+  addConstant(isConstantPi: boolean) {
+    const value &#x3D; isConstantPi ? getPi() : getE();
+    this.calculatorService.addConstant(value.toString());
+  }
+
+  addSymbol(value: string): void {
+    this.calculatorService.addSymbol(value, false);
+  }
+
+  removeSymbol(): void {
+    this.calculatorService.removeSymbol();
+  }
+
+  calculate(): string {
+    const result &#x3D; this.calculatorService.evaluate();
+    if (result !&#x3D;&#x3D; INVALID_EXPRESSION) this.calculated.emit(result);
+
+    return result;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;p-1 form-group&quot;&gt;
+    &lt;form method&#x3D;&quot;POST&quot;&gt;
+      &lt;div&gt;
+          &lt;div&gt;
+             &lt;span *ngIf&#x3D;&quot;getOperator()!&#x3D;&#x27;&#x27;;&quot; [innerHTML]&#x3D;&quot;getOperator()&quot;&gt;&lt;/span&gt;
+              &lt;span *ngIf&#x3D;&quot;getRadians(); else badgeGrads&quot; class&#x3D;&quot;rad&quot;&gt;Rad&lt;/span&gt;
+              &lt;ng-template #badgeGrads&gt;&lt;span class&#x3D;&quot;rad&quot;&gt;Grad&lt;/span&gt;&lt;/ng-template&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+
+        &lt;div class&#x3D;&quot;table&quot;&gt;
+
+            &lt;div class&#x3D;&quot;row&quot;&gt;
+              &lt;div class&#x3D;&quot;button-container&quot;&gt;
+                &lt;input type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;&quot; #inputField [value]&#x3D;&quot;getExpression()&quot; class&#x3D;&quot;display&quot;&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;row&quot;&gt;
+              &lt;div class&#x3D;&quot;button-container&quot;*ngFor&#x3D;&quot;let d of digits&quot;&gt;
+                &lt;button class&#x3D;&quot;button&quot; (click)&#x3D;&quot;addSymbol(d);&quot;&gt;{{d}}&lt;/button&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+  
+            &lt;div class&#x3D;&quot;row&quot;&gt;
+              &lt;div class&#x3D;&quot;button-container&quot;&gt;&lt;button class&#x3D;&quot;button&quot;(click)&#x3D;&quot;addSymbol(&#x27;.&#x27;);&quot;&gt;,&lt;/button&gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;button-container&quot;*ngFor&#x3D;&quot;let o of operators&quot;&gt;
+                &lt;button class&#x3D;&quot;button&quot; (click)&#x3D;&quot;setOperator(o.symbol);&quot; [innerHTML]&#x3D;&quot;getLabel(o)&quot;&gt;&lt;/button&gt;
+              &lt;/div&gt;
+              &lt;div class&#x3D;&quot;button-container&quot;*ngFor&#x3D;&quot;let b of brackets&quot;&gt;
+                &lt;button class&#x3D;&quot;button&quot;(click)&#x3D;&quot;addBracket(b.symbol);&quot; [innerHTML]&#x3D;&quot;getLabel(b)&quot;&gt;&lt;/button&gt;
+              &lt;/div&gt;              
+              &lt;div class&#x3D;&quot;button-container&quot;&gt;&lt;button class&#x3D;&quot;button&quot;(click)&#x3D;&quot;setOperator(&#x27;invert_sign&#x27;);&quot;&gt;&amp;#177;&lt;/button&gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;button-container&quot;&gt;&lt;button class&#x3D;&quot;button&quot;(click)&#x3D;&quot;setOperator(&#x27;percent&#x27;);&quot;&gt;%&lt;/button&gt;&lt;/div&gt;
+            &lt;/div&gt;
+  
+            &lt;div class&#x3D;&quot;row&quot;&gt;
+              &lt;div class&#x3D;&quot;button-container&quot;*ngFor&#x3D;&quot;let op of unaryOps1&quot;&gt;
+                &lt;button class&#x3D;&quot;button&quot;(click)&#x3D;&quot;setOperator(op.symbol);&quot; [innerHTML]&#x3D;&quot;getLabel(op)&quot;&gt;&lt;/button&gt;
+              &lt;/div&gt;
+              &lt;div class&#x3D;&quot;button-container&quot;*ngFor&#x3D;&quot;let op of operators2&quot;&gt;
+                &lt;button class&#x3D;&quot;button&quot;(click)&#x3D;&quot;setOperator(op.symbol);&quot; [innerHTML]&#x3D;&quot;getLabel(op)&quot;&gt;&lt;/button&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;row&quot;&gt;
+              &lt;div class&#x3D;&quot;button-container&quot;*ngFor&#x3D;&quot;let op of unaryOps2&quot;&gt;
+                &lt;button class&#x3D;&quot;button&quot;(click)&#x3D;&quot;setOperator(op.symbol);&quot; [innerHTML]&#x3D;&quot;getLabel(op)&quot;&gt;&lt;/button&gt;
+              &lt;/div&gt;
+              &lt;div class&#x3D;&quot;button-container&quot;&gt;&lt;button class&#x3D;&quot;button&quot; (click)&#x3D;&quot;addConstant(false);&quot;&gt;e&lt;/button&gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;button-container&quot;&gt;&lt;button class&#x3D;&quot;button&quot; (click)&#x3D;&quot;addConstant(true);&quot;&gt;&amp;#x213C;&lt;/button&gt;&lt;/div&gt;
+            &lt;/div&gt;
+  
+  
+            &lt;div class&#x3D;&quot;row&quot;&gt;
+              &lt;div class&#x3D;&quot;button-container&quot;*ngFor&#x3D;&quot;let t of trigonometry&quot;&gt;
+                &lt;button class&#x3D;&quot;button&quot; (click)&#x3D;&quot;setOperator(t.symbol);&quot; [innerHTML]&#x3D;&quot;getLabel(t)&quot;&gt;&lt;/button&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;row&quot;&gt;
+              &lt;div class&#x3D;&quot;button-container&quot;*ngFor&#x3D;&quot;let h of hyperbolic&quot;&gt;
+                &lt;button class&#x3D;&quot;button&quot; (click)&#x3D;&quot;setOperator(h.symbol);&quot; [innerHTML]&#x3D;&quot;getLabel(h)&quot;&gt;&lt;/button&gt;
+              &lt;/div&gt;
+            &lt;/div&gt; 
+            
+            &lt;div class&#x3D;&quot;row&quot;&gt;
+              &lt;div class&#x3D;&quot;button-container&quot;&gt;&lt;button class&#x3D;&quot;button&quot; (click)&#x3D;&quot;setOperator(&#x27;rnd&#x27;);&quot;&gt;Rnd&lt;/button&gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;button-container&quot;&gt;&lt;button class&#x3D;&quot;button&quot; (click)&#x3D;&quot;calculate();&quot;&gt;&#x3D;&lt;/button&gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;button-container&quot;&gt;&lt;button class&#x3D;&quot;button clear&quot; (click)&#x3D;&quot;clear();&quot;&gt;C&lt;/button&gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;button-container&quot;&gt;&lt;button class&#x3D;&quot;button&quot; (click)&#x3D;&quot;setRadians();&quot;&gt;Rad&lt;/button&gt;&lt;/div&gt;
+              &lt;div class&#x3D;&quot;button-container&quot;&gt;&lt;button class&#x3D;&quot;button&quot; (click)&#x3D;&quot;setRadians();&quot;&gt;Grad&lt;/button&gt;&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+
+    &lt;/form&gt;
+  &lt;/div&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./calculator.component.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.table {
+	width: 500px;
+	display: flex;
+	flex-direction: column;
+  }
+  
+  .row {
+	display: flex;
+	width: 100%;
+  }
+  
+  .button-container {
+	flex: 1;
+	display: flex;
+	width: 100%;
+  }
+  
+  .display {
+	border-radius: 0;
+	padding: 0;
+	border: 1px solid darkslategray;
+
+  }
+
+  .button {
+	flex: 1;
+	transition: background-color 0.3s;
+	background-color: rgb(240, 225, 196);
+	color: darkslategray;
+	border: 1px solid gray; 
+	cursor: pointer;
+	transition: background-color 0.3s;
+  }
+  
+
+  .rad {
+	font-size: 10px;
+  }
+
+  input {
+	flex: 1;
+	height: 40px;
+	width: 100%;
+	min-width: 0; 
+	white-space: nowrap;
+  }
+  
+  input::-webkit-scrollbar {
+	width: 8px; 
+  }
+  
+  input::-webkit-scrollbar-thumb {
+	background-color: black; 
+  }
+  </code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="p-1 form-group">    <form method="POST">      <div>          <div>             <span *ngIf="getOperator()!=\'\';" [innerHTML]="getOperator()"></span>              <span *ngIf="getRadians(); else badgeGrads" class="rad">Rad</span>              <ng-template #badgeGrads><span class="rad">Grad</span></ng-template>          </div>        </div>        <div class="table">            <div class="row">              <div class="button-container">                <input type="text" placeholder="" #inputField [value]="getExpression()" class="display">              </div>            </div>            <div class="row">              <div class="button-container"*ngFor="let d of digits">                <button class="button" (click)="addSymbol(d);">{{d}}</button>              </div>            </div>              <div class="row">              <div class="button-container"><button class="button"(click)="addSymbol(\'.\');">,</button></div>              <div class="button-container"*ngFor="let o of operators">                <button class="button" (click)="setOperator(o.symbol);" [innerHTML]="getLabel(o)"></button>              </div>              <div class="button-container"*ngFor="let b of brackets">                <button class="button"(click)="addBracket(b.symbol);" [innerHTML]="getLabel(b)"></button>              </div>                            <div class="button-container"><button class="button"(click)="setOperator(\'invert_sign\');">&#177;</button></div>              <div class="button-container"><button class="button"(click)="setOperator(\'percent\');">%</button></div>            </div>              <div class="row">              <div class="button-container"*ngFor="let op of unaryOps1">                <button class="button"(click)="setOperator(op.symbol);" [innerHTML]="getLabel(op)"></button>              </div>              <div class="button-container"*ngFor="let op of operators2">                <button class="button"(click)="setOperator(op.symbol);" [innerHTML]="getLabel(op)"></button>              </div>            </div>            <div class="row">              <div class="button-container"*ngFor="let op of unaryOps2">                <button class="button"(click)="setOperator(op.symbol);" [innerHTML]="getLabel(op)"></button>              </div>              <div class="button-container"><button class="button" (click)="addConstant(false);">e</button></div>              <div class="button-container"><button class="button" (click)="addConstant(true);">&#x213C;</button></div>            </div>                <div class="row">              <div class="button-container"*ngFor="let t of trigonometry">                <button class="button" (click)="setOperator(t.symbol);" [innerHTML]="getLabel(t)"></button>              </div>            </div>            <div class="row">              <div class="button-container"*ngFor="let h of hyperbolic">                <button class="button" (click)="setOperator(h.symbol);" [innerHTML]="getLabel(h)"></button>              </div>            </div>                         <div class="row">              <div class="button-container"><button class="button" (click)="setOperator(\'rnd\');">Rnd</button></div>              <div class="button-container"><button class="button" (click)="calculate();">=</button></div>              <div class="button-container"><button class="button clear" (click)="clear();">C</button></div>              <div class="button-container"><button class="button" (click)="setRadians();">Rad</button></div>              <div class="button-container"><button class="button" (click)="setRadians();">Grad</button></div>            </div>        </div>    </form>  </div></div>'
+    var COMPONENTS = [{'name': 'AboutComponent', 'selector': 'app-about'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CalculatorComponent', 'selector': 'app-calculator'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'FunctionInformationComponent', 'selector': 'app-function-information'},{'name': 'FunctionInputComponent', 'selector': 'app-function-input'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'HomepageComponent', 'selector': 'app-homepage'},{'name': 'ResultDisplayComponent', 'selector': 'app-result-display'},{'name': 'SpecialFunctionComponent', 'selector': 'app-special-function'},{'name': 'SvgIconComponent', 'selector': 'app-svg-icon'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'CalculatorComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'CalculatorComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

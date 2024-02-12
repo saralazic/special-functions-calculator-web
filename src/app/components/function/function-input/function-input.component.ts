@@ -252,6 +252,7 @@ export class FunctionInputComponent implements OnInit {
   }
 
   onCalculated(value: string): void {
+    console.log('OnCalculated: ' + value);
     this.currentCalculatedValue = value;
   }
 

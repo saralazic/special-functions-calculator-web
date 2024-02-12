@@ -11,7 +11,10 @@ import {
   unaryOps2,
 } from 'src/app/data/calculatorSymbols';
 import { Keys } from 'src/app/models/enums';
-import { CalculatorService } from 'src/app/services/calculator/calculatorService';
+import {
+  CalculatorService,
+  INVALID_EXPRESSION,
+} from 'src/app/services/calculator/calculatorService';
 import { ISymbol } from 'src/app/models/symbol';
 import { getE, getPi } from 'src/utilities/utilities';
 
@@ -88,7 +91,7 @@ export class CalculatorComponent {
   }
 
   getExpression() {
-    return this.calculatorService.get();
+    return this.calculatorService.getExpression();
   }
 
   clear(): any {
@@ -118,6 +121,9 @@ export class CalculatorComponent {
   }
 
   calculate(): string {
-    return this.calculatorService.evaluate();
+    const result = this.calculatorService.evaluate();
+    if (result !== INVALID_EXPRESSION) this.calculated.emit(result);
+
+    return result;
   }
 }
