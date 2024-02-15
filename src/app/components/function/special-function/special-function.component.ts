@@ -117,7 +117,7 @@ export class SpecialFunctionComponent implements OnInit {
     if (data) {
       this.slideTriggered = true;
 
-      this.valueBig = this.spef?.calculateBig(data.bignumber);
+      this.valueBig = this.spef?.calculate64(data.bignumber);
 
       this.value = this.spef?.calculate(data.real);
 

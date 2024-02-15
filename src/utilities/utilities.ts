@@ -22,11 +22,13 @@ export function factorial(n: number): number {
 }
 
 export function binomialCoefficient(n: number, k: number): number {
+  if (k === 0) return 1;
   const den = factorial(k) * factorial(n - k);
   return factorial(n) / den;
 }
 
 export function binomialCoefficientBig(n: BigNumber, k: BigNumber): BigNumber {
+  if (k === BIG_NUMBER_CONSTANTS.ZERO) return BIG_NUMBER_CONSTANTS.ONE;
   const den = math_64.multiply(
     math_64.factorial(k),
     math_64.factorial(math_64.subtract(n, k))
@@ -241,7 +243,7 @@ export function generateCoordinates(
  * Previously I tried Ramanujan, Stirling, Zhen-Hang Yang
  * Used aproximation: https://www.sciencedirect.com/science/article/pii/S0022314X16000068
  */
-export function gammaBig(alpha: math.BigNumber): math.BigNumber {
+export function gamma64(alpha: math.BigNumber): math.BigNumber {
   if (math_64.isInteger(alpha)) {
     return math_64.gamma(alpha);
   }

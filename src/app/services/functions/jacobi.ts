@@ -23,6 +23,8 @@ export class JacobiPolynomial extends SpecialFunction {
     const a = params.a ?? 0;
     const b = params.b ?? 0;
 
+    console.log(a, b);
+
     let sum = 0;
     let t;
 
@@ -37,7 +39,7 @@ export class JacobiPolynomial extends SpecialFunction {
     return sum / 2 ** alpha;
   }
 
-  calculateBig(params: FunctionParamsForCalculationWithBigNumbers): string {
+  calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
     const { alphaBig, xBig } = params;
 
     const alpha = this.math.bignumber(alphaBig);

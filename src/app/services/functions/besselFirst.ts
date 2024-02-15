@@ -1,7 +1,7 @@
 import * as math from 'mathjs';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 import { FunctionType } from '../../models/enums';
-import { gammaBig } from '../../../utilities/utilities';
+import { gamma64 } from '../../../utilities/utilities';
 import {
   FunctionParamsForCalculation,
   FunctionParamsForCalculationWithBigNumbers,
@@ -47,7 +47,7 @@ export class BesselFirstKind extends SpecialFunction {
     return sum;
   }
 
-  calculateBig(params: FunctionParamsForCalculationWithBigNumbers): string {
+  calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
     const { alphaBig, xBig } = params;
     const epsBig = params.epsBig ?? '1e-64';
 
@@ -59,7 +59,7 @@ export class BesselFirstKind extends SpecialFunction {
     const x = this.math.bignumber(xBig);
 
     let gammaArg = this.math.add(alpha, BIG_NUMBER_CONSTANTS.ONE);
-    let gammaCurrent = gammaBig(gammaArg);
+    let gammaCurrent = gamma64(gammaArg);
 
     const xHalf = this.math.divide(x, BIG_NUMBER_CONSTANTS.TWO);
     const xHalfSqr = this.math.pow(xHalf, BIG_NUMBER_CONSTANTS.TWO);
@@ -81,7 +81,7 @@ export class BesselFirstKind extends SpecialFunction {
       gammaPrevious = gammaCurrent;
 
       gammaArg = this.math.add(gammaArg, BIG_NUMBER_CONSTANTS.ONE);
-      gammaCurrent = gammaBig(gammaArg);
+      gammaCurrent = gamma64(gammaArg);
 
       R = this.math.divide(gammaPrevious, gammaCurrent);
       R = this.math.multiply(R, xHalfSqr);

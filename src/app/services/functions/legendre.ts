@@ -36,7 +36,7 @@ export class LegendrePolynomial extends SpecialFunction {
     return res;
   }
 
-  calculateBig(params: FunctionParamsForCalculationWithBigNumbers): string {
+  calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
     const { alphaBig, xBig } = params;
 
     const alpha = this.math.bignumber(alphaBig);

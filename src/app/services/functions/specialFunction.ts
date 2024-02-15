@@ -14,7 +14,7 @@ export abstract class SpecialFunction {
     this.functionType = type;
   }
 
-  public abstract calculateBig(
+  public abstract calculate64(
     params: FunctionParamsForCalculationWithBigNumbers
   ): string;
 

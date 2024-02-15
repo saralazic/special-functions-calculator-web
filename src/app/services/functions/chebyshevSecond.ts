@@ -21,7 +21,7 @@ export class ChebyshevPolynomialOfSecondKind extends SpecialFunction {
     return Math.sin((alpha + 1) * arccosX) / Math.sin(arccosX);
   }
 
-  calculateBig(params: FunctionParamsForCalculationWithBigNumbers): string {
+  calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
     const { alphaBig, xBig } = params;
 
     const alpha = this.math.bignumber(alphaBig);

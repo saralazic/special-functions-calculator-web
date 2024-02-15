@@ -32,26 +32,25 @@ export class LaguerrePolynomial extends SpecialFunction {
     return sum;
   }
 
-  calculateBig(params: FunctionParamsForCalculationWithBigNumbers): string {
+  calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
     const { alphaBig, xBig } = params;
 
-    const alpha = this.math.bignumber(alphaBig);
-    const x = this.math.bignumber(xBig);
+    const alpha = this.math.bignumber(alphaBig),
+      x = this.math.bignumber(xBig);
 
     const alphaPlus1 = this.math.add(alpha, BIG_NUMBER_CONSTANTS.ONE);
 
     let t: MathType = this.math.bignumber(BIG_NUMBER_CONSTANTS.ONE);
-    let sum: MathType = t;
-
-    let R: MathType;
-    let kBig: MathType;
+    let sum: MathType = t,
+      R: MathType,
+      kBig: MathType;
 
     for (
       let k = 1;
       Number(this.math.compare(this.math.bignumber(k), alpha)) <= 0;
       k++
     ) {
-      kBig = this.math.bignumber(k);
+      kBig = this.math.bignumber(k); // needs explicit conversion
       R = this.math.subtract(alphaPlus1, k);
       R = this.math.divide(R, this.math.pow(kBig, BIG_NUMBER_CONSTANTS.TWO));
       R = this.math.multiply(R, x);

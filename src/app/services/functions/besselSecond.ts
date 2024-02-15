@@ -45,7 +45,7 @@ export class BesselSecondKind extends SpecialFunction {
     return val;
   }
 
-  calculateBig(params: FunctionParamsForCalculationWithBigNumbers): string {
+  calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
     const { alphaBig, xBig } = params;
     const epsBig = params.epsBig ?? '1e-64';
 
@@ -56,7 +56,7 @@ export class BesselSecondKind extends SpecialFunction {
     const cos = this.math.cos(alphaPi as BigNumber);
     const sin = this.math.sin(alphaPi as BigNumber);
 
-    const Jalpha = this.math.bignumber(this.J.calculateBig(params));
+    const Jalpha = this.math.bignumber(this.J.calculate64(params));
 
     let JminusAlpha = Jalpha;
 

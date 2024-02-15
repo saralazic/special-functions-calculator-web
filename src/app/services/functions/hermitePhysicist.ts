@@ -39,7 +39,7 @@ export class HermitePhysicist extends SpecialFunction {
     return alphaFactorial * sum;
   }
 
-  calculateBig(params: FunctionParamsForCalculationWithBigNumbers): string {
+  calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
     const { alphaBig, xBig } = params;
 
     const alpha = this.math.bignumber(alphaBig);
@@ -50,9 +50,8 @@ export class HermitePhysicist extends SpecialFunction {
     const x2 = this.math.multiply(BIG_NUMBER_CONSTANTS.TWO, x);
 
     let sum: math.MathType = 0,
-      t;
-
-    let k = 0,
+      k = 0,
+      t,
       n2k,
       m,
       den;
