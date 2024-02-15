@@ -23,8 +23,6 @@ export class JacobiPolynomial extends SpecialFunction {
     const a = params.a ?? 0;
     const b = params.b ?? 0;
 
-    console.log(a, b);
-
     let sum = 0;
     let t;
 

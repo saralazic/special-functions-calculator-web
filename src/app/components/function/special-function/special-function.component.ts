@@ -82,8 +82,6 @@ export class SpecialFunctionComponent implements OnInit {
 
   drawGraphic(data: FunctionParamsForCalculation) {
     const { xArr, yArr } = generateCoordinates(this.parameter, this.spef, data);
-    console.log('x: ' + xArr);
-    console.log('y: ' + yArr);
 
     drawGraph(
       this.graphContainer?.nativeElement,
@@ -114,8 +112,6 @@ export class SpecialFunctionComponent implements OnInit {
       this.valueBig = this.spef?.calculate64(data.bignumber);
 
       this.value = this.spef?.calculate(data.real);
-
-      console.log('value: ' + this.value);
 
       this.drawGraphic(data.real);
       this.calculationResult.emit(this.valueBig);

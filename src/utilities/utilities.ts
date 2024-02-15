@@ -1,5 +1,5 @@
 import * as math from 'mathjs';
-import { BigNumber, MathType } from 'mathjs';
+import { BigNumber, MathType, multiply } from 'mathjs';
 import * as Plotly from 'plotly.js-basic-dist';
 import { BesselFirstKind } from 'src/app/services/functions/besselFirst';
 import { BesselSecondKind } from 'src/app/services/functions/besselSecond';
@@ -24,11 +24,7 @@ export function factorial(n: number): number {
 
   if (Math.trunc(n) == n) return n * factorial(n - 1);
 
-  return gamma64(math_64.bignumber(n + 1)).toNumber();
-}
-
-export function factorial64(n: BigNumber): BigNumber {
-  return gamma64(math_64.add(n, BIG_NUMBER_CONSTANTS.ONE));
+  return math.number(stirling_factorial(math.bignumber(n)) as BigNumber);
 }
 
 export function binomialCoefficient(n: number, k: number): number {
@@ -40,12 +36,13 @@ export function binomialCoefficient(n: number, k: number): number {
 
 export function binomialCoefficient64(n: BigNumber, k: BigNumber): BigNumber {
   if (k === BIG_NUMBER_CONSTANTS.ZERO) return BIG_NUMBER_CONSTANTS.ONE;
+
   const den = math_64.multiply(
-    factorial64(k),
-    factorial64(math_64.subtract(n, k))
+    stirling_factorial(k),
+    stirling_factorial(math_64.subtract(n, k))
   );
 
-  return math_64.divide(factorial64(n), den) as BigNumber;
+  return math_64.divide(stirling_factorial(n), den) as BigNumber;
 }
 
 export function drawGraph(
@@ -246,54 +243,23 @@ export function generateCoordinates(
  * Previously I tried Ramanujan, Stirling, Zhen-Hang Yang
  * Used aproximation: https://www.sciencedirect.com/science/article/pii/S0022314X16000068
  */
-export function gamma64(alpha: math.BigNumber): math.BigNumber {
-  console.log('gamma: ' + alpha);
+export function gamma64(alpha: math.BigNumber): MathType {
   if (math_64.isInteger(alpha)) {
-    console.log('alpha: ' + alpha);
     return math_64.gamma(alpha);
   }
 
-  const x = math_64.subtract(alpha, BIG_NUMBER_CONSTANTS.ONE);
-  const pi = getPi();
-  const e = getE();
+  return stirling_factorial(math_64.subtract(alpha, 1) as BigNumber);
+}
 
-  const half = math_64.divide(
-    BIG_NUMBER_CONSTANTS.ONE,
-    BIG_NUMBER_CONSTANTS.TWO
-  );
+function stirling_factorial(n: BigNumber): MathType {
+  if (n.isInteger()) {
+    return math_64.factorial(n);
+  }
 
-  let first = math_64.divide(x, e);
-  first = math_64.pow(first, x);
-
-  let second = math_64.multiply(
-    BIG_NUMBER_CONSTANTS.c12,
-    math_64.pow(x, BIG_NUMBER_CONSTANTS.THREE)
-  );
-
-  let add = math_64.multiply(
-    x,
-    math_64.divide(BIG_NUMBER_CONSTANTS.c24, BIG_NUMBER_CONSTANTS.SEVEN)
-  );
-
-  second = math_64.add(second, add);
-
-  second = math_64.subtract(second, half);
-
-  second = math_64.divide(BIG_NUMBER_CONSTANTS.ONE, second);
-  second = math_64.add(BIG_NUMBER_CONSTANTS.ONE, second);
-
-  let pow = math_64.divide(BIG_NUMBER_CONSTANTS.c53, BIG_NUMBER_CONSTANTS.c210);
-  pow = math_64.add(math_64.pow(x, BIG_NUMBER_CONSTANTS.TWO), pow);
-
-  second = math_64.pow(second, pow as math.BigNumber);
-
-  let mul = math_64.multiply(first, second);
-
-  let piX2 = math_64.multiply(BIG_NUMBER_CONSTANTS.TWO, pi);
-  piX2 = math_64.multiply(piX2, x);
-
-  return math_64.multiply(
-    math_64.pow(piX2, half as math.BigNumber),
-    mul
-  ) as math.BigNumber;
+  let mul = math_64.multiply(2, getPi());
+  mul = math_64.multiply(n, mul);
+  const sqrt_2pi_n = math_64.sqrt(mul as BigNumber);
+  let ndivE = math_64.divide(n, getE());
+  let pow_n_over_e = math_64.pow(ndivE, n);
+  return math_64.multiply(sqrt_2pi_n, pow_n_over_e);
 }
