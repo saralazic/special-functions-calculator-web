@@ -261,5 +261,36 @@ function stirling_factorial(n: BigNumber): MathType {
   const sqrt_2pi_n = math_64.sqrt(mul as BigNumber);
   let ndivE = math_64.divide(n, getE());
   let pow_n_over_e = math_64.pow(ndivE, n);
-  return math_64.multiply(sqrt_2pi_n, pow_n_over_e);
+
+  const result = math_64.multiply(sqrt_2pi_n, pow_n_over_e);
+  return math_64.multiply(result, factorial_factor(n));
+}
+
+function factorial_factor(n: BigNumber) {
+  if (math_64.number(n) >= 2) {
+    let res = BIG_NUMBER_CONSTANTS.ONE;
+    res = math_64.add(res, math_64.multiply(2, n)) as BigNumber;
+    res = math_64.add(
+      res,
+      math_64.divide(1, math_64.multiply(8, math_64.pow(n, 2)))
+    ) as BigNumber;
+    res = math_64.add(
+      res,
+      math_64.divide(1, math_64.multiply(240, math_64.pow(n, 3)))
+    ) as BigNumber;
+    res = math_64.subtract(
+      res,
+      math_64.divide(11, math_64.multiply(1920, math_64.pow(n, 4)))
+    ) as BigNumber;
+    res = math_64.add(
+      res,
+      math_64.divide(79, math_64.multiply(26880, math_64.pow(n, 5)))
+    ) as BigNumber;
+
+    return math_64.pow(res, math.bignumber(1 / 6));
+  }
+  return math_64.pow(
+    getE(),
+    math_64.divide(1, math_64.multiply(12, n)) as BigNumber
+  );
 }
