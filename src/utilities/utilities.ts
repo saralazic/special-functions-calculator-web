@@ -1,3 +1,4 @@
+import * as math from 'mathjs';
 import { BigNumber, MathType } from 'mathjs';
 import * as Plotly from 'plotly.js-basic-dist';
 import { BesselFirstKind } from 'src/app/services/functions/besselFirst';
@@ -9,32 +10,42 @@ import { HermiteProbabilistic } from 'src/app/services/functions/hermiteProbabil
 import { JacobiPolynomial } from 'src/app/services/functions/jacobi';
 import { LaguerrePolynomial } from 'src/app/services/functions/laguerre';
 import { LegendrePolynomial } from 'src/app/services/functions/legendre';
-import { SpecialFunction } from 'src/app/services/functions/specialFunction';
+import {
+  FunctionParamsForCalculation,
+  SpecialFunction,
+} from 'src/app/services/functions/specialFunction';
 import { FunctionType } from '../app/models/enums';
 import { BIG_NUMBER_CONSTANTS, math_64 } from './big_numbers_math';
 
 export function factorial(n: number): number {
   if (n === 0 || n === 1) {
     return 1;
-  } else {
-    return n * factorial(n - 1);
   }
+
+  if (Math.trunc(n) == n) return n * factorial(n - 1);
+
+  return gamma64(math_64.bignumber(n + 1)).toNumber();
+}
+
+export function factorial64(n: BigNumber): BigNumber {
+  return gamma64(math_64.add(n, BIG_NUMBER_CONSTANTS.ONE));
 }
 
 export function binomialCoefficient(n: number, k: number): number {
   if (k === 0) return 1;
+
   const den = factorial(k) * factorial(n - k);
   return factorial(n) / den;
 }
 
-export function binomialCoefficientBig(n: BigNumber, k: BigNumber): BigNumber {
+export function binomialCoefficient64(n: BigNumber, k: BigNumber): BigNumber {
   if (k === BIG_NUMBER_CONSTANTS.ZERO) return BIG_NUMBER_CONSTANTS.ONE;
   const den = math_64.multiply(
-    math_64.factorial(k),
-    math_64.factorial(math_64.subtract(n, k))
+    factorial64(k),
+    factorial64(math_64.subtract(n, k))
   );
 
-  return math_64.divide(math_64.factorial(n), den) as BigNumber;
+  return math_64.divide(factorial64(n), den) as BigNumber;
 }
 
 export function drawGraph(
@@ -204,9 +215,7 @@ export function checkIfBigNumberIsPrecision(value: string): boolean {
 export function generateCoordinates(
   parameter: string | null,
   spef: SpecialFunction | undefined,
-  n: number,
-  eps: number,
-  x: number
+  data: FunctionParamsForCalculation
 ) {
   const numParameters: number = 201;
   let startValue: number, endValue: number;
@@ -215,10 +224,11 @@ export function generateCoordinates(
   const drawFullDomain =
     parameter === FunctionType.LEGENDRE_POLYNOMIAL ||
     parameter === FunctionType.CHEBYSHEV_FIRST_KIND ||
-    parameter === FunctionType.CHEBYSHEV_SECOND_KIND;
+    parameter === FunctionType.CHEBYSHEV_SECOND_KIND ||
+    parameter === FunctionType.JACOBI_POLYNOMIAL;
 
-  startValue = drawFullDomain ? -0.999999 : x - 3;
-  endValue = drawFullDomain ? 0.999999 : x + 3;
+  startValue = drawFullDomain ? -0.999999 : data.x - 3;
+  endValue = drawFullDomain ? 0.999999 : data.x + 3;
 
   const step: number = (endValue - startValue) / (numParameters - 1);
   const xArr: number[] = Array.from(
@@ -226,14 +236,7 @@ export function generateCoordinates(
     (_, index) => startValue + index * step
   );
 
-  const yArr = xArr.map(
-    (x) =>
-      spef?.calculate({
-        alpha: n,
-        x: x,
-        eps: eps,
-      }) ?? 0
-  );
+  const yArr = xArr.map((x) => spef?.calculate({ ...data, x: x }) ?? 0);
 
   return { xArr, yArr };
 }
@@ -244,7 +247,9 @@ export function generateCoordinates(
  * Used aproximation: https://www.sciencedirect.com/science/article/pii/S0022314X16000068
  */
 export function gamma64(alpha: math.BigNumber): math.BigNumber {
+  console.log('gamma: ' + alpha);
   if (math_64.isInteger(alpha)) {
+    console.log('alpha: ' + alpha);
     return math_64.gamma(alpha);
   }
 
