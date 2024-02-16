@@ -15,6 +15,11 @@ export class FunctionInformationComponent {
   private subscription?: Subscription;
   spef?: SpecialFunction;
   parameter: string | null = null;
+  definitionUrls: string[] = [];
+  graphUrl: string = '';
+  domainUrl: string = '';
+  relationsUrl: string[] = [];
+  equationUrl: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -25,6 +30,7 @@ export class FunctionInformationComponent {
   ngOnInit(): void {
     this.parameter = this.route.snapshot.paramMap.get('parameter');
     this.spef = createChosenFunction(this.parameter ?? '');
+    this.generatePhotoUrls();
     this.loadTranslations();
 
     this.subscription = this.languageService
@@ -36,6 +42,27 @@ export class FunctionInformationComponent {
 
   ngOnDestroy() {
     this.subscription?.unsubscribe();
+  }
+
+  generatePhotoUrls() {
+    const baseUrl = '../../../assets/functions';
+    const definitionsCnt = this.parameter === 'hermite2' ? 1 : 3;
+    for (let i = 1; i <= definitionsCnt; i++) {
+      this.definitionUrls.push(
+        `${baseUrl}/definitions/${this.parameter}_${i}.png`
+      );
+    }
+
+    const relationsCnt = this.parameter === 'hermite2' ? 2 : 4;
+    for (let i = 1; i <= relationsCnt; i++) {
+      this.relationsUrl.push(`${baseUrl}/relations/${this.parameter}_${i}.png`);
+    }
+
+    this.graphUrl = `${baseUrl}/graphs/${this.parameter}.png`;
+    this.equationUrl = `${baseUrl}/equations/${this.parameter}.png`;
+    this.domainUrl = `${baseUrl}/domains/${this.parameter}.png`;
+
+    console.log(this.definitionUrls);
   }
 
   loadTranslations() {

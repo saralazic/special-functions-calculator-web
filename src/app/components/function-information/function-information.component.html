@@ -1,2 +1,27 @@
 <br>
-<p> Ime: {{spef?.translations?.name}}</p>
+<div style="display: flex;">
+    <div style="flex: 1; padding-left: 200px;">
+        <h1> {{spef?.translations?.name}} </h1>
+
+        <h3> Definicije: </h3>
+        <div *ngFor="let definitionUrl of definitionUrls">
+            <img src="{{ definitionUrl }}" alt="Photo" style="max-width: 25%;">
+        </div>
+        <h3> Domen: </h3>
+        <div>
+            <img src="{{ domainUrl }}" alt="Domain" style="max-width: 14%;">
+        </div>
+        <h3> Jednacina: </h3>
+        <div>
+            <img src="{{ equationUrl }}" alt="Equation" style="max-width: 25%;">
+        </div>
+        <h3> Relacije: </h3>
+        <div *ngFor="let relationUrl of relationsUrl">
+            <img src="{{ relationUrl }}" alt="Photo" style="max-width: 25%;">
+        </div>
+    </div>
+      
+    <div style="flex: 1; display: flex; align-items: center;">
+        <img src="{{ graphUrl }}" alt="Graph" style="max-width: 70%;">
+    </div>    
+</div>

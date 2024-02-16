@@ -202,7 +202,8 @@ export function checkIfBigNumberIsPrecision(value: string): boolean {
 
   return (
     Number(math_64.compare(valueNumber, zero)) > 0 &&
-    Number(math_64.compare(valueNumber, one)) < 0
+    Number(math_64.compare(valueNumber, one)) < 0 &&
+    Number(math_64.compare(valueNumber, one)) > 0
   );
 }
 
@@ -241,8 +242,9 @@ export function generateCoordinates(
 /** This is the most accurate approximation I managed to implement
  * since BigMath doesn't have
  * Previously I tried Ramanujan, Stirling, Zhen-Hang Yang
- * Used aproximation: https://www.sciencedirect.com/science/article/pii/S0022314X16000068
+ * Used aproximation: https://sci-hub.se/https://link.springer.com/article/10.1007/s11139-013-9494-y
  */
+
 export function gamma64(alpha: math.BigNumber): MathType {
   if (math_64.isInteger(alpha)) {
     return math_64.gamma(alpha);
