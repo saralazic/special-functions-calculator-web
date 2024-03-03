@@ -16,8 +16,10 @@ import {
   bigNumberValidatorConstrained,
   bigNumberValidatorN0,
   bigNumberValidatorForParams,
-  bigNumberValidator,
+  bigNumberValidatorReal,
   bigNumberValidatorLegendre,
+  bigNumberValidatorPositiveR0,
+  bigNumberValidatorPositiveReal,
 } from 'src/utilities/validators';
 
 @Component({
@@ -49,6 +51,7 @@ export class FunctionInputComponent implements OnInit {
   bInputLabel: string = '';
   labelVariableConstrained: string = '';
   labelVariableRealPositive: string = '';
+  labelVariablePositiveR0: string = '';
   labelVariableLegendre: string = '';
   orderInputReal: IInput;
   orderInputNatural: IInput;
@@ -57,6 +60,8 @@ export class FunctionInputComponent implements OnInit {
   variableInput: IInput;
   variableInputConstrained: IInput;
   variableRealPositive: IInput;
+  secondVariableInput: IInput;
+  variablePositiveR0: IInput;
   variableInputLegendre: IInput;
   variableInputN0: IInput;
   aInput: IInput;
@@ -155,6 +160,23 @@ export class FunctionInputComponent implements OnInit {
 
     this.variableRealPositive = {
       label: this.labelVariableRealPositive,
+      formControlName: 'variableValue',
+      isInvalid:
+        "form.get('variableValue')?.invalid && form.get('variableValue')?.touched",
+      error: this.errorMessage,
+      inputType: InputType.VARIABLE,
+    };
+
+    this.secondVariableInput = {
+      ...this.variableRealPositive,
+      formControlName: 'secondVariableValue',
+      inputType: InputType.SECOND_VARIABLE,
+      isInvalid:
+        "form.get('secondVariableValue')?.invalid && form.get('secondVariableValue')?.touched",
+    };
+
+    this.variablePositiveR0 = {
+      label: this.labelVariablePositiveR0,
       formControlName: 'variableValue',
       isInvalid:
         "form.get('variableValue')?.invalid && form.get('variableValue')?.touched",
@@ -285,6 +307,10 @@ export class FunctionInputComponent implements OnInit {
         controlName = 'bParameterValue';
         break;
       }
+      case InputType.SECOND_VARIABLE: {
+        controlName = 'secondVariableValue';
+        break;
+      }
       case InputType.VARIABLE:
       default: {
         controlName = 'variableValue';
@@ -329,13 +355,33 @@ export class FunctionInputComponent implements OnInit {
             '1e-64',
             [Validators.required, bigNumberValidatorForPrecision],
           ],
-          variableValue: ['0', [Validators.required, bigNumberValidator]],
+          variableValue: ['0', [Validators.required, bigNumberValidatorReal]],
+        });
+        break;
+      case FunctionType.GAMMA:
+        this.form = this.formBuilder.group({
+          variableValue: [
+            '0',
+            [Validators.required, bigNumberValidatorPositiveR0],
+          ],
+        });
+        break;
+      case FunctionType.BETA:
+        this.form = this.formBuilder.group({
+          variableValue: [
+            '1',
+            [Validators.required, bigNumberValidatorPositiveReal],
+          ],
+          secondVariableValue: [
+            '1',
+            [Validators.required, bigNumberValidatorPositiveReal],
+          ],
         });
         break;
       case FunctionType.LAGUERRE_POLYNOMIAL:
         this.form = this.formBuilder.group({
           orderValue: ['1', [Validators.required, bigNumberValidatorNatural]],
-          variableValue: ['0', [Validators.required, bigNumberValidator]],
+          variableValue: ['0', [Validators.required, bigNumberValidatorReal]],
         });
         break;
       case FunctionType.LEGENDRE_POLYNOMIAL:
@@ -361,7 +407,7 @@ export class FunctionInputComponent implements OnInit {
       case FunctionType.HERMITE_PROBABILISTIC:
         this.form = this.formBuilder.group({
           orderValue: ['0', [Validators.required, bigNumberValidatorN0]],
-          variableValue: ['0', [Validators.required, bigNumberValidator]],
+          variableValue: ['0', [Validators.required, bigNumberValidatorReal]],
         });
         break;
       case FunctionType.JACOBI_POLYNOMIAL:
@@ -388,7 +434,7 @@ export class FunctionInputComponent implements OnInit {
             '1e-64',
             [Validators.required, bigNumberValidatorForPrecision],
           ],
-          variableValue: ['0', [Validators.required, bigNumberValidator]],
+          variableValue: ['0', [Validators.required, bigNumberValidatorReal]],
         });
         break;
     }
@@ -411,6 +457,11 @@ export class FunctionInputComponent implements OnInit {
         this.errorMessage = translations.input.errorMessage;
         this.aInputLabel = translations.input.aInputLabel;
         this.bInputLabel = translations.input.bInputLabel;
+
+        this.labelVariablePositiveR0 =
+          translations.input.labelVariablePositiveR0;
+        this.labelVariableRealPositive =
+          translations.input.labelVariablePositiveR0;
 
         this.basicInformationsLabel =
           translations.input.buttonBasicInformations;
@@ -455,6 +506,15 @@ export class FunctionInputComponent implements OnInit {
 
     this.variableInputN0.label = this.labelVariableN0;
     this.variableInputN0.error = this.errorMessage;
+
+    this.variablePositiveR0.label = this.labelVariablePositiveR0;
+    this.variablePositiveR0.error = this.errorMessage;
+
+    this.variableRealPositive.label = this.labelVariableRealPositive;
+    this.variableRealPositive.error = this.errorMessage;
+
+    this.secondVariableInput.label = this.labelVariableRealPositive;
+    this.secondVariableInput.error = this.errorMessage;
   }
 
   assignInput() {
@@ -466,8 +526,11 @@ export class FunctionInputComponent implements OnInit {
           this.variableInput,
         ];
         break;
+      case FunctionType.GAMMA:
+        this.inputs = [this.variablePositiveR0];
+        break;
       case FunctionType.BETA:
-        this.inputs = [this.variableInput];
+        this.inputs = [this.variableRealPositive, this.secondVariableInput];
         break;
       case FunctionType.LAGUERRE_POLYNOMIAL:
         this.inputs = [this.orderInputNatural, this.variableInput];
@@ -513,13 +576,12 @@ export class FunctionInputComponent implements OnInit {
         this.form.get('precisionValue')?.setValue('1e-64');
         this.form.get('variableValue')?.setValue('0');
         break;
-      case FunctionType.GAMA:
+      case FunctionType.GAMMA:
         this.form.get('variableValue')?.setValue('0');
         break;
-      case FunctionType.GAMA:
-        this.form.get('variableValue')?.setValue('0');
-        this.form.get('variableValue')?.setValue('0');
-
+      case FunctionType.GAMMA:
+        this.form.get('variableValue')?.setValue('1');
+        this.form.get('secondVariableValue')?.setValue('1');
         break;
       case FunctionType.LAGUERRE_POLYNOMIAL:
         this.form.get('orderValue')?.setValue('1');

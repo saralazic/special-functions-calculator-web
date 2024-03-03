@@ -6,8 +6,8 @@
     "head_1": "Calculate the value of a special function simply and efficiently!",
     "head_2": "Choose one of the functions bellow and start computing",
     "bessel_1": "Bessel functions of the first kind",
-    "bessel_2": "Bessel functions of the second kind",
-    "bessel_3": "Bessel functions of the third kind",
+    "beta": "Beta function",
+    "gamma": "Gama function",
     "laguerre": "Laguerre polynomials",
     "legendre": "Legendre polynomials",
     "jacobi": "Jacobi polynomials",
@@ -42,8 +42,11 @@
   "bessel_1":{
     "name": "Bessel functions of the first kind"
   },
-  "bessel_2":{
-    "name": "Bessel functions of the second kind"
+  "gamma":  {
+    "name": "Gamma function"
+  },
+  "beta":{
+    "name": "Beta function"
   },
   "legendre":{
     "name": "Legendre polynomials"
@@ -77,6 +80,8 @@
     "labelVariableN0": "Variable (nonnegative integer):",
     "aInputLabel": "Parameter alpha (real number greater than -1):",
     "bInputLabel": "Parameter beta (real number greater than -1):",
+    "labelVariableRealPositive": "Variable (positive real)",
+    "labelVariablePositiveR0": "Variable (real greater than 0)",
     "errorMessage": "Please enter a valid value",
     "buttonBasicInformations": "Basic informations about this function",
     "buttonUseCalculatedValue": "Use this value",

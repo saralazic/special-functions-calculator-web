@@ -8,10 +8,11 @@ import {
   FunctionParamsForCalculationWithBigNumbers,
   SpecialFunction,
 } from './specialFunction';
+import { GammaFunction } from './gamma';
 
-export class GammaFunction extends SpecialFunction {
+export class BetaFunction extends SpecialFunction {
   constructor(private gamma = new GammaFunction()) {
-    super(FunctionType.GAMA);
+    super(FunctionType.BETA);
   }
 
   calculate(params: FunctionParamsForCalculation): number {

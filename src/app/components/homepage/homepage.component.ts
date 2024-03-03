@@ -15,8 +15,8 @@ export class HomepageComponent {
   head_1?: string;
   head_2?: string;
   bessel_1?: string;
-  bessel_2?: string;
-  bessel_3?: string;
+  gamma?: string;
+  beta?: string;
   laguerre?: string;
   legendre?: string;
   jacobi?: string;
@@ -51,8 +51,8 @@ export class HomepageComponent {
         this.head_1 = translations.homepage.head_1;
         this.head_2 = translations.homepage.head_2;
         this.bessel_1 = translations.homepage.bessel_1;
-        this.bessel_2 = translations.homepage.bessel_2;
-        this.bessel_3 = translations.homepage.bessel_3;
+        this.beta = translations.homepage.beta;
+        this.gamma = translations.homepage.gamma;
         this.laguerre = translations.homepage.laguerre;
         this.legendre = translations.homepage.legendre;
         this.jacobi = translations.homepage.jacobi;

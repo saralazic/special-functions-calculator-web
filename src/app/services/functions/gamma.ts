@@ -11,7 +11,7 @@ import { BigNumber } from 'mathjs';
 
 export class GammaFunction extends SpecialFunction {
   constructor() {
-    super(FunctionType.GAMA);
+    super(FunctionType.GAMMA);
   }
 
   calculate(params: FunctionParamsForCalculation): number {

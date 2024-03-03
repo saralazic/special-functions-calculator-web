@@ -1,6 +1,6 @@
 export enum FunctionType {
   BESSEL_FIRST_KIND = 'bessel1',
-  GAMA = 'gamma',
+  GAMMA = 'gamma',
   BETA = 'beta',
   LAGUERRE_POLYNOMIAL = 'laguerre',
   LEGENDRE_POLYNOMIAL = 'legendre',
@@ -17,6 +17,7 @@ export enum InputType {
   ORDER,
   ALPHA,
   BETA,
+  SECOND_VARIABLE,
 }
 
 export enum Keys {

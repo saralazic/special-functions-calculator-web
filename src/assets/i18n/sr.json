@@ -6,8 +6,8 @@
     "head_1": "Izračunajte vrednost specijalne funkcije jednostavno i efikasno!",
     "head_2": "Odaberite neku od ponuđenih funkcija i počnite rad",
     "bessel_1": "Beselove funkcije prve vrste",
-    "bessel_2": "Beselove funkcije druge vrste",
-    "bessel_3": "Beselove funkcije treće vrste",
+    "beta": "Beta funkcija",
+    "gamma": "Gama funkcija",
     "laguerre": "Lagerovi polinomi",
     "legendre": "Ležandrovi polinomi",
     "jacobi": "Jakobijevi polinomi",
@@ -42,8 +42,11 @@
   "bessel_1":  {
     "name": "Beselove funkcije prve vrste"
   },
-  "bessel_2":  {
-    "name": "Beselove funkcije druge vrste"
+  "gamma":  {
+    "name": "Gama funkcija"
+  },
+  "beta":{
+    "name": "Beta funkcija"
   },
   "legendre":{
     "name": "Ležandrovi polinomi"
@@ -77,6 +80,8 @@
     "labelVariableN0": "Promenljiva (nenegativan ceo broj):",
     "aInputLabel": "Parametar alfa (realan broj veći od -1):",
     "bInputLabel": "Parametar beta (realan broj veći od -1):",
+    "labelVariableRealPositive": "Promenljiva (pozitivan realan broj)",
+    "labelVariablePositiveR0": "Promenljiva (nenegativan realan broj)",
     "errorMessage": "Unesite validnu vrednost!",
     "buttonBasicInformations": "Osnovne informacije o ovoj funkciji",
     "buttonUseCalculatedValue": "Upotrebi ovu vrednost",

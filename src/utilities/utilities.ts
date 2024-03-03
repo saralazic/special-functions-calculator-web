@@ -2,8 +2,10 @@ import * as math from 'mathjs';
 import { BigNumber, exp, MathType, multiply } from 'mathjs';
 import * as Plotly from 'plotly.js-basic-dist';
 import { BesselFirstKind } from 'src/app/services/functions/besselFirst';
+import { BetaFunction } from 'src/app/services/functions/beta';
 import { ChebyshevPolynomialOfFirstKind } from 'src/app/services/functions/chebyshevFirst';
 import { ChebyshevPolynomialOfSecondKind } from 'src/app/services/functions/chebyshevSecond';
+import { GammaFunction } from 'src/app/services/functions/gamma';
 import { HermitePhysicist } from 'src/app/services/functions/hermitePhysicist';
 import { HermiteProbabilistic } from 'src/app/services/functions/hermiteProbabilistic';
 import { JacobiPolynomial } from 'src/app/services/functions/jacobi';
@@ -99,6 +101,12 @@ export function loadTranslationForFunction(
     case FunctionType.BESSEL_FIRST_KIND:
       fn = translations.bessel_1;
       break;
+    case FunctionType.BETA:
+      fn = translations.beta;
+      break;
+    case FunctionType.GAMMA:
+      fn = translations.gamma;
+      break;
     case FunctionType.LEGENDRE_POLYNOMIAL:
       fn = translations.legendre;
       break;
@@ -133,6 +141,12 @@ export function createChosenFunction(parameter: string): SpecialFunction {
   switch (parameter) {
     case FunctionType.BESSEL_FIRST_KIND:
       spef = new BesselFirstKind();
+      break;
+    case FunctionType.GAMMA:
+      spef = new GammaFunction();
+      break;
+    case FunctionType.BETA:
+      spef = new BetaFunction();
       break;
     case FunctionType.LEGENDRE_POLYNOMIAL:
       spef = new LegendrePolynomial();

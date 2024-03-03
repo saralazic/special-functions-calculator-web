@@ -2,13 +2,45 @@ import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { BIG_NUMBER_CONSTANTS, math_64 } from './big_numbers_math';
 import { checkIfBigNumberIsPrecision } from './utilities';
 
-export function bigNumberValidator(
+export function bigNumberValidatorReal(
   control: AbstractControl
 ): ValidationErrors | null {
   const bigNumberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
   if (control.value && !bigNumberRegex.test(control.value)) {
     return { invalidBigNumber: true };
   }
+  return null;
+}
+
+export function bigNumberValidatorPositiveReal(
+  control: AbstractControl
+): ValidationErrors | null {
+  const bigNumberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
+  if (control.value && !bigNumberRegex.test(control.value)) {
+    return { invalidBigNumber: true };
+  }
+
+  let k = math_64.bignumber(control.value);
+  if (!(Number(math_64.compare(k, BIG_NUMBER_CONSTANTS.ZERO)) > 0)) {
+    return { invalidBigNumber: true };
+  }
+
+  return null;
+}
+
+export function bigNumberValidatorPositiveR0(
+  control: AbstractControl
+): ValidationErrors | null {
+  const bigNumberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
+  if (control.value && !bigNumberRegex.test(control.value)) {
+    return { invalidBigNumber: true };
+  }
+
+  let k = math_64.bignumber(control.value);
+  if (!(Number(math_64.compare(k, BIG_NUMBER_CONSTANTS.ZERO)) >= 0)) {
+    return { invalidBigNumber: true };
+  }
+
   return null;
 }
 
@@ -81,6 +113,7 @@ export function bigNumberValidatorConstrained(
   return null;
 }
 
+// same as Constrained excluding borders
 export function bigNumberValidatorLegendre(
   control: AbstractControl
 ): ValidationErrors | null {
