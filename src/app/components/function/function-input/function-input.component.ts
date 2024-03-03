@@ -579,7 +579,7 @@ export class FunctionInputComponent implements OnInit {
       case FunctionType.GAMMA:
         this.form.get('variableValue')?.setValue('0');
         break;
-      case FunctionType.GAMMA:
+      case FunctionType.BETA:
         this.form.get('variableValue')?.setValue('1');
         this.form.get('secondVariableValue')?.setValue('1');
         break;
