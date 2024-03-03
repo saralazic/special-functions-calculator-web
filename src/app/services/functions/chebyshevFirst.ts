@@ -20,7 +20,7 @@ export class ChebyshevPolynomialOfFirstKind extends SpecialFunction {
     return Math.cos(alpha * Math.acos(x));
   }
 
-  calculateBig(params: FunctionParamsForCalculationWithBigNumbers): string {
+  calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
     const { alphaBig, xBig } = params;
 
     const alpha = this.math.bignumber(alphaBig);

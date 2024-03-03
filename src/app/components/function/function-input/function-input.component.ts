@@ -357,8 +357,11 @@ export class FunctionInputComponent implements OnInit {
         break;
       case FunctionType.JACOBI_POLYNOMIAL:
         this.form = this.formBuilder.group({
-          orderValue: ['0', [Validators.required, bigNumberValidatorN0]],
-          variableValue: ['0', [Validators.required, bigNumberValidator]],
+          orderValue: ['1', [Validators.required, bigNumberValidatorNatural]],
+          variableValue: [
+            '0',
+            [Validators.required, bigNumberValidatorLegendre],
+          ],
           aParameterValue: [
             '0',
             [Validators.required, bigNumberValidatorForParams],
@@ -472,8 +475,8 @@ export class FunctionInputComponent implements OnInit {
         break;
       case FunctionType.JACOBI_POLYNOMIAL:
         this.inputs = [
-          this.orderInputNonNegative,
-          this.variableInput,
+          this.orderInputNatural,
+          this.variableInputLegendre,
           this.aInput,
           this.bInput,
         ];
@@ -518,7 +521,7 @@ export class FunctionInputComponent implements OnInit {
         this.form.get('variableValue')?.setValue('0');
         break;
       case FunctionType.JACOBI_POLYNOMIAL:
-        this.form.get('orderValue')?.setValue('0');
+        this.form.get('orderValue')?.setValue('1');
         this.form.get('variableValue')?.setValue('0');
         this.form.get('aParameterValue')?.setValue('0');
         this.form.get('bParameterValue')?.setValue('0');

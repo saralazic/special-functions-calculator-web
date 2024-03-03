@@ -1,4 +1,5 @@
-import { all, BigNumber, create, MathType } from 'mathjs';
+import * as math from 'mathjs';
+import { BigNumber, MathType, multiply } from 'mathjs';
 import * as Plotly from 'plotly.js-basic-dist';
 import { BesselFirstKind } from 'src/app/services/functions/besselFirst';
 import { BesselSecondKind } from 'src/app/services/functions/besselSecond';
@@ -9,32 +10,39 @@ import { HermiteProbabilistic } from 'src/app/services/functions/hermiteProbabil
 import { JacobiPolynomial } from 'src/app/services/functions/jacobi';
 import { LaguerrePolynomial } from 'src/app/services/functions/laguerre';
 import { LegendrePolynomial } from 'src/app/services/functions/legendre';
-import { SpecialFunction } from 'src/app/services/functions/specialFunction';
+import {
+  FunctionParamsForCalculation,
+  SpecialFunction,
+} from 'src/app/services/functions/specialFunction';
 import { FunctionType } from '../app/models/enums';
 import { BIG_NUMBER_CONSTANTS, math_64 } from './big_numbers_math';
-
-const math = math_64;
 
 export function factorial(n: number): number {
   if (n === 0 || n === 1) {
     return 1;
-  } else {
-    return n * factorial(n - 1);
   }
+
+  if (Math.trunc(n) == n) return n * factorial(n - 1);
+
+  return math.number(stirling_factorial(math.bignumber(n)) as BigNumber);
 }
 
 export function binomialCoefficient(n: number, k: number): number {
+  if (k === 0) return 1;
+
   const den = factorial(k) * factorial(n - k);
   return factorial(n) / den;
 }
 
-export function binomialCoefficientBig(n: BigNumber, k: BigNumber): BigNumber {
+export function binomialCoefficient64(n: BigNumber, k: BigNumber): BigNumber {
+  if (k === BIG_NUMBER_CONSTANTS.ZERO) return BIG_NUMBER_CONSTANTS.ONE;
+
   const den = math_64.multiply(
-    math_64.factorial(k),
-    math_64.factorial(math_64.subtract(n, k))
+    stirling_factorial(k),
+    stirling_factorial(math_64.subtract(n, k))
   );
 
-  return math_64.divide(math_64.factorial(n), den) as BigNumber;
+  return math_64.divide(stirling_factorial(n), den) as BigNumber;
 }
 
 export function drawGraph(
@@ -162,15 +170,15 @@ export function createChosenFunction(parameter: string): SpecialFunction {
 }
 
 export function getE(): MathType {
-  return math.exp(BIG_NUMBER_CONSTANTS.ONE);
+  return math_64.exp(BIG_NUMBER_CONSTANTS.ONE);
 }
 
 export function getPi(): MathType {
   // const piValue: BigNumber = math.bignumber(
   //   '3.1415926535897932384626433832795028841971693993751058209749445923078164'
   // );
-  const piHalf: BigNumber = math.acos(BIG_NUMBER_CONSTANTS.ZERO);
-  return math.multiply(piHalf, BIG_NUMBER_CONSTANTS.TWO as BigNumber);
+  const piHalf: BigNumber = math_64.acos(BIG_NUMBER_CONSTANTS.ZERO);
+  return math_64.multiply(piHalf, BIG_NUMBER_CONSTANTS.TWO as BigNumber);
 }
 
 export function round(stringVal: string): string {
@@ -188,13 +196,14 @@ export function round(stringVal: string): string {
 }
 
 export function checkIfBigNumberIsPrecision(value: string): boolean {
-  const valueNumber = math.bignumber(value);
+  const valueNumber = math_64.bignumber(value);
   const zero = BIG_NUMBER_CONSTANTS.ZERO;
   const one = BIG_NUMBER_CONSTANTS.ONE;
 
   return (
-    Number(math.compare(valueNumber, zero)) > 0 &&
-    Number(math.compare(valueNumber, one)) < 0
+    Number(math_64.compare(valueNumber, zero)) > 0 &&
+    Number(math_64.compare(valueNumber, one)) < 0 &&
+    Number(math_64.compare(valueNumber, one)) > 0
   );
 }
 
@@ -204,9 +213,7 @@ export function checkIfBigNumberIsPrecision(value: string): boolean {
 export function generateCoordinates(
   parameter: string | null,
   spef: SpecialFunction | undefined,
-  n: number,
-  eps: number,
-  x: number
+  data: FunctionParamsForCalculation
 ) {
   const numParameters: number = 201;
   let startValue: number, endValue: number;
@@ -215,10 +222,11 @@ export function generateCoordinates(
   const drawFullDomain =
     parameter === FunctionType.LEGENDRE_POLYNOMIAL ||
     parameter === FunctionType.CHEBYSHEV_FIRST_KIND ||
-    parameter === FunctionType.CHEBYSHEV_SECOND_KIND;
+    parameter === FunctionType.CHEBYSHEV_SECOND_KIND ||
+    parameter === FunctionType.JACOBI_POLYNOMIAL;
 
-  startValue = drawFullDomain ? -0.999999 : x - 3;
-  endValue = drawFullDomain ? 0.999999 : x + 3;
+  startValue = drawFullDomain ? -0.999999 : data.x - 3;
+  endValue = drawFullDomain ? 0.999999 : data.x + 3;
 
   const step: number = (endValue - startValue) / (numParameters - 1);
   const xArr: number[] = Array.from(
@@ -226,14 +234,7 @@ export function generateCoordinates(
     (_, index) => startValue + index * step
   );
 
-  const yArr = xArr.map(
-    (x) =>
-      spef?.calculate({
-        alpha: n,
-        x: x,
-        eps: eps,
-      }) ?? 0
-  );
+  const yArr = xArr.map((x) => spef?.calculate({ ...data, x: x }) ?? 0);
 
   return { xArr, yArr };
 }
@@ -241,54 +242,57 @@ export function generateCoordinates(
 /** This is the most accurate approximation I managed to implement
  * since BigMath doesn't have
  * Previously I tried Ramanujan, Stirling, Zhen-Hang Yang
- * Used aproximation: https://www.sciencedirect.com/science/article/pii/S0022314X16000068
+ * Used aproximation: https://sci-hub.se/https://link.springer.com/article/10.1007/s11139-013-9494-y
  */
-export function gammaBig(alpha: math.BigNumber): math.BigNumber {
+
+export function gamma64(alpha: math.BigNumber): MathType {
   if (math_64.isInteger(alpha)) {
     return math_64.gamma(alpha);
   }
 
-  const x = math_64.subtract(alpha, BIG_NUMBER_CONSTANTS.ONE);
-  const pi = getPi();
-  const e = getE();
+  return stirling_factorial(math_64.subtract(alpha, 1) as BigNumber);
+}
 
-  const half = math_64.divide(
-    BIG_NUMBER_CONSTANTS.ONE,
-    BIG_NUMBER_CONSTANTS.TWO
+function stirling_factorial(n: BigNumber): MathType {
+  if (n.isInteger()) {
+    return math_64.factorial(n);
+  }
+
+  let mul = math_64.multiply(2, getPi());
+  mul = math_64.multiply(n, mul);
+  const sqrt_2pi_n = math_64.sqrt(mul as BigNumber);
+  let ndivE = math_64.divide(n, getE());
+  let pow_n_over_e = math_64.pow(ndivE, n);
+
+  const result = math_64.multiply(sqrt_2pi_n, pow_n_over_e);
+  return math_64.multiply(result, factorial_factor(n));
+}
+
+function factorial_factor(n: BigNumber) {
+  if (math_64.number(n) >= 2) {
+    let res = BIG_NUMBER_CONSTANTS.ONE;
+    res = math_64.add(res, math_64.multiply(2, n)) as BigNumber;
+    res = math_64.add(
+      res,
+      math_64.divide(1, math_64.multiply(8, math_64.pow(n, 2)))
+    ) as BigNumber;
+    res = math_64.add(
+      res,
+      math_64.divide(1, math_64.multiply(240, math_64.pow(n, 3)))
+    ) as BigNumber;
+    res = math_64.subtract(
+      res,
+      math_64.divide(11, math_64.multiply(1920, math_64.pow(n, 4)))
+    ) as BigNumber;
+    res = math_64.add(
+      res,
+      math_64.divide(79, math_64.multiply(26880, math_64.pow(n, 5)))
+    ) as BigNumber;
+
+    return math_64.pow(res, math.bignumber(1 / 6));
+  }
+  return math_64.pow(
+    getE(),
+    math_64.divide(1, math_64.multiply(12, n)) as BigNumber
   );
-
-  let first = math_64.divide(x, e);
-  first = math_64.pow(first, x);
-
-  let second = math_64.multiply(
-    BIG_NUMBER_CONSTANTS.c12,
-    math_64.pow(x, BIG_NUMBER_CONSTANTS.THREE)
-  );
-
-  let add = math_64.multiply(
-    x,
-    math_64.divide(BIG_NUMBER_CONSTANTS.c24, BIG_NUMBER_CONSTANTS.SEVEN)
-  );
-
-  second = math_64.add(second, add);
-
-  second = math_64.subtract(second, half);
-
-  second = math_64.divide(BIG_NUMBER_CONSTANTS.ONE, second);
-  second = math_64.add(BIG_NUMBER_CONSTANTS.ONE, second);
-
-  let pow = math_64.divide(BIG_NUMBER_CONSTANTS.c53, BIG_NUMBER_CONSTANTS.c210);
-  pow = math_64.add(math_64.pow(x, BIG_NUMBER_CONSTANTS.TWO), pow);
-
-  second = math_64.pow(second, pow as math.BigNumber);
-
-  let mul = math_64.multiply(first, second);
-
-  let piX2 = math_64.multiply(BIG_NUMBER_CONSTANTS.TWO, pi);
-  piX2 = math_64.multiply(piX2, x);
-
-  return math_64.multiply(
-    math_64.pow(piX2, half as math.BigNumber),
-    mul
-  ) as math.BigNumber;
 }

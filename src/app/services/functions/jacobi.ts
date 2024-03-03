@@ -3,7 +3,7 @@ import { FunctionType } from 'src/app/models/enums';
 import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
 import {
   binomialCoefficient,
-  binomialCoefficientBig,
+  binomialCoefficient64,
 } from 'src/utilities/utilities';
 import {
   FunctionParamsForCalculation,
@@ -37,7 +37,7 @@ export class JacobiPolynomial extends SpecialFunction {
     return sum / 2 ** alpha;
   }
 
-  calculateBig(params: FunctionParamsForCalculationWithBigNumbers): string {
+  calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
     const { alphaBig, xBig } = params;
 
     const alpha = this.math.bignumber(alphaBig);
@@ -56,14 +56,14 @@ export class JacobiPolynomial extends SpecialFunction {
     let t1, t2, t, kBig: MathType;
 
     for (
-      let k = 1;
+      let k = 0;
       Number(this.math.compare(this.math.bignumber(k), alpha)) <= 0;
       k++
     ) {
       kBig = this.math.bignumber(k);
       const nk = this.math.subtract(alpha, kBig);
-      const bca = binomialCoefficientBig(alphaPlusA, kBig);
-      const bcb = binomialCoefficientBig(alphaPlusB, nk);
+      const bca = binomialCoefficient64(alphaPlusA, kBig);
+      const bcb = binomialCoefficient64(alphaPlusB, nk);
       const factorNK = this.math.pow(xMinus1, nk);
       const factorK = this.math.pow(xPlus1, kBig);
       t1 = this.math.multiply(bca, bcb);

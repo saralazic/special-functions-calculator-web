@@ -9,7 +9,7 @@ export class Stack<T> {
     return this.items.pop();
   }
 
-  peek(): T | undefined {
+  top(): T | undefined {
     return this.items[this.items.length - 1];
   }
 
@@ -26,6 +26,6 @@ export class Stack<T> {
   }
 
   join(): string {
-    return this.items.join('');
+    return this.items.join(', ');
   }
 }

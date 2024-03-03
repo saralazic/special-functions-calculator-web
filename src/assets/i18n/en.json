@@ -16,6 +16,12 @@
     "hermite_1": "Physicist's Hermite polynomial",
     "hermite_2": "Probabilist's Hermite polynomials"
   },
+  "function_information": {
+    "definition": "Definitions",
+    "domain": "Domain",
+    "equation": "Equation",
+    "relations": "Relations"
+  },
   "footer": {
     "about": "About",
     "contact": "Contact",

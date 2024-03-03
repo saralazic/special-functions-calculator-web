@@ -31,7 +31,7 @@ export class HermiteProbabilistic extends SpecialFunction {
     return factor * yPhy;
   }
 
-  calculateBig(params: FunctionParamsForCalculationWithBigNumbers): string {
+  calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
     const { alphaBig, xBig } = params;
 
     const alpha = this.math.bignumber(alphaBig);
@@ -40,7 +40,7 @@ export class HermiteProbabilistic extends SpecialFunction {
     const sqrt2 = this.math.sqrt(BIG_NUMBER_CONSTANTS.TWO);
     const xPhy = this.math.divide(x, sqrt2);
 
-    const yPhy = this.hermitePhysicist.calculateBig({
+    const yPhy = this.hermitePhysicist.calculate64({
       alphaBig: params.alphaBig,
       xBig: xPhy.toString(),
       epsBig: params.epsBig,

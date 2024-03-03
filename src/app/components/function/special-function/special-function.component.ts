@@ -18,6 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {
   FunctionParams,
+  FunctionParamsForCalculation,
   SpecialFunction,
 } from 'src/app/services/functions/specialFunction';
 import { LanguageService } from 'src/app/services/language-service/language.service';
@@ -79,24 +80,15 @@ export class SpecialFunctionComponent implements OnInit {
     this.subscription?.unsubscribe();
   }
 
-  drawGraphic(n: number, eps: number, x: number) {
-    const { xArr, yArr } = generateCoordinates(
-      this.parameter,
-      this.spef,
-      n,
-      eps,
-      x
-    );
+  drawGraphic(data: FunctionParamsForCalculation) {
+    const { xArr, yArr } = generateCoordinates(this.parameter, this.spef, data);
+
     drawGraph(
       this.graphContainer?.nativeElement,
       xArr,
       yArr,
-      x,
-      this.spef?.calculate({
-        alpha: n,
-        x: x,
-        eps: eps,
-      }) ?? 0
+      data.x,
+      this.spef?.calculate(data) ?? 0
     );
     this.graphContainer.nativeElement.style.display = 'block';
   }
@@ -117,11 +109,11 @@ export class SpecialFunctionComponent implements OnInit {
     if (data) {
       this.slideTriggered = true;
 
-      this.valueBig = this.spef?.calculateBig(data.bignumber);
+      this.valueBig = this.spef?.calculate64(data.bignumber);
 
       this.value = this.spef?.calculate(data.real);
 
-      this.drawGraphic(data.real.alpha, data.real.eps, data.real.x);
+      this.drawGraphic(data.real);
       this.calculationResult.emit(this.valueBig);
       return;
     }
