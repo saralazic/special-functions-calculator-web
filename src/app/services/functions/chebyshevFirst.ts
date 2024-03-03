@@ -8,8 +8,6 @@ import {
 } from './specialFunction';
 
 export class ChebyshevPolynomialOfFirstKind extends SpecialFunction {
-  math = math_64;
-
   constructor() {
     super(FunctionType.CHEBYSHEV_FIRST_KIND);
   }
@@ -21,10 +19,7 @@ export class ChebyshevPolynomialOfFirstKind extends SpecialFunction {
   }
 
   calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
-    const { alphaBig, xBig } = params;
-
-    const alpha = this.math.bignumber(alphaBig);
-    const x = this.math.bignumber(xBig);
+    const { alpha, x } = this.stringToBigNumber(params);
 
     let result: MathType = this.math.acos(x);
     result = this.math.multiply(result, alpha);

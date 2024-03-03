@@ -312,8 +312,6 @@ export class FunctionInputComponent implements OnInit {
   createForm() {
     switch (this.parameter) {
       case FunctionType.BESSEL_FIRST_KIND:
-      case FunctionType.BESSEL_SECOND_KIND:
-      case FunctionType.BESSEL_THIRD_KIND:
         this.form = this.formBuilder.group({
           orderValue: ['1', [Validators.required, bigNumberValidatorNatural]],
           precisionValue: [
@@ -451,8 +449,6 @@ export class FunctionInputComponent implements OnInit {
   assignInput() {
     switch (this.parameter) {
       case FunctionType.BESSEL_FIRST_KIND:
-      case FunctionType.BESSEL_SECOND_KIND:
-      case FunctionType.BESSEL_THIRD_KIND:
         this.inputs = [
           this.orderInputNatural,
           this.precisionInput,
@@ -499,8 +495,6 @@ export class FunctionInputComponent implements OnInit {
   private resetFormToInitialValues() {
     switch (this.parameter) {
       case FunctionType.BESSEL_FIRST_KIND:
-      case FunctionType.BESSEL_SECOND_KIND:
-      case FunctionType.BESSEL_THIRD_KIND:
         this.form.get('orderValue')?.setValue('1');
         this.form.get('precisionValue')?.setValue('1e-64');
         this.form.get('variableValue')?.setValue('0');

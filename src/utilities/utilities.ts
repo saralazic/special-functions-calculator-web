@@ -2,7 +2,6 @@ import * as math from 'mathjs';
 import { BigNumber, MathType, multiply } from 'mathjs';
 import * as Plotly from 'plotly.js-basic-dist';
 import { BesselFirstKind } from 'src/app/services/functions/besselFirst';
-import { BesselSecondKind } from 'src/app/services/functions/besselSecond';
 import { ChebyshevPolynomialOfFirstKind } from 'src/app/services/functions/chebyshevFirst';
 import { ChebyshevPolynomialOfSecondKind } from 'src/app/services/functions/chebyshevSecond';
 import { HermitePhysicist } from 'src/app/services/functions/hermitePhysicist';
@@ -99,9 +98,6 @@ export function loadTranslationForFunction(
     case FunctionType.BESSEL_FIRST_KIND:
       fn = translations.bessel_1;
       break;
-    case FunctionType.BESSEL_SECOND_KIND:
-      fn = translations.bessel_2;
-      break;
     case FunctionType.LEGENDRE_POLYNOMIAL:
       fn = translations.legendre;
       break;
@@ -136,9 +132,6 @@ export function createChosenFunction(parameter: string): SpecialFunction {
   switch (parameter) {
     case FunctionType.BESSEL_FIRST_KIND:
       spef = new BesselFirstKind();
-      break;
-    case FunctionType.BESSEL_SECOND_KIND:
-      spef = new BesselSecondKind();
       break;
     case FunctionType.LEGENDRE_POLYNOMIAL:
       spef = new LegendrePolynomial();

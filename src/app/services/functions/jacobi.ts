@@ -12,8 +12,6 @@ import {
 } from './specialFunction';
 
 export class JacobiPolynomial extends SpecialFunction {
-  math = math_64;
-
   constructor() {
     super(FunctionType.JACOBI_POLYNOMIAL);
   }

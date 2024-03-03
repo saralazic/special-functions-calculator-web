@@ -9,8 +9,6 @@ import {
 } from './specialFunction';
 
 export class BesselFirstKind extends SpecialFunction {
-  math = math_64;
-
   constructor() {
     super(FunctionType.BESSEL_FIRST_KIND);
   }
@@ -48,15 +46,7 @@ export class BesselFirstKind extends SpecialFunction {
   }
 
   calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
-    const { alphaBig, xBig } = params;
-    const epsBig = params.epsBig ?? '1e-64';
-
-    // console.log('xBig: ' + xBig);
-    // console.log('alphaBig: ' + alphaBig);
-
-    const alpha = this.math.bignumber(alphaBig);
-    const eps = this.math.bignumber(epsBig);
-    const x = this.math.bignumber(xBig);
+    const { alpha, x, eps } = this.stringToBigNumber(params);
 
     let gammaArg = this.math.add(alpha, BIG_NUMBER_CONSTANTS.ONE);
     let gammaCurrent = gamma64(gammaArg);

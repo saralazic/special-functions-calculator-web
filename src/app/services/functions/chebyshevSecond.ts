@@ -8,8 +8,6 @@ import {
 } from './specialFunction';
 
 export class ChebyshevPolynomialOfSecondKind extends SpecialFunction {
-  math = math_64;
-
   constructor() {
     super(FunctionType.CHEBYSHEV_SECOND_KIND);
   }

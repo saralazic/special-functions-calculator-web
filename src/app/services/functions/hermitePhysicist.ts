@@ -9,8 +9,6 @@ import {
 import { factorial } from 'mathjs';
 
 export class HermitePhysicist extends SpecialFunction {
-  math = math_64;
-
   constructor() {
     super(FunctionType.HERMITE_PHYSICIST);
   }
@@ -40,10 +38,7 @@ export class HermitePhysicist extends SpecialFunction {
   }
 
   calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
-    const { alphaBig, xBig } = params;
-
-    const alpha = this.math.bignumber(alphaBig);
-    const x = this.math.bignumber(xBig);
+    const { alpha, x } = this.stringToBigNumber(params);
 
     const alphaFactorial = this.math.factorial(alpha);
 

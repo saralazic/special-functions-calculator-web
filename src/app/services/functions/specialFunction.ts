@@ -1,3 +1,4 @@
+import { math_64 } from 'src/utilities/big_numbers_math';
 import { loadTranslationForFunction } from 'src/utilities/utilities';
 import { FunctionType } from '../../models/enums';
 
@@ -7,6 +8,7 @@ import { FunctionType } from '../../models/enums';
  */
 
 export abstract class SpecialFunction {
+  public math = math_64;
   public functionType: FunctionType;
   public translations?: ISpecialFunctionTranslations;
 
@@ -31,6 +33,16 @@ export abstract class SpecialFunction {
     };
 
     return this.translations;
+  }
+
+  public stringToBigNumber(params: FunctionParamsForCalculationWithBigNumbers) {
+    return {
+      x: this.math.bignumber(params.xBig),
+      alpha: this.math.bignumber(params.alphaBig),
+      eps: this.math.bignumber(
+        params.epsBig.length > 0 ? params.epsBig : '1e-64'
+      ),
+    };
   }
 }
 

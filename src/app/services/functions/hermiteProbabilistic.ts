@@ -9,8 +9,6 @@ import {
 import { HermitePhysicist } from './hermitePhysicist';
 
 export class HermiteProbabilistic extends SpecialFunction {
-  math = math_64;
-
   constructor(private hermitePhysicist = new HermitePhysicist()) {
     super(FunctionType.HERMITE_PROBABILISTIC);
   }
@@ -32,10 +30,7 @@ export class HermiteProbabilistic extends SpecialFunction {
   }
 
   calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
-    const { alphaBig, xBig } = params;
-
-    const alpha = this.math.bignumber(alphaBig);
-    const x = this.math.bignumber(xBig);
+    const { alpha, x } = this.stringToBigNumber(params);
 
     const sqrt2 = this.math.sqrt(BIG_NUMBER_CONSTANTS.TWO);
     const xPhy = this.math.divide(x, sqrt2);

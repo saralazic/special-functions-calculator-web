@@ -1,7 +1,7 @@
 export enum FunctionType {
   BESSEL_FIRST_KIND = 'bessel1',
-  BESSEL_SECOND_KIND = 'bessel2',
-  BESSEL_THIRD_KIND = 'bessel3',
+  GAMA = 'gamma',
+  BETA = 'beta',
   LAGUERRE_POLYNOMIAL = 'laguerre',
   LEGENDRE_POLYNOMIAL = 'legendre',
   JACOBI_POLYNOMIAL = 'jacobi',
