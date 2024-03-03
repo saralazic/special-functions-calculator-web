@@ -7,6 +7,7 @@ import {
   FunctionParamsForCalculationWithBigNumbers,
   SpecialFunction,
 } from './specialFunction';
+import { BigNumber } from 'mathjs';
 
 export class GammaFunction extends SpecialFunction {
   constructor() {
@@ -14,8 +15,7 @@ export class GammaFunction extends SpecialFunction {
   }
 
   calculate(params: FunctionParamsForCalculation): number {
-    const { alpha, x } = params;
-
+    const { x } = params;
     return 0;
 
     // console.log('x: ' + x);
@@ -23,8 +23,19 @@ export class GammaFunction extends SpecialFunction {
   }
 
   calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
-    const { x, alpha, eps } = this.stringToBigNumber(params);
+    const { x, eps } = this.stringToBigNumber(params);
+
+    if (this.math.isInteger(x)) this.naturalFactorial(x).toString();
 
     return '';
   }
+
+  private naturalFactorial(n: BigNumber): BigNumber {
+    if (n.equals(BIG_NUMBER_CONSTANTS.ZERO)) return BIG_NUMBER_CONSTANTS.ONE;
+    const nMinus1 = this.math.subtract(n, 1);
+    const fprev = this.naturalFactorial(nMinus1 as BigNumber);
+    return this.math.multiply(nMinus1, fprev) as BigNumber;
+  }
+
+  private coefficientAk(k: BigNumber, r: BigNumber) {}
 }

@@ -7,6 +7,7 @@ import {
   SpecialFunction,
 } from './specialFunction';
 import { HermitePhysicist } from './hermitePhysicist';
+import { initializeParams64 } from 'src/utilities/utilities';
 
 export class HermiteProbabilistic extends SpecialFunction {
   constructor(private hermitePhysicist = new HermitePhysicist()) {
@@ -14,7 +15,8 @@ export class HermiteProbabilistic extends SpecialFunction {
   }
 
   calculate(params: FunctionParamsForCalculation): number {
-    const { alpha, x } = params;
+    let { alpha, x } = params;
+    alpha = alpha ?? 0;
 
     const xPhy = x / 2 ** 0.5;
 
@@ -22,6 +24,9 @@ export class HermiteProbabilistic extends SpecialFunction {
       alpha: params.alpha,
       x: xPhy,
       eps: params.eps,
+      a: 0,
+      b: 0,
+      y: 0,
     });
 
     const factor = 2 ** (-alpha / 2);
@@ -36,6 +41,7 @@ export class HermiteProbabilistic extends SpecialFunction {
     const xPhy = this.math.divide(x, sqrt2);
 
     const yPhy = this.hermitePhysicist.calculate64({
+      ...initializeParams64(),
       alphaBig: params.alphaBig,
       xBig: xPhy.toString(),
       epsBig: params.epsBig,

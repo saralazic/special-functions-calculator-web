@@ -48,6 +48,7 @@ export class FunctionInputComponent implements OnInit {
   aInputLabel: string = '';
   bInputLabel: string = '';
   labelVariableConstrained: string = '';
+  labelVariableRealPositive: string = '';
   labelVariableLegendre: string = '';
   orderInputReal: IInput;
   orderInputNatural: IInput;
@@ -55,6 +56,7 @@ export class FunctionInputComponent implements OnInit {
   precisionInput: IInput;
   variableInput: IInput;
   variableInputConstrained: IInput;
+  variableRealPositive: IInput;
   variableInputLegendre: IInput;
   variableInputN0: IInput;
   aInput: IInput;
@@ -144,6 +146,15 @@ export class FunctionInputComponent implements OnInit {
 
     this.variableInputConstrained = {
       label: this.labelVariableConstrained,
+      formControlName: 'variableValue',
+      isInvalid:
+        "form.get('variableValue')?.invalid && form.get('variableValue')?.touched",
+      error: this.errorMessage,
+      inputType: InputType.VARIABLE,
+    };
+
+    this.variableRealPositive = {
+      label: this.labelVariableRealPositive,
       formControlName: 'variableValue',
       isInvalid:
         "form.get('variableValue')?.invalid && form.get('variableValue')?.touched",
@@ -455,6 +466,9 @@ export class FunctionInputComponent implements OnInit {
           this.variableInput,
         ];
         break;
+      case FunctionType.BETA:
+        this.inputs = [this.variableInput];
+        break;
       case FunctionType.LAGUERRE_POLYNOMIAL:
         this.inputs = [this.orderInputNatural, this.variableInput];
         break;
@@ -498,6 +512,14 @@ export class FunctionInputComponent implements OnInit {
         this.form.get('orderValue')?.setValue('1');
         this.form.get('precisionValue')?.setValue('1e-64');
         this.form.get('variableValue')?.setValue('0');
+        break;
+      case FunctionType.GAMA:
+        this.form.get('variableValue')?.setValue('0');
+        break;
+      case FunctionType.GAMA:
+        this.form.get('variableValue')?.setValue('0');
+        this.form.get('variableValue')?.setValue('0');
+
         break;
       case FunctionType.LAGUERRE_POLYNOMIAL:
         this.form.get('orderValue')?.setValue('1');

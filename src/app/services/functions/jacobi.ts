@@ -17,7 +17,8 @@ export class JacobiPolynomial extends SpecialFunction {
   }
 
   calculate(params: FunctionParamsForCalculation): number {
-    const { alpha, x } = params;
+    let { alpha, x } = params;
+    alpha = alpha ?? 0;
     const a = params.a ?? 0;
     const b = params.b ?? 0;
 
@@ -36,12 +37,7 @@ export class JacobiPolynomial extends SpecialFunction {
   }
 
   calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
-    const { alphaBig, xBig } = params;
-
-    const alpha = this.math.bignumber(alphaBig);
-    const x = this.math.bignumber(xBig);
-    const a = this.math.bignumber(params.a ?? '0');
-    const b = this.math.bignumber(params.b ?? '0');
+    const { alpha, x, a, b } = this.stringToBigNumber(params);
 
     const xPlus1 = this.math.add(x, BIG_NUMBER_CONSTANTS.ONE);
     const xMinus1 = this.math.subtract(x, BIG_NUMBER_CONSTANTS.ONE);

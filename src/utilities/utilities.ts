@@ -1,5 +1,5 @@
 import * as math from 'mathjs';
-import { BigNumber, MathType, multiply } from 'mathjs';
+import { BigNumber, exp, MathType, multiply } from 'mathjs';
 import * as Plotly from 'plotly.js-basic-dist';
 import { BesselFirstKind } from 'src/app/services/functions/besselFirst';
 import { ChebyshevPolynomialOfFirstKind } from 'src/app/services/functions/chebyshevFirst';
@@ -11,6 +11,7 @@ import { LaguerrePolynomial } from 'src/app/services/functions/laguerre';
 import { LegendrePolynomial } from 'src/app/services/functions/legendre';
 import {
   FunctionParamsForCalculation,
+  FunctionParamsForCalculationWithBigNumbers,
   SpecialFunction,
 } from 'src/app/services/functions/specialFunction';
 import { FunctionType } from '../app/models/enums';
@@ -288,4 +289,26 @@ function factorial_factor(n: BigNumber) {
     getE(),
     math_64.divide(1, math_64.multiply(12, n)) as BigNumber
   );
+}
+
+export function initializeParams(): FunctionParamsForCalculation {
+  return {
+    x: 0,
+    y: 0,
+    alpha: 0,
+    a: 0,
+    b: 0,
+    eps: 1e-64,
+  };
+}
+
+export function initializeParams64(): FunctionParamsForCalculationWithBigNumbers {
+  return {
+    xBig: '0',
+    yBig: '0',
+    alphaBig: '0',
+    a: '0',
+    b: '0',
+    epsBig: '1e-64',
+  };
 }

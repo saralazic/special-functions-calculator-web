@@ -38,10 +38,11 @@ export abstract class SpecialFunction {
   public stringToBigNumber(params: FunctionParamsForCalculationWithBigNumbers) {
     return {
       x: this.math.bignumber(params.xBig),
+      y: this.math.bignumber(params.yBig),
       alpha: this.math.bignumber(params.alphaBig),
-      eps: this.math.bignumber(
-        params.epsBig.length > 0 ? params.epsBig : '1e-64'
-      ),
+      eps: this.math.bignumber(params.epsBig ? params.epsBig : '1e-64'),
+      a: this.math.bignumber(params.a),
+      b: this.math.bignumber(params.b),
     };
   }
 }
@@ -53,17 +54,19 @@ export interface ISpecialFunctionTranslations {
 export interface FunctionParamsForCalculation {
   alpha: number;
   x: number;
+  y: number; // for beta
   eps: number;
-  a?: number;
-  b?: number;
+  a: number;
+  b: number;
 }
 
 export interface FunctionParamsForCalculationWithBigNumbers {
-  alphaBig: string;
+  alphaBig?: string;
   xBig: string;
+  yBig: string;
   epsBig: string;
-  a?: string;
-  b?: string;
+  a: string;
+  b: string;
 }
 
 export interface FunctionParams {

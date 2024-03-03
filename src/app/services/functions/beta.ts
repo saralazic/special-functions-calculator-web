@@ -1,0 +1,54 @@
+import { FunctionType } from '../../models/enums';
+import {
+  initializeParams,
+  initializeParams64,
+} from '../../../utilities/utilities';
+import {
+  FunctionParamsForCalculation,
+  FunctionParamsForCalculationWithBigNumbers,
+  SpecialFunction,
+} from './specialFunction';
+
+export class GammaFunction extends SpecialFunction {
+  constructor(private gamma = new GammaFunction()) {
+    super(FunctionType.GAMA);
+  }
+
+  calculate(params: FunctionParamsForCalculation): number {
+    const { x, y } = params;
+    return (
+      (this.gamma.calculate({ ...initializeParams(), x }) *
+        this.gamma.calculate({ ...initializeParams(), x: y })) /
+      this.gamma.calculate({ ...initializeParams(), x: x + y })
+    );
+  }
+
+  calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
+    const { x, y } = this.stringToBigNumber(params);
+
+    const Gx = this.math.bignumber(
+      this.gamma.calculate64({
+        ...initializeParams64(),
+        xBig: params.xBig,
+      })
+    );
+
+    const Gy = this.math.bignumber(
+      this.gamma.calculate64({
+        ...initializeParams64(),
+        xBig: params.yBig,
+      })
+    );
+
+    const Gxy = this.math.bignumber(
+      this.gamma.calculate64({
+        ...initializeParams64(),
+        xBig: this.math.add(x, y).toString(),
+      })
+    );
+
+    const mul = this.math.multiply(Gx, Gy);
+
+    return this.math.divide(mul, Gxy).toString();
+  }
+}
