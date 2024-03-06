@@ -21,23 +21,7 @@ export function bigNumberValidatorPositiveReal(
   }
 
   let k = math_64.bignumber(control.value);
-  if (!(Number(math_64.compare(k, BIG_NUMBER_CONSTANTS.ZERO)) > 0)) {
-    return { invalidBigNumber: true };
-  }
-
-  return null;
-}
-
-export function bigNumberValidatorPositiveR0(
-  control: AbstractControl
-): ValidationErrors | null {
-  const bigNumberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
-  if (control.value && !bigNumberRegex.test(control.value)) {
-    return { invalidBigNumber: true };
-  }
-
-  let k = math_64.bignumber(control.value);
-  if (!(Number(math_64.compare(k, BIG_NUMBER_CONSTANTS.ZERO)) >= 0)) {
+  if (!math_64.isPositive(k)) {
     return { invalidBigNumber: true };
   }
 

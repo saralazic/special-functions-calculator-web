@@ -81,7 +81,6 @@
     "aInputLabel": "Parameter alpha (real number greater than -1):",
     "bInputLabel": "Parameter beta (real number greater than -1):",
     "labelVariableRealPositive": "Variable (positive real)",
-    "labelVariablePositiveR0": "Variable (real greater than 0)",
     "errorMessage": "Please enter a valid value",
     "buttonBasicInformations": "Basic informations about this function",
     "buttonUseCalculatedValue": "Use this value",

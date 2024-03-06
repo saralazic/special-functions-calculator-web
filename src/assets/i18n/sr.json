@@ -81,7 +81,6 @@
     "aInputLabel": "Parametar alfa (realan broj veći od -1):",
     "bInputLabel": "Parametar beta (realan broj veći od -1):",
     "labelVariableRealPositive": "Promenljiva (pozitivan realan broj)",
-    "labelVariablePositiveR0": "Promenljiva (nenegativan realan broj)",
     "errorMessage": "Unesite validnu vrednost!",
     "buttonBasicInformations": "Osnovne informacije o ovoj funkciji",
     "buttonUseCalculatedValue": "Upotrebi ovu vrednost",

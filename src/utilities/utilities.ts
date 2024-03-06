@@ -209,9 +209,8 @@ export function checkIfBigNumberIsPrecision(value: string): boolean {
   const one = BIG_NUMBER_CONSTANTS.ONE;
 
   return (
-    Number(math_64.compare(valueNumber, zero)) > 0 &&
-    Number(math_64.compare(valueNumber, one)) < 0 &&
-    Number(math_64.compare(valueNumber, one)) > 0
+    Number(math.compare(valueNumber, zero)) > 0 &&
+    Number(math.compare(valueNumber, one)) < 0
   );
 }
 

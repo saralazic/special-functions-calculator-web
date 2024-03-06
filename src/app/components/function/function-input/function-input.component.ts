@@ -18,7 +18,6 @@ import {
   bigNumberValidatorForParams,
   bigNumberValidatorReal,
   bigNumberValidatorLegendre,
-  bigNumberValidatorPositiveR0,
   bigNumberValidatorPositiveReal,
 } from 'src/utilities/validators';
 
@@ -51,7 +50,6 @@ export class FunctionInputComponent implements OnInit {
   bInputLabel: string = '';
   labelVariableConstrained: string = '';
   labelVariableRealPositive: string = '';
-  labelVariablePositiveR0: string = '';
   labelVariableLegendre: string = '';
   orderInputReal: IInput;
   orderInputNatural: IInput;
@@ -61,7 +59,6 @@ export class FunctionInputComponent implements OnInit {
   variableInputConstrained: IInput;
   variableRealPositive: IInput;
   secondVariableInput: IInput;
-  variablePositiveR0: IInput;
   variableInputLegendre: IInput;
   variableInputN0: IInput;
   aInput: IInput;
@@ -173,15 +170,6 @@ export class FunctionInputComponent implements OnInit {
       inputType: InputType.SECOND_VARIABLE,
       isInvalid:
         "form.get('secondVariableValue')?.invalid && form.get('secondVariableValue')?.touched",
-    };
-
-    this.variablePositiveR0 = {
-      label: this.labelVariablePositiveR0,
-      formControlName: 'variableValue',
-      isInvalid:
-        "form.get('variableValue')?.invalid && form.get('variableValue')?.touched",
-      error: this.errorMessage,
-      inputType: InputType.VARIABLE,
     };
 
     this.variableInputLegendre = {
@@ -361,8 +349,8 @@ export class FunctionInputComponent implements OnInit {
       case FunctionType.GAMMA:
         this.form = this.formBuilder.group({
           variableValue: [
-            '0',
-            [Validators.required, bigNumberValidatorPositiveR0],
+            '1',
+            [Validators.required, bigNumberValidatorPositiveReal],
           ],
         });
         break;
@@ -458,10 +446,8 @@ export class FunctionInputComponent implements OnInit {
         this.aInputLabel = translations.input.aInputLabel;
         this.bInputLabel = translations.input.bInputLabel;
 
-        this.labelVariablePositiveR0 =
-          translations.input.labelVariablePositiveR0;
         this.labelVariableRealPositive =
-          translations.input.labelVariablePositiveR0;
+          translations.input.labelVariableRealPositive;
 
         this.basicInformationsLabel =
           translations.input.buttonBasicInformations;
@@ -507,9 +493,6 @@ export class FunctionInputComponent implements OnInit {
     this.variableInputN0.label = this.labelVariableN0;
     this.variableInputN0.error = this.errorMessage;
 
-    this.variablePositiveR0.label = this.labelVariablePositiveR0;
-    this.variablePositiveR0.error = this.errorMessage;
-
     this.variableRealPositive.label = this.labelVariableRealPositive;
     this.variableRealPositive.error = this.errorMessage;
 
@@ -527,7 +510,7 @@ export class FunctionInputComponent implements OnInit {
         ];
         break;
       case FunctionType.GAMMA:
-        this.inputs = [this.variablePositiveR0];
+        this.inputs = [this.variableRealPositive];
         break;
       case FunctionType.BETA:
         this.inputs = [this.variableRealPositive, this.secondVariableInput];

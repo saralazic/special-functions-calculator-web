@@ -37,12 +37,12 @@ export abstract class SpecialFunction {
 
   public stringToBigNumber(params: FunctionParamsForCalculationWithBigNumbers) {
     return {
-      x: this.math.bignumber(params.xBig),
-      y: this.math.bignumber(params.yBig),
-      alpha: this.math.bignumber(params.alphaBig),
+      x: this.math.bignumber(params.xBig ?? 0),
+      y: this.math.bignumber(params.yBig ?? '0'),
+      alpha: this.math.bignumber(params.alphaBig ?? '0'),
       eps: this.math.bignumber(params.epsBig ? params.epsBig : '1e-64'),
-      a: this.math.bignumber(params.a),
-      b: this.math.bignumber(params.b),
+      a: this.math.bignumber(params.a ?? '0'),
+      b: this.math.bignumber(params.b ?? '0'),
     };
   }
 }
