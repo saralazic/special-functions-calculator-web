@@ -24,12 +24,20 @@ export function factorial(n: number): number {
     return 1;
   }
 
-  if (Math.trunc(n) == n) return n * factorial(n - 1);
+  if (Math.trunc(n) == n) {
+    let result = 1;
+    for (let i = 2; i <= n; i++) {
+      result *= i;
+    }
+
+    return result;
+  }
 
   return math.number(stirling_factorial(math.bignumber(n)) as BigNumber);
 }
 
 export function binomialCoefficient(n: number, k: number): number {
+  if (k < 0 || k > n) return 0;
   if (k === 0) return 1;
 
   const den = factorial(k) * factorial(n - k);
