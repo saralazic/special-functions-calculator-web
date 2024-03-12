@@ -16,8 +16,9 @@ import {
   bigNumberValidatorConstrained,
   bigNumberValidatorN0,
   bigNumberValidatorForParams,
-  bigNumberValidator,
+  bigNumberValidatorReal,
   bigNumberValidatorLegendre,
+  bigNumberValidatorPositiveReal,
 } from 'src/utilities/validators';
 
 @Component({
@@ -48,6 +49,7 @@ export class FunctionInputComponent implements OnInit {
   aInputLabel: string = '';
   bInputLabel: string = '';
   labelVariableConstrained: string = '';
+  labelVariableRealPositive: string = '';
   labelVariableLegendre: string = '';
   orderInputReal: IInput;
   orderInputNatural: IInput;
@@ -55,6 +57,8 @@ export class FunctionInputComponent implements OnInit {
   precisionInput: IInput;
   variableInput: IInput;
   variableInputConstrained: IInput;
+  variableRealPositive: IInput;
+  secondVariableInput: IInput;
   variableInputLegendre: IInput;
   variableInputN0: IInput;
   aInput: IInput;
@@ -151,6 +155,23 @@ export class FunctionInputComponent implements OnInit {
       inputType: InputType.VARIABLE,
     };
 
+    this.variableRealPositive = {
+      label: this.labelVariableRealPositive,
+      formControlName: 'variableValue',
+      isInvalid:
+        "form.get('variableValue')?.invalid && form.get('variableValue')?.touched",
+      error: this.errorMessage,
+      inputType: InputType.VARIABLE,
+    };
+
+    this.secondVariableInput = {
+      ...this.variableRealPositive,
+      formControlName: 'secondVariableValue',
+      inputType: InputType.SECOND_VARIABLE,
+      isInvalid:
+        "form.get('secondVariableValue')?.invalid && form.get('secondVariableValue')?.touched",
+    };
+
     this.variableInputLegendre = {
       label: this.labelVariableLegendre,
       formControlName: 'variableValue',
@@ -212,6 +233,8 @@ export class FunctionInputComponent implements OnInit {
       const orderValue = this.form.get('orderValue')?.value || '0';
       const precisionValue = this.form.get('precisionValue')?.value || '1e-64';
       const variableValue = this.form.get('variableValue')?.value || '0';
+      const secondVariableValue =
+        this.form.get('secondVariableValue')?.value || '0';
       const paramAlpha = this.form.get('aParameterValue')?.value || '0';
       const paramBeta = this.form.get('bParameterValue')?.value || '0';
 
@@ -220,6 +243,7 @@ export class FunctionInputComponent implements OnInit {
         alphaBig: orderValue,
         epsBig: precisionValue,
         xBig: variableValue,
+        yBig: secondVariableValue,
         a: paramAlpha,
         b: paramBeta,
       } as FunctionParamsForCalculationWithBigNumbers;
@@ -228,6 +252,7 @@ export class FunctionInputComponent implements OnInit {
       const paramsR = {
         alpha: +orderValue,
         eps: +precisionValue,
+        y: +secondVariableValue,
         x: +variableValue,
         a: +paramAlpha,
         b: +paramBeta,
@@ -274,6 +299,10 @@ export class FunctionInputComponent implements OnInit {
         controlName = 'bParameterValue';
         break;
       }
+      case InputType.SECOND_VARIABLE: {
+        controlName = 'secondVariableValue';
+        break;
+      }
       case InputType.VARIABLE:
       default: {
         controlName = 'variableValue';
@@ -312,21 +341,39 @@ export class FunctionInputComponent implements OnInit {
   createForm() {
     switch (this.parameter) {
       case FunctionType.BESSEL_FIRST_KIND:
-      case FunctionType.BESSEL_SECOND_KIND:
-      case FunctionType.BESSEL_THIRD_KIND:
         this.form = this.formBuilder.group({
           orderValue: ['1', [Validators.required, bigNumberValidatorNatural]],
           precisionValue: [
             '1e-64',
             [Validators.required, bigNumberValidatorForPrecision],
           ],
-          variableValue: ['0', [Validators.required, bigNumberValidator]],
+          variableValue: ['0', [Validators.required, bigNumberValidatorReal]],
+        });
+        break;
+      case FunctionType.GAMMA:
+        this.form = this.formBuilder.group({
+          variableValue: [
+            '1',
+            [Validators.required, bigNumberValidatorPositiveReal],
+          ],
+        });
+        break;
+      case FunctionType.BETA:
+        this.form = this.formBuilder.group({
+          variableValue: [
+            '1',
+            [Validators.required, bigNumberValidatorPositiveReal],
+          ],
+          secondVariableValue: [
+            '1',
+            [Validators.required, bigNumberValidatorPositiveReal],
+          ],
         });
         break;
       case FunctionType.LAGUERRE_POLYNOMIAL:
         this.form = this.formBuilder.group({
           orderValue: ['1', [Validators.required, bigNumberValidatorNatural]],
-          variableValue: ['0', [Validators.required, bigNumberValidator]],
+          variableValue: ['0', [Validators.required, bigNumberValidatorReal]],
         });
         break;
       case FunctionType.LEGENDRE_POLYNOMIAL:
@@ -352,7 +399,7 @@ export class FunctionInputComponent implements OnInit {
       case FunctionType.HERMITE_PROBABILISTIC:
         this.form = this.formBuilder.group({
           orderValue: ['0', [Validators.required, bigNumberValidatorN0]],
-          variableValue: ['0', [Validators.required, bigNumberValidator]],
+          variableValue: ['0', [Validators.required, bigNumberValidatorReal]],
         });
         break;
       case FunctionType.JACOBI_POLYNOMIAL:
@@ -379,7 +426,7 @@ export class FunctionInputComponent implements OnInit {
             '1e-64',
             [Validators.required, bigNumberValidatorForPrecision],
           ],
-          variableValue: ['0', [Validators.required, bigNumberValidator]],
+          variableValue: ['0', [Validators.required, bigNumberValidatorReal]],
         });
         break;
     }
@@ -402,6 +449,9 @@ export class FunctionInputComponent implements OnInit {
         this.errorMessage = translations.input.errorMessage;
         this.aInputLabel = translations.input.aInputLabel;
         this.bInputLabel = translations.input.bInputLabel;
+
+        this.labelVariableRealPositive =
+          translations.input.labelVariableRealPositive;
 
         this.basicInformationsLabel =
           translations.input.buttonBasicInformations;
@@ -446,18 +496,28 @@ export class FunctionInputComponent implements OnInit {
 
     this.variableInputN0.label = this.labelVariableN0;
     this.variableInputN0.error = this.errorMessage;
+
+    this.variableRealPositive.label = this.labelVariableRealPositive;
+    this.variableRealPositive.error = this.errorMessage;
+
+    this.secondVariableInput.label = this.labelVariableRealPositive;
+    this.secondVariableInput.error = this.errorMessage;
   }
 
   assignInput() {
     switch (this.parameter) {
       case FunctionType.BESSEL_FIRST_KIND:
-      case FunctionType.BESSEL_SECOND_KIND:
-      case FunctionType.BESSEL_THIRD_KIND:
         this.inputs = [
           this.orderInputNatural,
           this.precisionInput,
           this.variableInput,
         ];
+        break;
+      case FunctionType.GAMMA:
+        this.inputs = [this.variableRealPositive];
+        break;
+      case FunctionType.BETA:
+        this.inputs = [this.variableRealPositive, this.secondVariableInput];
         break;
       case FunctionType.LAGUERRE_POLYNOMIAL:
         this.inputs = [this.orderInputNatural, this.variableInput];
@@ -499,11 +559,16 @@ export class FunctionInputComponent implements OnInit {
   private resetFormToInitialValues() {
     switch (this.parameter) {
       case FunctionType.BESSEL_FIRST_KIND:
-      case FunctionType.BESSEL_SECOND_KIND:
-      case FunctionType.BESSEL_THIRD_KIND:
         this.form.get('orderValue')?.setValue('1');
         this.form.get('precisionValue')?.setValue('1e-64');
         this.form.get('variableValue')?.setValue('0');
+        break;
+      case FunctionType.GAMMA:
+        this.form.get('variableValue')?.setValue('0');
+        break;
+      case FunctionType.BETA:
+        this.form.get('variableValue')?.setValue('1');
+        this.form.get('secondVariableValue')?.setValue('1');
         break;
       case FunctionType.LAGUERRE_POLYNOMIAL:
         this.form.get('orderValue')?.setValue('1');

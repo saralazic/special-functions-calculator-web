@@ -1,26 +1,28 @@
 .app-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: 770px; 
+  height: 770px;
 }
 
-.left-content   {
+.left-content {
   display: flex;
   justify-content: center;
+  position: relative; /* Make it relative to enable positioning */
+  overflow: hidden; /* Hide overflowing image */
 }
 
-.left-content  img {
-  max-width: 50%;
+.left-content img {
+  max-width: 100%; /* Make the image responsive */
   height: auto;
   position: absolute;
-  bottom: 70px;
+  bottom: 0;
+  transition: opacity 0.5s; /* Add a transition for smooth fading */
 }
 
-
-.inner{
-  width:400px;
+.inner {
+  max-width: 90%;
   text-align: center;
-  justify-content: center;
+  font-size: calc(13px + 1vw);
 }
 
 .right-content {
@@ -29,4 +31,18 @@
   align-items: center;
   vertical-align: center;
   text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  /* Adjust grid layout for smaller screens */
+  .app-container {
+    grid-template-columns: 1fr; /* Display in a single column */
+  }
+
+  .left-content img {
+    max-height: 100%; /* Make image responsive to height */
+    width: auto;
+    bottom: auto;
+    opacity: 1; /* Ensure image is visible on smaller screens */
+  }
 }

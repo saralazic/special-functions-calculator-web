@@ -8,8 +8,6 @@ import {
 } from './specialFunction';
 
 export class LegendrePolynomial extends SpecialFunction {
-  math = math_64;
-
   constructor() {
     super(FunctionType.LEGENDRE_POLYNOMIAL);
   }
@@ -37,10 +35,7 @@ export class LegendrePolynomial extends SpecialFunction {
   }
 
   calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
-    const { alphaBig, xBig } = params;
-
-    const alpha = this.math.bignumber(alphaBig);
-    const x = this.math.bignumber(xBig);
+    const { alpha, x } = this.stringToBigNumber(params);
 
     const xMinus1 = this.math.subtract(x, BIG_NUMBER_CONSTANTS.ONE);
     const xPlus1 = this.math.add(x, BIG_NUMBER_CONSTANTS.ONE);

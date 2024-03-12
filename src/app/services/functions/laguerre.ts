@@ -8,8 +8,6 @@ import {
 } from './specialFunction';
 
 export class LaguerrePolynomial extends SpecialFunction {
-  math = math_64;
-
   constructor() {
     super(FunctionType.LAGUERRE_POLYNOMIAL);
   }
@@ -33,10 +31,7 @@ export class LaguerrePolynomial extends SpecialFunction {
   }
 
   calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
-    const { alphaBig, xBig } = params;
-
-    const alpha = this.math.bignumber(alphaBig),
-      x = this.math.bignumber(xBig);
+    const { alpha, x } = this.stringToBigNumber(params);
 
     const alphaPlus1 = this.math.add(alpha, BIG_NUMBER_CONSTANTS.ONE);
 
