@@ -19,23 +19,21 @@ import {
 import { FunctionType } from '../app/models/enums';
 import { BIG_NUMBER_CONSTANTS, math_64 } from './big_numbers_math';
 
+// factorial for natural numbers
 export function factorial(n: number): number {
   if (n === 0 || n === 1) {
     return 1;
   }
 
-  if (Math.trunc(n) == n) {
-    let result = 1;
-    for (let i = 2; i <= n; i++) {
-      result *= i;
-    }
-
-    return result;
+  let result = 1;
+  for (let i = 2; i <= n; i++) {
+    result *= i;
   }
 
-  return math.number(stirling_factorial(math.bignumber(n)) as BigNumber);
+  return result;
 }
 
+// binomialCoefficient for natural numbers
 export function binomialCoefficient(n: number, k: number): number {
   if (k < 0 || k > n) return 0;
   if (k === 0) return 1;
@@ -48,11 +46,11 @@ export function binomialCoefficient64(n: BigNumber, k: BigNumber): BigNumber {
   if (k === BIG_NUMBER_CONSTANTS.ZERO) return BIG_NUMBER_CONSTANTS.ONE;
 
   const den = math_64.multiply(
-    stirling_factorial(k),
-    stirling_factorial(math_64.subtract(n, k))
+    math_64.factorial(k),
+    math_64.factorial(math_64.subtract(n, k))
   );
 
-  return math_64.divide(stirling_factorial(n), den) as BigNumber;
+  return math_64.divide(math_64.factorial(n), den) as BigNumber;
 }
 
 export function drawGraph(
@@ -266,64 +264,6 @@ export function generateCoordinates(
   const yArr = xArr.map((x) => spef?.calculate({ ...data, x: x }) ?? 0);
 
   return { xArr, yArr };
-}
-
-/** This is the most accurate approximation I managed to implement
- * since BigMath doesn't have
- * Previously I tried Ramanujan, Stirling, Zhen-Hang Yang
- * Used aproximation: https://sci-hub.se/https://link.springer.com/article/10.1007/s11139-013-9494-y
- */
-
-export function gamma64(alpha: math.BigNumber): MathType {
-  if (math_64.isInteger(alpha)) {
-    return math_64.gamma(alpha);
-  }
-
-  return stirling_factorial(math_64.subtract(alpha, 1) as BigNumber);
-}
-
-function stirling_factorial(n: BigNumber): MathType {
-  if (n.isInteger()) {
-    return math_64.factorial(n);
-  }
-
-  let mul = math_64.multiply(2, getPi());
-  mul = math_64.multiply(n, mul);
-  const sqrt_2pi_n = math_64.sqrt(mul as BigNumber);
-  let ndivE = math_64.divide(n, getE());
-  let pow_n_over_e = math_64.pow(ndivE, n);
-
-  const result = math_64.multiply(sqrt_2pi_n, pow_n_over_e);
-  return math_64.multiply(result, factorial_factor(n));
-}
-
-function factorial_factor(n: BigNumber) {
-  if (math_64.number(n) >= 2) {
-    let res = BIG_NUMBER_CONSTANTS.ONE;
-    res = math_64.add(res, math_64.multiply(2, n)) as BigNumber;
-    res = math_64.add(
-      res,
-      math_64.divide(1, math_64.multiply(8, math_64.pow(n, 2)))
-    ) as BigNumber;
-    res = math_64.add(
-      res,
-      math_64.divide(1, math_64.multiply(240, math_64.pow(n, 3)))
-    ) as BigNumber;
-    res = math_64.subtract(
-      res,
-      math_64.divide(11, math_64.multiply(1920, math_64.pow(n, 4)))
-    ) as BigNumber;
-    res = math_64.add(
-      res,
-      math_64.divide(79, math_64.multiply(26880, math_64.pow(n, 5)))
-    ) as BigNumber;
-
-    return math_64.pow(res, math.bignumber(1 / 6));
-  }
-  return math_64.pow(
-    getE(),
-    math_64.divide(1, math_64.multiply(12, n)) as BigNumber
-  );
 }
 
 export function initializeParams(): FunctionParamsForCalculation {

@@ -1,7 +1,8 @@
-import * as math from 'mathjs';
-import { BIG_NUMBER_CONSTANTS, math_64 } from 'src/utilities/big_numbers_math';
+import { BigNumber } from 'mathjs';
+import { BIG_NUMBER_CONSTANTS } from 'src/utilities/big_numbers_math';
+import { initializeParams64 } from 'src/utilities/utilities';
 import { FunctionType } from '../../models/enums';
-import { gamma64 } from '../../../utilities/utilities';
+import { GammaFunction } from './gamma';
 import {
   FunctionParamsForCalculation,
   FunctionParamsForCalculationWithBigNumbers,
@@ -9,7 +10,7 @@ import {
 } from './specialFunction';
 
 export class BesselFirstKind extends SpecialFunction {
-  constructor() {
+  constructor(private gamma = new GammaFunction()) {
     super(FunctionType.BESSEL_FIRST_KIND);
   }
 
@@ -29,7 +30,7 @@ export class BesselFirstKind extends SpecialFunction {
     let gammaPrevious: number;
     let R: number;
 
-    for (let m = 1; math.abs(t / sum) > eps; m++) {
+    for (let m = 1; this.math.abs(t / sum) > eps; m++) {
       gammaPrevious = gammaCurrent;
 
       gammaArg += 1;
@@ -46,7 +47,7 @@ export class BesselFirstKind extends SpecialFunction {
     const { alpha, x, eps } = this.stringToBigNumber(params);
 
     let gammaArg = this.math.add(alpha, BIG_NUMBER_CONSTANTS.ONE);
-    let gammaCurrent = gamma64(gammaArg);
+    let gammaCurrent = this.calculateGamma64(gammaArg);
 
     const xHalf = this.math.divide(x, BIG_NUMBER_CONSTANTS.TWO);
     const xHalfSqr = this.math.pow(xHalf, BIG_NUMBER_CONSTANTS.TWO);
@@ -68,7 +69,7 @@ export class BesselFirstKind extends SpecialFunction {
       gammaPrevious = gammaCurrent;
 
       gammaArg = this.math.add(gammaArg, BIG_NUMBER_CONSTANTS.ONE);
-      gammaCurrent = gamma64(gammaArg);
+      gammaCurrent = this.calculateGamma64(gammaArg);
 
       R = this.math.divide(gammaPrevious, gammaCurrent);
       R = this.math.multiply(R, xHalfSqr);
@@ -80,5 +81,15 @@ export class BesselFirstKind extends SpecialFunction {
     }
 
     return sum.toString();
+  }
+
+  // helper wrapper function
+  private calculateGamma64(x: BigNumber): BigNumber {
+    return this.math.bignumber(
+      this.gamma.calculate64({
+        ...initializeParams64(),
+        xBig: x.toString(),
+      })
+    );
   }
 }
