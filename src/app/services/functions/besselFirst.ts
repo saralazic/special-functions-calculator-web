@@ -17,9 +17,6 @@ export class BesselFirstKind extends SpecialFunction {
     const { alpha, x } = params;
     const eps: number = params.eps ?? 10 ** -15;
 
-    // console.log('x: ' + x);
-    // console.log('alpha: ' + alpha);
-
     const xHalf = x / 2.0;
     const xHalfSqr = xHalf ** 2;
 

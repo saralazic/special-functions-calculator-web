@@ -9,85 +9,99 @@ import {
 import { BigNumber } from 'mathjs';
 
 export class GammaFunction extends SpecialFunction {
-  constructor() {
+  private n: number;
+  private g: number;
+
+  private B: BigNumber[][];
+  private C: BigNumber[][];
+  private D: BigNumber[][];
+  private F: BigNumber[][];
+
+  constructor(n?: number, g?: number) {
     super(FunctionType.GAMMA);
+
+    //49 digits
+    this.n = n ?? 13;
+    this.g = g ?? 13.144565; // 6.024680040776729583740234375;
+
+    this.B = this.populateMatrixB();
+    this.C = this.populateMatrixC();
+    this.D = this.populateMatrixD();
+    this.F = this.populateVectorF();
   }
 
   calculate(params: FunctionParamsForCalculation): number {
-    const { x } = params;
-    return 0;
+    let { x } = params;
+
+    x--;
+
+    // P = B * C * D * F
+    let P = this.math.multiply(this.D, this.B);
+    P = this.math.multiply(P, this.C);
+    P = this.math.multiply(P, this.F);
+    const vectorZ: BigNumber[] = this.populateVectorZ(this.math.bignumber(x));
+    let R = this.math.multiply(vectorZ, P);
+
+    let lnZP = this.math.log(R[0]);
+
+    let r = x + 0.5 + this.g;
+
+    const logGx = lnZP.toNumber() + (x + 0.5) * this.math.log(r) - r;
+
+    return this.math.exp(logGx);
   }
 
   calculate64(params: FunctionParamsForCalculationWithBigNumbers): string {
     let { x } = this.stringToBigNumber(params);
 
+    console.log(x.toString());
+
     x = this.math.subtract(x, BIG_NUMBER_CONSTANTS.ONE);
 
-    const n = 17;
-    const g = 12.2252227365970611572265625;
+    let P = this.math.multiply(this.D, this.B);
+    P = this.math.multiply(P, this.C);
+    P = this.math.multiply(P, this.F);
 
-    // if (this.math.isInteger(x)) {
-    //   return this.naturalFactorial(
-    //     this.math.subtract(x, BIG_NUMBER_CONSTANTS.ONE)
-    //   ).toString();
-    // }
-
-    const B = this.populateMatrixB(n);
-    const C = this.populateMatrixC(n);
-    const D = this.populateMatrixD(n);
-    const F = this.populateVectorF(n, g);
-
-    let P = this.math.multiply(D, B);
-
-    P = this.math.multiply(P, C);
-
-    P = this.math.multiply(P, F);
-
-    //  console.log(P.toString());
-
-    const vectorZ: BigNumber[] = this.populateVectorZ(x, n);
-
-    console.log('Vector Z: ' + vectorZ.toString());
+    const vectorZ: BigNumber[] = this.populateVectorZ(x);
 
     let R = this.math.multiply(vectorZ, P);
 
     let lnZP = this.math.log(R[0]);
 
-    console.log('lnZP: ' + lnZP);
+    let xPlusHalf = this.math.add(x, this.math.bignumber(0.5)); // x+0.5
+    let t = this.math.add(xPlusHalf, this.math.bignumber(this.g)); // x+0.5+g
 
-    let xPlusHalf = this.math.add(x, this.math.bignumber(0.5));
-    let t = this.math.add(xPlusHalf, this.math.bignumber(g));
+    let t1 = this.math.multiply(xPlusHalf, this.math.log(t)); // (x+0.5)* log(x+0.5+g)
 
-    let t1 = this.math.multiply(xPlusHalf, this.math.log(t));
-
-    const logGx = this.math.subtract(this.math.add(lnZP, t1), t);
+    // ln(Z*P) + (x+0.5)*ln(x+g+0.5)-(x+g+0.5)
+    let logGx = this.math.add(lnZP, t1);
+    logGx = this.math.subtract(logGx, t);
 
     const Gx = this.math.exp(logGx as BigNumber);
-
-    console.log('Log 8');
 
     return Gx.toString();
   }
 
-  private populateVectorZ(x: BigNumber, n: number): BigNumber[] {
+  private populateVectorZ(x: BigNumber): BigNumber[] {
     const vectorZ: BigNumber[] = [];
     vectorZ[0] = BIG_NUMBER_CONSTANTS.ONE;
-    for (let i = 1; i < n; i++) {
+
+    for (let i = 1; i < this.n; i++) {
       vectorZ[i] = this.math.divide(
         BIG_NUMBER_CONSTANTS.ONE,
-        this.math.add(x, this.math.bignumber(i))
+        this.math.add(x, i)
       ) as BigNumber;
     }
 
     return vectorZ;
   }
 
-  private populateMatrixB(n: number): BigNumber[][] {
+  private populateMatrixB(): BigNumber[][] {
     const B: number[][] = [];
 
-    for (let i = 0; i < n; i++) {
+    for (let i = 0; i < this.n; i++) {
       B[i] = [];
-      for (let j = 0; j < n; j++) {
+      for (let j = 0; j < this.n; j++) {
         let factor = (i + j) & 1 ? -1 : 1; //(-1)^(j-i)
         B[i][j] =
           i === 0
@@ -100,12 +114,12 @@ export class GammaFunction extends SpecialFunction {
     return this.convertNumberMatrixToBigNumber(B);
   }
 
-  private populateMatrixC(n: number): BigNumber[][] {
+  private populateMatrixC(): BigNumber[][] {
     const C: number[][] = [];
 
-    for (let i = 0; i < n; i++) {
+    for (let i = 0; i < this.n; i++) {
       C[i] = [];
-      for (let j = 0; j < n; j++) {
+      for (let j = 0; j < this.n; j++) {
         C[i][j] =
           i === 0 && j === 0
             ? 0.5
@@ -117,16 +131,16 @@ export class GammaFunction extends SpecialFunction {
     return this.convertNumberMatrixToBigNumber(C);
   }
 
-  private populateMatrixD(n: number): BigNumber[][] {
+  private populateMatrixD(): BigNumber[][] {
     const D: BigNumber[][] = [];
 
-    for (let i = 0; i < n; i++) {
-      D[i] = new Array(n).fill(BIG_NUMBER_CONSTANTS.ZERO);
+    for (let i = 0; i < this.n; i++) {
+      D[i] = new Array(this.n).fill(BIG_NUMBER_CONSTANTS.ZERO);
     }
 
     D[0][0] = BIG_NUMBER_CONSTANTS.ONE;
     D[1][1] = this.math.unaryMinus(BIG_NUMBER_CONSTANTS.ONE);
-    for (let i = 2; i < n; i++) {
+    for (let i = 2; i < this.n; i++) {
       D[i][i] = this.math.multiply(
         D[i - 1][i - 1],
         this.math.divide(
@@ -139,11 +153,11 @@ export class GammaFunction extends SpecialFunction {
     return D;
   }
 
-  private populateVectorF(n: number, g: number): BigNumber[][] {
+  private populateVectorF(): BigNumber[][] {
     const F: BigNumber[][] = [];
 
-    for (let i = 0; i < n; i++) {
-      let t1 = this.math.exp(this.math.bignumber(i + g + 0.5));
+    for (let i = 0; i < this.n; i++) {
+      let t1 = this.math.exp(this.math.bignumber(i + this.g + 0.5));
       t1 = this.math.multiply(
         t1,
         this.math.bignumber(factorial(2 * i))
@@ -156,7 +170,7 @@ export class GammaFunction extends SpecialFunction {
       t2 = this.math.multiply(
         t2,
         this.math.pow(
-          this.math.bignumber(g + i + 0.5),
+          this.math.bignumber(this.g + i + 0.5),
           this.math.bignumber(i + 0.5)
         )
       );
@@ -167,55 +181,18 @@ export class GammaFunction extends SpecialFunction {
   }
 
   private calculateSumForCMatrix(i: number, j: number) {
-    let factor = (i + j) & 1 ? -1 : 1; //(-1)^(j-i)
+    const factor = (i + j) & 1 ? -1 : 1; //(-1)^(j-i)
 
     let sum = 0,
       t = 0;
-    for (let k = 0; k < i; k++) {
-      t = binomialCoefficient(2 * i, 2 * k) * binomialCoefficient(k, k + i - j);
+    for (let k = 0; k <= i; k++) {
+      t = binomialCoefficient(2 * i, 2 * k) * binomialCoefficient(k, k + j - i);
       sum += t;
     }
     return factor * sum;
   }
 
-  private naturalFactorial(n: BigNumber): BigNumber {
-    if (n.isZero()) return BIG_NUMBER_CONSTANTS.ONE;
-    const nMinus1 = this.math.subtract(n, BIG_NUMBER_CONSTANTS.ONE);
-    const fprev = this.naturalFactorial(nMinus1 as BigNumber);
-    return this.math.multiply(n, fprev) as BigNumber;
-  }
-
   private convertNumberMatrixToBigNumber(matrix: number[][]): BigNumber[][] {
     return matrix.map((row) => row.map((cell) => this.math.bignumber(cell)));
-  }
-
-  private convertBigNumberMatrixToNumber(matrix: BigNumber[][]): number[][] {
-    return matrix.map((row) => row.map((cell) => cell.toNumber()));
-  }
-
-  private hasNaN(matrix: any[][]): boolean {
-    let i = 0,
-      j = 0;
-    for (let row of matrix) {
-      j = 0;
-      for (let element of row) {
-        if (isNaN(element)) {
-          console.log('i,j: ' + i + ', ' + j);
-          return true; // If any element is NaN, return true
-        }
-        j++;
-      }
-      i++;
-    }
-    return false; // If no element is NaN, return false
-  }
-
-  private roundToZeroIfSmall(x: BigNumber): BigNumber {
-    const threshold = this.math.bignumber(1e-64);
-    if (this.math.abs(x).lt(threshold)) {
-      return BIG_NUMBER_CONSTANTS.ZERO;
-    } else {
-      return x;
-    }
   }
 }

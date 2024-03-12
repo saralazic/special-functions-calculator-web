@@ -233,6 +233,8 @@ export class FunctionInputComponent implements OnInit {
       const orderValue = this.form.get('orderValue')?.value || '0';
       const precisionValue = this.form.get('precisionValue')?.value || '1e-64';
       const variableValue = this.form.get('variableValue')?.value || '0';
+      const secondVariableValue =
+        this.form.get('secondVariableValue')?.value || '0';
       const paramAlpha = this.form.get('aParameterValue')?.value || '0';
       const paramBeta = this.form.get('bParameterValue')?.value || '0';
 
@@ -241,6 +243,7 @@ export class FunctionInputComponent implements OnInit {
         alphaBig: orderValue,
         epsBig: precisionValue,
         xBig: variableValue,
+        yBig: secondVariableValue,
         a: paramAlpha,
         b: paramBeta,
       } as FunctionParamsForCalculationWithBigNumbers;
@@ -249,6 +252,7 @@ export class FunctionInputComponent implements OnInit {
       const paramsR = {
         alpha: +orderValue,
         eps: +precisionValue,
+        y: +secondVariableValue,
         x: +variableValue,
         a: +paramAlpha,
         b: +paramBeta,

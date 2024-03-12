@@ -37,7 +37,7 @@ export abstract class SpecialFunction {
 
   public stringToBigNumber(params: FunctionParamsForCalculationWithBigNumbers) {
     return {
-      x: this.math.bignumber(params.xBig ?? 0),
+      x: this.math.bignumber(params.xBig ?? '0'),
       y: this.math.bignumber(params.yBig ?? '0'),
       alpha: this.math.bignumber(params.alphaBig ?? '0'),
       eps: this.math.bignumber(params.epsBig ? params.epsBig : '1e-64'),

@@ -240,8 +240,22 @@ export function generateCoordinates(
     parameter === FunctionType.CHEBYSHEV_SECOND_KIND ||
     parameter === FunctionType.JACOBI_POLYNOMIAL;
 
-  startValue = drawFullDomain ? -0.999999 : data.x - 3;
-  endValue = drawFullDomain ? 0.999999 : data.x + 3;
+  const betaAndGama =
+    parameter === FunctionType.GAMMA || parameter === FunctionType.BETA;
+
+  startValue = drawFullDomain
+    ? -0.999999
+    : betaAndGama
+    ? data.x - 2
+    : data.x - 3;
+  endValue = drawFullDomain ? 0.999999 : betaAndGama ? data.x + 2 : data.x + 3;
+
+  if (parameter === FunctionType.GAMMA || parameter === FunctionType.BETA) {
+    if (startValue < 1) {
+      startValue = 0.05;
+      endValue = 4.0000001;
+    }
+  }
 
   const step: number = (endValue - startValue) / (numParameters - 1);
   const xArr: number[] = Array.from(

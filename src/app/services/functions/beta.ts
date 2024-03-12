@@ -30,14 +30,14 @@ export class BetaFunction extends SpecialFunction {
     const Gx = this.math.bignumber(
       this.gamma.calculate64({
         ...initializeParams64(),
-        xBig: params.xBig,
+        xBig: x.toString(),
       })
     );
 
     const Gy = this.math.bignumber(
       this.gamma.calculate64({
         ...initializeParams64(),
-        xBig: params.yBig,
+        xBig: y.toString(),
       })
     );
 
