@@ -1,3 +1,9 @@
+.small-sup {
+	font-size: 0.2em; /* Adjust this value as needed */
+	vertical-align: super;
+
+}
+
 .table {
 	width: 500px;
 	display: flex;

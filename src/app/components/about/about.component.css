@@ -23,6 +23,7 @@
   max-width: 90%;
   text-align: center;
   font-size: calc(13px + 1vw);
+  margin-top: -30px;
 }
 
 .right-content {
@@ -31,6 +32,7 @@
   align-items: center;
   vertical-align: center;
   text-align: center;
+
 }
 
 @media screen and (max-width: 768px) {
