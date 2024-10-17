@@ -20,10 +20,9 @@ export class GammaFunction extends SpecialFunction {
   constructor(n?: number, g?: number) {
     super(FunctionType.GAMMA);
 
-    //49 digits
+    //50 digits
     this.n = n ?? 13;
-    this.g = g ?? 13.144565; // 6.024680040776729583740234375;
-
+    this.g = g ?? 13.144565;
     this.B = this.populateMatrixB();
     this.C = this.populateMatrixC();
     this.D = this.populateMatrixD();

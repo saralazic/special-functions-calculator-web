@@ -14,8 +14,8 @@
             <div style="display: flex; justify-content: center;">
                 <img src="{{ domainUrl }}" alt="Domain" [style.max-width.%]="styleDomain" style="max-width: 100%; height: auto;">
             </div>
-            <h3>{{equation}}:</h3>
-            <div style="display: flex; justify-content: center;"> 
+            <h3  *ngIf = "showEquation">{{equation}}:</h3>
+            <div  *ngIf = "showEquation" style="display: flex; justify-content: center;"> 
                 <img src="{{ equationUrl }}" alt="Equation" [style.max-width.%]="styleEqu" style="max-width: 100%; height: auto;">
             </div>
             <h3>{{relations}}:</h3>

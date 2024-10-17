@@ -1,7 +1,7 @@
 
 .content {
   display: flex;
-  margin: 82px auto 32px;
+  margin: 72px auto 32px;
   padding: 0 16px;
   max-width: 960px;
   flex-direction: column;
@@ -9,7 +9,7 @@
 }
 
 svg.material-icons {
-  height: 24px;
+  height: 30px;
   width: auto;
 }
 
@@ -22,9 +22,9 @@ svg.material-icons:not(:last-child) {
   border-radius: 4px;
   border: 1px solid var(--footer-gray);
   background-color: var(--card-light-gray);
-  height: 40px;
-  width: 200px;
-  margin: 0 8px 16px;
+  height: 45px;
+  width: 250px;
+  margin: 0 16px 16px;
   padding: 16px;
   display: flex;
   flex-direction: row;
@@ -32,6 +32,7 @@ svg.material-icons:not(:last-child) {
   align-items: center;
   transition: all 0.2s ease-in-out;
   line-height: 24px;
+  font-size: 18px;
 }
 
 .card-container {
@@ -46,8 +47,8 @@ svg.material-icons:not(:last-child) {
 }
 
 .card.card-small {
-  height: 16px;
-  width: 168px;
+  height: 20px;
+  width: 200px;
 }
 
 .card-container .card:not(.highlight-card) {
@@ -69,7 +70,7 @@ svg.material-icons:not(:last-child) {
   font-weight: 600;
   border: none;
   width: auto;
-  min-width: 30%;
+  min-width: 50%;
   position: relative;
 }
 
@@ -78,7 +79,7 @@ svg.material-icons:not(:last-child) {
 }
 
 #rocket {
-  width: 80px;
+  width: 95px;
   position: absolute;
   left: -15px;
   top: -10px;
@@ -93,7 +94,7 @@ a:hover {
   color: var(--hover-red);
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 1067px) {
   .card-container > *:not(.circle-link) {
     height: 16px;
     margin: 8px 0;

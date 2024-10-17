@@ -21,6 +21,7 @@ export class FunctionInformationComponent {
   domainUrl: string = '';
   relationsUrl: string[] = [];
   equationUrl: string = '';
+  showEquation: boolean = false;
 
   styleDef: number = 0;
   styleDomain: number = 0;
@@ -43,6 +44,10 @@ export class FunctionInformationComponent {
 
   ngOnInit(): void {
     this.parameter = this.route.snapshot.paramMap.get('parameter');
+    this.showEquation = !(
+      this.parameter === FunctionType.BETA ||
+      this.parameter === FunctionType.GAMMA
+    );
     this.spef = createChosenFunction(this.parameter ?? '');
     this.generatePhotoUrls();
     this.loadStyles();
@@ -158,6 +163,22 @@ export class FunctionInformationComponent {
         this.styleDomain = 60;
         this.styleRel = 65;
         this.styleEqu = 65;
+        this.photoStyle = 90;
+        break;
+      }
+      case FunctionType.GAMMA: {
+        this.styleDef = 40;
+        this.styleDomain = 40;
+        this.styleRel = 45;
+        this.styleEqu = 45;
+        this.photoStyle = 90;
+        break;
+      }
+      case FunctionType.BETA: {
+        this.styleDef = 45;
+        this.styleDomain = 45;
+        this.styleRel = 45;
+        this.styleEqu = 45;
         this.photoStyle = 90;
         break;
       }

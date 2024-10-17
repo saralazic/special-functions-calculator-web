@@ -34,7 +34,6 @@ export class LaguerrePolynomial extends SpecialFunction {
     const { alpha, x } = this.stringToBigNumber(params);
 
     const alphaPlus1 = this.math.add(alpha, BIG_NUMBER_CONSTANTS.ONE);
-
     let t: MathType = this.math.bignumber(BIG_NUMBER_CONSTANTS.ONE);
     let sum: MathType = t,
       R: MathType,

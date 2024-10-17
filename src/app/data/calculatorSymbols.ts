@@ -24,17 +24,17 @@ export const operators: ISymbol[] = [
 export const operators2: ISymbol[] = [
   { symbol: 'xy', label: 'x<sup>y</sup>' },
   { symbol: 'yx', label: 'y<sup>x</sup>' },
-  { symbol: 'sqrty', label: '<sup>y</sup>&radic;x' },
+  { symbol: 'sqrty', label: '<sup class="small-sup">y</sup>&radic;x' },
   { symbol: 'log', label: 'log<sub>y</sub>x' },
 ];
 
 export const trigonometry: ISymbol[] = [
   { symbol: 'sin', label: 'sin' },
   { symbol: 'cos', label: 'cos' },
-  { symbol: 'tan', label: 'tan' },
-  { symbol: 'asin', label: 'sin<sup>-1</sup>' },
-  { symbol: 'acos', label: 'cos<sup>-1</sup>' },
-  { symbol: 'atan', label: 'tan<sup>-1</sup>' },
+  { symbol: 'tan', label: 'tg' },
+  { symbol: 'asin', label: 'arcsin' },
+  { symbol: 'acos', label: 'arccos' },
+  { symbol: 'atan', label: 'arctg' },
 ];
 
 export const brackets: ISymbol[] = [
@@ -52,11 +52,11 @@ export const unaryOps1: ISymbol[] = [
   },
   {
     symbol: 'sqrt2',
-    label: '<sup>2</sup>&radic;x',
+    label: `<sup><span [style.font-size]="'0.50em'">2</span></sup>&radic;x`,
   },
   {
     symbol: 'sqrt3',
-    label: '<sup>3</sup>&radic;x',
+    label: '<sup class="small-sup">3</sup>&radic;x',
   },
 ];
 
@@ -71,17 +71,17 @@ export const unaryOps2: ISymbol[] = [
   },
   { symbol: 'factorial', label: 'x!' },
   { symbol: 'ln', label: 'ln' },
-  { symbol: 'lg', label: 'lg' },
+  { symbol: 'lg', label: 'log<sub>10</sub>' },
   { symbol: 'lg2', label: 'log<sub>2</sub>' },
 ];
 
 export const hyperbolic: ISymbol[] = [
-  { symbol: 'sinh', label: 'sin<sup>h</sup>' },
-  { symbol: 'cosh', label: 'cos<sup>h</sup>' },
-  { symbol: 'tanh', label: 'tan<sup>h</sup>' },
-  { symbol: 'asinh', label: 'sinh<sup>-1</sup>' },
-  { symbol: 'acosh', label: 'cosh<sup>-1</sup>' },
-  { symbol: 'atanh', label: 'tanh<sup>-1</sup>' },
+  { symbol: 'sinh', label: 'sh' },
+  { symbol: 'cosh', label: 'ch' },
+  { symbol: 'tanh', label: 'th' },
+  { symbol: 'asinh', label: 'arsh' },
+  { symbol: 'acosh', label: 'arch' },
+  { symbol: 'atanh', label: 'arth' },
 ];
 
 export const unaryOps = _.flatten([
