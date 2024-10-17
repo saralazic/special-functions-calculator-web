@@ -52,7 +52,7 @@ export const unaryOps1: ISymbol[] = [
   },
   {
     symbol: 'sqrt2',
-    label: '<sup><span class="small-sup">2</span></sup>&radic;x',
+    label: `<sup><span [style.font-size]="'0.50em'">2</span></sup>&radic;x`,
   },
   {
     symbol: 'sqrt3',

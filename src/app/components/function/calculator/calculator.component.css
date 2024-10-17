@@ -1,7 +1,5 @@
 .small-sup {
-	font-size: 0.2em; /* Adjust this value as needed */
-	vertical-align: super;
-
+	font-size: 0.2em  !important;
 }
 
 .table {
